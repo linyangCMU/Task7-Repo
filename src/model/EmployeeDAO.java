@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
+import databeans.Employee;
+
 public class EmployeeDAO {
 	private List<Connection> connectionPool = new ArrayList<Connection>();	
 	private String jdbcDriver;
@@ -51,7 +53,7 @@ public class EmployeeDAO {
 			con = getConnection();
 			
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (username, password, firstname, lastname) VALUES (?,?,?,?)");
-			pstmt.setString(1, employee.getUsername);
+			pstmt.setString(1, employee.getUsername());
 			pstmt.setString(2, employee.getPassword());
 			pstmt.setString(3, employee.getFirstName());
 			pstmt.setString(4, employee.getLastName());			

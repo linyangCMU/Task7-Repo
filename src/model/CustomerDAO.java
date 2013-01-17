@@ -14,6 +14,8 @@ import java.util.List;
 
 import java.sql.PreparedStatement;
 
+import databeans.Customer;
+
 public class CustomerDAO {
 	private List<Connection> connectionPool = new ArrayList<Connection>();	
 	private String jdbcDriver;
@@ -56,15 +58,15 @@ public class CustomerDAO {
 			con = getConnection();
 			
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (username, password, firstname, lastname, addr_line1, add_line2, city, state, zip, cash) VALUES (?,?,?,?,?,?,?,?,?,?)");
-			pstmt.setString(1, customer.getUsername);
+			pstmt.setString(1, customer.getUsername());
 			pstmt.setString(2, customer.getPassword());
 			pstmt.setString(3, customer.getFirstName());
 			pstmt.setString(4, customer.getLastName());
 			pstmt.setString(5, customer.getAddrL1());
 			pstmt.setString(6, customer.getAddrL2());
-			pstmt.setString(7, customer.getCity);
+			pstmt.setString(7, customer.getCity());
 			pstmt.setString(8, customer.getState());
-			pstmt.setInteger(9, customer.getZip());
+			pstmt.setString(9, customer.getZip());
 			pstmt.setDouble(10, customer.getCash());
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
