@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
+import databeans.Transaction;
+
 public class TransactionDAO {
 	private List<Connection> connectionPool = new ArrayList<Connection>();	
 	private String jdbcDriver;
@@ -51,12 +53,12 @@ public class TransactionDAO {
 			con = getConnection();
 			
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (customer_id, fund_id, execute_date, lastname, shares, transaction_type, amount) VALUES (?,?,?,?,?,?,?)");
-			pstmt.setInteger(1, transaction.getCustomer_id);
-			pstmt.setInteger(2, transaction.getfund_id());
-			pstmt.setDate(3, transaction.getDate());
-			pstmt.setInteger(4, transaction.getShares());
-			pstmt.setString(5, transaction.getType());
-			pstmt.setInteger(6, transaction.getAmount());
+			pstmt.setInt(1, transaction.getCustomer_id());
+			pstmt.setInt(2, transaction.getFund_id());
+			pstmt.setDate(3, transaction.getExecute_date());
+			pstmt.setInt(4, transaction.getShares());
+			pstmt.setString(5, transaction.getTransaction_type());
+			pstmt.setInt(6, transaction.getAmount());
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
 			pstmt.close();

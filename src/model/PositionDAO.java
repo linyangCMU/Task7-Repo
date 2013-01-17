@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
+import databeans.Position;
+
 public class PositionDAO {
 	private List<Connection> connectionPool = new ArrayList<Connection>();	
 	private String jdbcDriver;
@@ -52,9 +54,9 @@ public class PositionDAO {
 			con = getConnection();
 			
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (customer_id, fund_id, shares) VALUES (?,?,?)");
-			pstmt.setInteger(1, position.getCustomID());
-			pstmt.setInteger(2, position.getFundID());
-			pstmt.setInteger(3, position.getShares());		
+			pstmt.setInt(1, position.getCustomer_id());
+			pstmt.setInt(2, position.getFundID());
+			pstmt.setInt(3, position.getShares());		
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
 			pstmt.close();
