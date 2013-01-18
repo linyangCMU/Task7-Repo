@@ -66,7 +66,7 @@ public class EmployeeRegisterAction extends Action {
 	        
 	        // If redirectTo is null, redirect to the "manage" action
 			String webapp = request.getContextPath();
-			return webapp + "/manage.do";
+			return webapp + "/viewCustomerList.html";
         } catch (MyDAOException e) {
         	errors.add(e.getMessage());
         	return "register.jsp";
