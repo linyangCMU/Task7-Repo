@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class History {
 	
-	private int id; //fund_id
-	private Date date; //price date
-	private double price; //daily price
+	private int id = -1; //fund_id
+	private Date date = null; //price date
+	private double price = 0.00; //daily price
 	
 	public int getId()       { return id;    }
 	public Date getDate()    { return date;  }

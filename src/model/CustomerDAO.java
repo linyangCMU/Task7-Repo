@@ -82,11 +82,45 @@ public class CustomerDAO {
 		}
 	}
 	public Customer lookup(String username) throws MyDAOException{
-		//lookup method
+		Connection con = null;
+        try {
+        	con = getConnection();
+
+        	PreparedStatement pstmt = con.prepareStatement("SELECT * FROM " + tableName + " WHERE username=?");
+        	pstmt.setString(1,username);
+        	ResultSet rs = pstmt.executeQuery();
+        	
+        	Customer customer;
+        	if (!rs.next()) {
+        		customer = null;
+        	} else {
+        		customer = new Customer();
+        		customer.setCustomerID(rs.getInt("customer_id"));
+        		customer.setUsername(rs.getString("username"));
+        		customer.setPassword(rs.getString("password"));
+        		customer.setFirstName(rs.getString("firstname"));
+        		customer.setLastName(rs.getString("lastname"));
+        		customer.setAddr1(rs.getString("addr_line1"));
+        		customer.setAddr2(rs.getString("addr_line2"));
+        		customer.setCity(rs.getString("city"));
+        		customer.setState(rs.getString("state"));
+        		customer.setZip(rs.getString("zip"));
+        		customer.setCash(rs.getInt("cash"));
+        	}
+        	
+        	rs.close();
+        	pstmt.close();
+        	releaseConnection(con);
+            return customer;
+            
+        } catch (Exception e) {
+            try { if (con != null) con.close(); } catch (SQLException e2) { /* ignore */ }
+        	throw new MyDAOException(e);
+        }
 		
 		
 	}
-	public Customer lookupByCustomerID(String username) throws MyDAOException{
+	/*public Customer lookupByCustomerID(String username) throws MyDAOException{
 		//lookupByCustomerID method
 		
 		
@@ -101,7 +135,7 @@ public class CustomerDAO {
 		// get Customer Collection
 		
 	}
-	
+	*/
 	
 	private boolean tableExists() throws MyDAOException{
 		Connection con = null;
