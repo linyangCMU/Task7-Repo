@@ -23,6 +23,7 @@ public class Controller extends HttpServlet {
 		Action.add(new CustomerLogoutAction(model));
 		Action.add(new EmployeeLoginAction(model));
 		Action.add(new EmployeeLogoutAction(model));
+		Action.add(new EmployeeRegisterAction(model));
 	}
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,6 +42,12 @@ public class Controller extends HttpServlet {
         
         if (action.equals("login1.do")) {
         	// Allow these actions without logging in
+			return Action.perform(action,request);
+        }
+        
+        if (action.equals("register1.do")) {
+        	// Allow these actions without logging in
+        	System.out.println("Action: register1.do");
 			return Action.perform(action,request);
         }
         

@@ -25,7 +25,7 @@ public class CustomerLoginAction extends Action {
 		customerDAO = model.getCustomerDAO();
 	}
 	
-	public String getName() { return "login1.do"; }
+	public String getName() { return "login2.do"; }
 	
     public String perform(HttpServletRequest request) {
     	List<String> errors = new ArrayList<String>();
@@ -37,27 +37,31 @@ public class CustomerLoginAction extends Action {
 
 	        
 	        if (!form.isPresent()) {
-	            return "login1.html";
+	        	System.out.println("haha1");
+	            return "login2.html";
 	        }
 
 	        // Any validation errors?
 	        errors.addAll(form.getValidationErrors());
 	        if (errors.size() != 0) {
-	            return "login1.html";
+	        	System.out.println(errors.toString());
+	            return "login2.html";
 	        }
-
+	        
 	        // Look up the user
 	        Customer user = customerDAO.lookup(form.getUserName());
+	        System.out.println("haha");
 	        
 	        if (user == null) {
 	            errors.add("User Name not found");
-	            return "login1.html";
+	            System.out.println("not found");
+	            return "login2.html";
 	        }
-
+	        System.out.println(user.getCity());
 	        // Check the password
 	        if (!user.checkPassword(form.getPassword())) {
 	            errors.add("Incorrect password");
-	            return "login1.html";
+	            return "login2.html";
 	        }
 	
 	        // Attach (this copy of) the user bean to the session
@@ -66,7 +70,7 @@ public class CustomerLoginAction extends Action {
 	
 	      
 			String webapp = request.getContextPath();
-			return webapp + "/manage.do";
+			return webapp + "/viewPortafolio.html";
         } catch (MyDAOException e) {
         	errors.add(e.getMessage());
         	return "error.jsp";
