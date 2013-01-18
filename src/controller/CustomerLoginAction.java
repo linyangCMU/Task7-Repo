@@ -17,8 +17,6 @@ import model.CustomerDAO;
 import model.MyDAOException;
 
 
-import org.mybeans.form.FormBean;
-
 public class CustomerLoginAction extends Action {	
 	private FormBeanFactory<CustomerLoginForm> formBeanFactory = FormBeanFactory.getInstance(CustomerLoginForm.class);
 	private CustomerDAO customerDAO;
@@ -27,7 +25,7 @@ public class CustomerLoginAction extends Action {
 		customerDAO = model.getCustomerDAO();
 	}
 	
-	public String getName() { return "login.do"; }
+	public String getName() { return "login1.do"; }
 	
     public String perform(HttpServletRequest request) {
     	List<String> errors = new ArrayList<String>();
@@ -92,7 +90,5 @@ public class CustomerLoginAction extends Action {
         	errors.add(e.getMessage());
         	return "error.jsp";
         }
-        
-    	return null;	
     }
 }

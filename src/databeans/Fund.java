@@ -6,7 +6,6 @@ public class Fund {
 	private String symbol = null; // the short name for the fund
 	
 	public int compareTo(Fund other) {
-		// Order first by lastName and then by firstName
 		int c = name.compareTo(other.name);
 		if (c != 0) return c;
 		return symbol.compareTo(other.symbol);
