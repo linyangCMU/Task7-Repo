@@ -35,26 +35,15 @@ public class CustomerLoginAction extends Action {
 	    	CustomerLoginForm form = formBeanFactory.create(request);
 	        request.setAttribute("form",form);
 
-	        // If the servlet path isn't "/login.do", the controller sent a request here
-	        // because the user needed to login.  We want to support redirect back to the
-	        // original request only if the user is just trying to view an image.
-	        // So, only set up redirect back to original request path="/view.do".
-	        if (request.getServletPath().equals("/view.do")) {
-	        	String redirectTo = request.getRequestURI()+"?"+request.getQueryString();
-	        	HttpSession session = request.getSession();
-	        	session.setAttribute("redirectTo",redirectTo);
-	        }
-
-	        // If no params were passed, return with no errors so that the form will be
-	        // presented (we assume for the first time).
+	        
 	        if (!form.isPresent()) {
-	            return "login.jsp";
+	            return "login1.html";
 	        }
 
 	        // Any validation errors?
 	        errors.addAll(form.getValidationErrors());
 	        if (errors.size() != 0) {
-	            return "login.jsp";
+	            return "login1.html";
 	        }
 
 	        // Look up the user
@@ -62,25 +51,20 @@ public class CustomerLoginAction extends Action {
 	        
 	        if (user == null) {
 	            errors.add("User Name not found");
-	            return "login.jsp";
+	            return "login1.html";
 	        }
 
 	        // Check the password
 	        if (!user.checkPassword(form.getPassword())) {
 	            errors.add("Incorrect password");
-	            return "login.jsp";
+	            return "login1.html";
 	        }
 	
 	        // Attach (this copy of) the user bean to the session
 	        HttpSession session = request.getSession();
 	        session.setAttribute("user",user);
 	
-	        // After successful login send to...
-	        String redirectTo = (String) session.getAttribute("redirectTo");
-	        if (redirectTo != null) return redirectTo;
-	        
-	        
-	        // If redirectTo is null, redirect to the "manage" action
+	      
 			String webapp = request.getContextPath();
 			return webapp + "/manage.do";
         } catch (MyDAOException e) {

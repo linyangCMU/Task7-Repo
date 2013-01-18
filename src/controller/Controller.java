@@ -39,7 +39,7 @@ public class Controller extends HttpServlet {
     	String      servletPath = request.getServletPath();
         String      action = getActionName(servletPath);
         
-        if (action.equals("login.do")) {
+        if (action.equals("login1.do")) {
         	// Allow these actions without logging in
 			return Action.perform(action,request);
         }

@@ -2,7 +2,7 @@ package databeans;
 
 public class Customer implements Comparable<Customer> {
 
-	private int userId = 0;
+	private int customerID = 0;
 	private String username = null;
 	private String password = null;
 	private String firstName = null;
@@ -25,7 +25,7 @@ public class Customer implements Comparable<Customer> {
 		c = firstName.compareTo(other.firstName);
 		if (c != 0)
 			return c;
-		return String.valueOf(userId).compareTo(String.valueOf(other.userId));
+		return String.valueOf(customerID).compareTo(String.valueOf(other.customerID));
 	}
 
 	public boolean equals(Object obj) {
@@ -44,8 +44,8 @@ public class Customer implements Comparable<Customer> {
 		return username;
 	}
 
-	public int getUserId() {
-		return userId;
+	public int getCustomerID() {
+		return customerID;
 	}
 
 	public String getFirstName() {
@@ -84,8 +84,8 @@ public class Customer implements Comparable<Customer> {
 		password = s;
 	}
 
-	public void setUserId(int x) {
-		userId = x;
+	public void setCustomerID(int x) {
+		customerID = x;
 	}
 
 	public void setFirstName(String s) {
@@ -125,6 +125,6 @@ public class Customer implements Comparable<Customer> {
 	}
 	
 	public String toString() {
-		return "User(" + getUserId() + ")";
+		return "Customer(" + getCustomerID() + ")";
 	}
 }
