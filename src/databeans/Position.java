@@ -4,7 +4,7 @@ public class Position {
 
 	private int customer_id = 0;
 	private int fund_id = 0;
-	private int shares = 0;
+	private double shares = 0;
 
 	public int getCustomer_id() {
 		return customer_id;
@@ -14,12 +14,12 @@ public class Position {
 		return fund_id;
 	}
 	
-	public int getShares() {
+	public double getShares() {
 		return shares;
 	}
 
 
-	public void setCustomID(int x) {
+	public void setCustomerID(int x) {
 		customer_id = x;
 	}
 
@@ -27,7 +27,7 @@ public class Position {
 		fund_id = x;
 	}
 	
-	public void setShares(int x) {
+	public void setShares(double x) {
 		shares = x;
 	}
 }

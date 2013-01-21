@@ -56,7 +56,7 @@ public class TransactionDAO {
 			pstmt.setInt(1, transaction.getCustomer_id());
 			pstmt.setInt(2, transaction.getFund_id());
 			pstmt.setDate(3, transaction.getExecute_date());
-			pstmt.setInt(4, transaction.getShares());
+			pstmt.setInt(4, (int)transaction.getShares() * 1000);	
 			pstmt.setString(5, transaction.getTransaction_type());
 			pstmt.setInt(6, transaction.getAmount());
 			int count = pstmt.executeUpdate();
