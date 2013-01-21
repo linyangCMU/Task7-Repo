@@ -6,8 +6,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="style/table.css"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="style/table.css"/>
 </head>
 <body>
 
@@ -39,21 +39,18 @@
 	
 	rs = pstmt.executeQuery();
 	
-	out.println("<table class='mftable' >");
-	out.println("<tr>");
-	out.println("<th> UserName </th>");
-	out.println("<th> First Name </th>");
-	out.println("<th> Last Name </th>");
-	out.println("</tr>");
 	
 	while (rs.next()) {
-	    out.println("<tr>");
-	    out.println("<td>"+rs.getString("username") + "</td>");
-	    out.println("<td>"+rs.getString("firstname") + "</td>");
-	    out.println("<td>"+rs.getString("lastname") + "</td>");
+	    out.println("<form method='get' id=\""+rs.getString("customer_id")+"\" action=\"login.do\">");
+	    out.println("<tr value='"+rs.getString("customer_id")+"' name='id' onclick=\"document.forms['"+rs.getString("customer_id")+"'].submit();\">");
+	    out.println("  <td class=\"td3\">"+rs.getString("username") + "</td>");
+	    out.println("  <td class=\"td3\">"+rs.getString("firstname") + "</td>");
+	    out.println("  <td class=\"td3\">"+rs.getString("lastname") + "</td>");
+	    out.println("  <td class=\"td3\">"+rs.getString("username") + "</td>");
+        out.println("  <td class=\"td3\">"+rs.getString("firstname") + "</td>");
 	    out.println("</tr>");
+	    out.println("</form>");
 	}
-	out.println("</table>");
 	
 	rs.close();
 	
