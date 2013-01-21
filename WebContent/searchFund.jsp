@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title> Mutual Fund Management </title>
+    <link rel="stylesheet" type="text/css" href="style/main.css" />
+    
+    <script >
+        function showFund(str) {
+            var xmlhttp;    
+            if (str=="") {
+                document.getElementById("txtHint").innerHTML="";
+                return;
+            }
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp=new XMLHttpRequest();
+            }
+            else {
+                // code for IE6, IE5
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+            xmlhttp.onreadystatechange=function() {
+                if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                    document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+                }
+            }
+            xmlhttp.open("GET","getFund.jsp?fund="+str,true);
+            xmlhttp.send();
+        }
+    </script>
+    
+</head>
+
+<body>
+    <div id="container">
+        
+        <div id="header">
+            <h1>Carnegie Financial Service - Mutual Fund Management</h1>
+        </div>
+        
+        <div id="navigation">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact us</a></li>
+            </ul>
+        </div>
+        
+        <div id="content-container">
+            <div id="section-navigation">
+                <ul>
+                    
+                </ul>
+            </div>
+            
+            <div id="content">
+                <h2>Customer List</h2>
+                
+                <form action=""> 
+                    <input type="text" name="fundid" onkeyup="showFund(this.value)" onchange="showFund(this.value)"/>
+                </form>
+                <br/>
+                <div id="txtHint">Fund info will be listed here...</div>
+            </div>
+            
+            <div id="footer">
+                Copyright © Mutual Fund Application by Team
+                e-Motion | CMU MSIT ebusiness Task7 2013
+            </div>
+        </div>
+    </div>
+</body>
+</html>
