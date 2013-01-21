@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
+import databeans.Fund;
 import databeans.History;
 
 public class HistoryDAO {
@@ -71,14 +72,46 @@ public class HistoryDAO {
 		}
 	}
 	
-	public History lookup(int fund_id) throws MyDAOException {
-		// get history method
+	public History lookup(int fund_id, Date priceDate) throws MyDAOException {
+		Connection con = null;
+		try {
+			con = getConnection();
+
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM "
+					+ tableName + " WHERE fund_id=?, price_date=?");
+			pstmt.setInt(1, fund_id);
+			pstmt.setDate(2, priceDate);
+			ResultSet rs = pstmt.executeQuery();
+
+			History history;
+			if (!rs.next()) {
+				history = null;
+			} else {
+				history = new History();				
+				history.setId(rs.getInt("fund_id"));
+				history.setDate(rs.getDate("price_date"));
+				history.setPrice((double)rs.getInt("price")/100);
+				
+			}
+
+			rs.close();
+			pstmt.close();
+			releaseConnection(con);
+			return history;
+
+		} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
+		}
 		
 	}
-	public History[] lookupByDate(Date priceDate) throws MyDAOException {
-		// get history method
-		
-	}
+	
 	
 	private boolean tableExists() throws MyDAOException{
 		Connection con = null;
