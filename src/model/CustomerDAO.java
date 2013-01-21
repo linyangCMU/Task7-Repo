@@ -11,11 +11,10 @@ import java.util.List;
 
 import java.sql.PreparedStatement;
 
-import org.genericdao.RollbackException;
-import org.genericdao.Transaction;
+
 
 import databeans.Customer;
-import databeans.User;
+
 
 public class CustomerDAO {
 	private List<Connection> connectionPool = new ArrayList<Connection>();
@@ -105,7 +104,6 @@ public class CustomerDAO {
 				customer = new Customer();
 				customer.setCustomerID(rs.getInt("customer_id"));
 				customer.setUsername(rs.getString("username"));
-				customer.setPassword(rs.getString("password"));
 				customer.setFirstName(rs.getString("firstname"));
 				customer.setLastName(rs.getString("lastname"));
 				customer.setAddr1(rs.getString("addr_line1"));
@@ -121,58 +119,95 @@ public class CustomerDAO {
 			releaseConnection(con);
 			return customer;
 
-		} catch (Exception e) {
-			try {
-				if (con != null)
-					con.close();
-			} catch (SQLException e2) { /* ignore */
-			}
-			throw new MyDAOException(e);
+		} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
 		}
 
 	}
 
-	/*
-	 * public Customer lookupByCustomerID(String username) throws
-	 * MyDAOException{ //lookupByCustomerID method
-	 * 
-	 * 
-	 * }
-	 */
+	
+	 
+	 
 
-	public void setPassword(int customerID, String password) {
-		try {
-			Connection con = null;
-			con = getConnection();
-			
-			Customer customer = lookup(String.valueOf(customerID));
-			
-//			PreparedStatement pstmt = con.prepareStatement("SET PASSWORD" + tableName + "WHRER = customerID = ? ")
-//			pstmt.setString(1,String.valueOf(customerID));
-//			ResultSet rs = pstmt.executeQuery();
-			
-			
-			if (customerID == 0) {
-				throw new Exception("Customer " + customerID
-						+ " no longer exists");
-			}
-
-			customer.setPassword(password);
-			
-//			update(customer); 不知道这句怎么改
-			Transaction.commit();
-		} finally {
-			if (Transaction.isActive())
-				Transaction.rollback();
+	public void setPassword(String username, String password) throws MyDAOException {
+		Connection con = null;		
+    	try {
+        	con = getConnection();
+        	
+        	
+            Statement stmt = con.createStatement();
+            PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET password=? WHERE username=?");
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);		
+			pstmt.executeUpdate();
+           
+            stmt.close();
+            releaseConnection(con);
+            
+        
+    	} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
 		}
 	}
 
-	/*
-	 * public Customer[] getCustomers() throws MyDAOException { // get Customer
-	 * Collection
-	 * 
-	 * }
-	 */
+	
+	public Customer[] getCustomers() throws MyDAOException {
+		Connection con = null;
+    	try {
+        	con = getConnection();
+
+            Statement stmt = con.createStatement();
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM " + tableName + " ");
+        	
+        	ResultSet rs = pstmt.executeQuery();
+            
+            List<Customer> list = new ArrayList<Customer>();
+            while (rs.next()) {
+            	Customer customer = new Customer();
+            	customer.setCustomerID(rs.getInt("customer_id"));
+				customer.setUsername(rs.getString("username"));
+				customer.setPassword(rs.getString("password"));
+				customer.setFirstName(rs.getString("firstname"));
+				customer.setLastName(rs.getString("lastname"));
+				customer.setAddr1(rs.getString("addr_line1"));
+				customer.setAddr2(rs.getString("addr_line2"));
+				customer.setCity(rs.getString("city"));
+				customer.setState(rs.getString("state"));
+				customer.setZip(rs.getString("zip"));
+				customer.setCash(rs.getInt("cash"));
+            	
+            	
+            	list.add(customer);
+            }
+            stmt.close();
+            releaseConnection(con);
+            
+            return list.toArray(new Customer[list.size()]);
+    	} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
+		}
+	} 
 
 	private boolean tableExists() throws MyDAOException {
 		Connection con = null;

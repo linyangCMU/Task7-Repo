@@ -10,18 +10,18 @@ import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
 
 import databeans.Customer;
-import formbeans.CustomerLoginForm;
+import formbeans.Cus_LoginForm;
 
 import model.Model;
 import model.CustomerDAO;
 import model.MyDAOException;
 
 
-public class CustomerLoginAction extends Action {	
-	private FormBeanFactory<CustomerLoginForm> formBeanFactory = FormBeanFactory.getInstance(CustomerLoginForm.class);
+public class Cus_LoginAction extends Action {	
+	private FormBeanFactory<Cus_LoginForm> formBeanFactory = FormBeanFactory.getInstance(Cus_LoginForm.class);
 	private CustomerDAO customerDAO;
 	
-	public CustomerLoginAction(Model model) {
+	public Cus_LoginAction(Model model) {
 		customerDAO = model.getCustomerDAO();
 	}
 	
@@ -32,7 +32,7 @@ public class CustomerLoginAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
-	    	CustomerLoginForm form = formBeanFactory.create(request);
+	    	Cus_LoginForm form = formBeanFactory.create(request);
 	        request.setAttribute("form",form);
 
 	        

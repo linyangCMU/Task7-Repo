@@ -16,16 +16,16 @@ import model.MyDAOException;
 import databeans.Customer;
 import databeans.Employee;
 
-import formbeans.ChangePwdForm;
-import formbeans.EmployeeRegisterForm;
+import formbeans.Cus_ChangePwdForm;
+import formbeans.Emp_RegisterForm;
 
-public class changepwdAAction extends Action {
-	private FormBeanFactory<ChangePwdForm> formBeanFactory = FormBeanFactory
-			.getInstance(ChangePwdForm.class);
+public class Cus_ChangePwdAction extends Action {
+	private FormBeanFactory<Cus_ChangePwdForm> formBeanFactory = FormBeanFactory
+			.getInstance(Cus_ChangePwdForm.class);
 
 	private CustomerDAO customerDAO;
 
-	public changepwdAAction(Model model) {
+	public Cus_ChangePwdAction(Model model) {
 		customerDAO = model.getCustomerDAO();
 	}
 
@@ -38,7 +38,7 @@ public class changepwdAAction extends Action {
 		request.setAttribute("errors", errors);
 
 		try {
-			ChangePwdForm form = formBeanFactory.create(request);
+			Cus_ChangePwdForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
 			// If no params were passed, return with no errors so that the form
 			// will be
@@ -58,7 +58,7 @@ public class changepwdAAction extends Action {
 			Customer customer = (Customer) request.getSession().getAttribute("customer");
 			
 			// Change the password
-			customerDAO.setPassword(customer.getCustomerID(), form.getNewPassword());
+			customerDAO.setPassword(customer.getUsername(), form.getNewPassword());
 
 			request.setAttribute("message","Password changed for "+customer.getCustomerID());
 	        return "viewPortafolio.jsp";

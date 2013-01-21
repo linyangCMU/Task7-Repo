@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
+import databeans.History;
+
 public class HistoryDAO {
 	private List<Connection> connectionPool = new ArrayList<Connection>();	
 	private String jdbcDriver;
@@ -51,9 +53,10 @@ public class HistoryDAO {
 			con = getConnection();
 			
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (fund_id, price_date, price,) VALUES (?,?,?)");
-			pstmt.setInteger(1, history.getFundID());
-			pstmt.setDate(2, history.getPriceDate());
-			pstmt.setInteger(3, history.getPrice());					
+			pstmt.setInt(1, history.getId());
+			pstmt.setDate(2, history.getDate());
+			int int_price = (int) history.getPrice() * 100;
+			pstmt.setInt(3, int_price);					
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
 			pstmt.close();

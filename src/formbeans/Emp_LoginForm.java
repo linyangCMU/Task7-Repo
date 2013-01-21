@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.mybeans.form.FormBean;
 
-public class EmployeeLoginForm extends FormBean {
+public class Emp_LoginForm extends FormBean {
 	private String userName;
 	private String password;
 	

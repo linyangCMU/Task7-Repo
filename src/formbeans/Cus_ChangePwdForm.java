@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.mybeans.form.FormBean;
 
-public class ChangePwdForm extends FormBean {
+public class Cus_ChangePwdForm extends FormBean {
 	private String confirmPassword;
 	private String newPassword;
 	

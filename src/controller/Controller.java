@@ -19,11 +19,11 @@ public class Controller extends HttpServlet {
 
 	public void init() throws ServletException {
 		Model model = new Model(getServletConfig());
-		Action.add(new CustomerLoginAction(model));
-		Action.add(new CustomerLogoutAction(model));
-		Action.add(new EmployeeLoginAction(model));
-		Action.add(new EmployeeLogoutAction(model));
-		Action.add(new EmployeeRegisterAction(model));
+		Action.add(new Cus_LoginAction(model));
+		Action.add(new Cus_LogoutAction(model));
+		Action.add(new Emp_LoginAction(model));
+		Action.add(new Emp_LogoutAction(model));
+		Action.add(new Emp_RegisterAction(model));
 	}
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
