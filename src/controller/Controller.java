@@ -33,6 +33,7 @@ public class Controller extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nextPage = performTheAction(request);
         sendToNextPage(nextPage,request,response);
+        System.out.println("here");
     }
     
 	private String performTheAction(HttpServletRequest request) {
@@ -42,6 +43,7 @@ public class Controller extends HttpServlet {
         
         if (action.equals("login1.do")) {
         	// Allow these actions without logging in
+        	System.out.println("log in");
 			return Action.perform(action,request);
         }
         
