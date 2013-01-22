@@ -188,7 +188,7 @@ public class CustomerDAO {
             con = getConnection();
             
             PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET cash=? WHERE username=?");
-            pstmt.setDouble(1, customer.getCash());
+            pstmt.setInt(1, (int)customer.getCash()*1000);
             pstmt.setString(2, customer.getUsername());
             pstmt.executeUpdate();
             

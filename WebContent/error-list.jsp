@@ -1,7 +1,12 @@
-<!--zhenzhex, Dec 5,08-600  -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.*" %>
 
-<c:forEach var="error" items="${errors}">
-	<div style="font-size:medium; color:red; "> ${error} </div>
-</c:forEach>
+<%
+ArrayList<String> errors = (ArrayList<String>) request.getAttribute("errors");
 
+if(errors!=null) {
+    for (String error : errors) {
+        out.println("<div style=\"font-size:medium; color:red; \"> " + error + "</div>");
+    }
+}
+
+%>

@@ -6,7 +6,7 @@
 	Deposit Check
 </p>
 <p>
-	<form method="post" action="deposit-check.do">
+	<form method="post" action="depositcheck.do">
 		<table>
 			<tr>
 				<td> UserName: </td>
