@@ -1,4 +1,4 @@
-.tableone {width:650px; border-collapse:collapse; margin:0 auto;}
+.tableone {width:650px; order-collapse:collapse; margin:0 auto;}
 .tabletwo {width:620px; border-collapse:collapse;}
 .th1 {width:49px;}
 .th2 {width:299px;}
@@ -21,6 +21,6 @@
 .tabletwo tr.dk td {background:#ddd; color:#000;}
 .tabletwo tr:HOVER td:hover{cursor: pointer; background:lime;}
 
-.innerb {height:10em; overflow:auto;}
+.innerb {height:20em; overflow:auto;}
 
 .searchinput {width:500px;}

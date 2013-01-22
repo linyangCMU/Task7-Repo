@@ -14,16 +14,17 @@
 
 <%
 ArrayList<Customer> customers = (ArrayList<Customer>) session.getAttribute("customers");
-
-for (Customer customer : customers) {
-    out.println("<tr onclick=\" javascript:submitCustomer("+ customer.getCustomerID() +")  \">");
-    out.println("  <td class=\"td4\">"+customer.getUsername()+ "</td>");
-    out.println("  <td class=\"td4\">"+customer.getFirstName() + "</td>");
-    out.println("  <td class=\"td4\">"+customer.getLastName() + "</td>");
-    out.println("  <td class=\"td4\">"+customer.getCity()+ "</td>");
-    out.println("  <td class=\"td4\">"+customer.getState() + "</td>");
-    out.println("</tr>");
-    out.println("</form>");
+if(customers!=null) {
+    for (Customer customer : customers) {
+	    out.println("<tr onclick=\" javascript:submitCustomer("+ customer.getCustomerID() +")  \">");
+	    out.println("  <td class=\"td4\">"+customer.getUsername()+ "</td>");
+	    out.println("  <td class=\"td4\">"+customer.getFirstName() + "</td>");
+	    out.println("  <td class=\"td4\">"+customer.getLastName() + "</td>");
+	    out.println("  <td class=\"td4\">"+customer.getCity()+ "</td>");
+	    out.println("  <td class=\"td4\">"+customer.getState() + "</td>");
+	    out.println("</tr>");
+	    out.println("</form>");
+    }
 }
 %>
 

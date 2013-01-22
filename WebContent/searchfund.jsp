@@ -76,7 +76,9 @@
 	                        <th class="th5"> Price </th>
 	                    </tr>
 	                </thead>
-	                
+	                <tfoot>
+	                   <tr><td colspan="5">Click ROW to view details for each fund.</td></tr>
+	                </tfoot>
 	                <tbody>
                     <tr><td colspan="5">
                     <div class="innerb">

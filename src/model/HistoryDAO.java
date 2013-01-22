@@ -111,6 +111,44 @@ public class HistoryDAO {
 		
 	}
 	
+	public ArrayList<History> lookup(int fund_id) throws MyDAOException {
+        Connection con = null;
+        try {
+            con = getConnection();
+            String sql = "SELECT * FROM " + tableName + 
+                         " WHERE fund_id=? ORDER BY price_date ASC";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, fund_id);
+            ResultSet rs = pstmt.executeQuery();
+
+            ArrayList<History> histories = new ArrayList<History>();
+            History history = null;
+            while (rs.next()) {
+                history = new History();                
+                history.setId(rs.getInt("fund_id"));
+                history.setDate(rs.getDate("price_date"));
+                history.setPrice((double)rs.getInt("price")/100);
+                histories.add(history);
+            }
+
+            rs.close();
+            pstmt.close();
+            releaseConnection(con);
+            return histories;
+
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+        
+    }
+	
 	public String lookupLatestPriceAndDate(int fund_id, Date d) throws MyDAOException {
         Connection con = null;
         try {

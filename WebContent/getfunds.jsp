@@ -12,18 +12,20 @@
 <body>
 
 <%
-    ArrayList<Fund> funds = (ArrayList<Fund>) session.getAttribute("funds");
-    
-    for (Fund fund : funds) {
-        out.println("<tr onclick=\" javascript:submitFund("+ fund.getId() +")  \">");
-        out.println("<td class=\"td1\">"+ fund.getId() + "</td>");
-        out.println("<td class=\"td2\">"+ fund.getName() + "</td>");
-        out.println("<td class=\"td3\">"+ fund.getSymbol() + "</td>");
-        out.println("<td class=\"td4\">"+ fund.getDate() + "</td>");
-        out.println("<td class=\"td5\">"+ fund.getPrice() + "</td>");
-        
-        out.println("</tr>");
-    }
+ArrayList<Fund> funds = (ArrayList<Fund>) session.getAttribute("funds");
+
+if (funds!=null) {
+	for (Fund fund : funds) {
+	    out.println("<tr onclick=\" javascript:submitFund("+ fund.getId() +")  \">");
+	    out.println("<td class=\"td1\">"+ fund.getId() + "</td>");
+	    out.println("<td class=\"td2\">"+ fund.getName() + "</td>");
+	    out.println("<td class=\"td3\">"+ fund.getSymbol() + "</td>");
+	    out.println("<td class=\"td4\">"+ fund.getDate() + "</td>");
+	    out.println("<td class=\"td5\">"+ fund.getPrice() + "</td>");
+	    
+	    out.println("</tr>");
+	}
+}
 %>
 
 </body>
