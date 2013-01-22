@@ -37,7 +37,6 @@ public class Emp_LoginAction extends Action {
 
 	        
 	        if (!form.isPresent()) {
-	        	System.out.println("haha1");
 	            return "login1.html";
 	        }
 
@@ -50,11 +49,9 @@ public class Emp_LoginAction extends Action {
 	        
 	        // Look up the user
 	        Employee user = employeeDAO.lookup(form.getUserName());
-	        System.out.println("haha");
 	        
 	        if (user == null) {
 	            errors.add("User Name not found");
-	            System.out.println("not found");
 	            return "login1.html";
 	        }
 

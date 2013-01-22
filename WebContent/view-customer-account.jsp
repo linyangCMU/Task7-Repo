@@ -1,4 +1,3 @@
-
 <%@page import="java.util.List"%>
 <jsp:include page="template-top.jsp" />
 <jsp:include page="error-list.jsp" />
@@ -49,7 +48,7 @@
 				<td>Total Value</td>
 			</tr>
 			
-<% 			List<FundInfo> fundInfos =(List<FundInfo>) request.getAttribute("fundInfos");
+<% 			ArrayList<FundInfo> fundInfos =(ArrayList<FundInfo>) request.getAttribute("fundInfos");
 			for(FundInfo fundInfo: fundInfos)
 %>
            	<tr>
