@@ -41,8 +41,8 @@
 	
 	
 	while (rs.next()) {
-	    out.println("<form method='get' id=\""+rs.getString("customer_id")+"\" action=\"login.do\">");
-	    out.println("<tr value='"+rs.getString("customer_id")+"' name='id' onclick=\"document.forms['"+rs.getString("customer_id")+"'].submit();\">");
+	    String customerId = rs.getString("customer_id");
+	    out.println("<tr onclick=\" javascript:submitCustomer("+ customerId +")  \">");
 	    out.println("  <td class=\"td3\">"+rs.getString("username") + "</td>");
 	    out.println("  <td class=\"td3\">"+rs.getString("firstname") + "</td>");
 	    out.println("  <td class=\"td3\">"+rs.getString("lastname") + "</td>");

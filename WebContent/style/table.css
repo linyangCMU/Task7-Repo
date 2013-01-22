@@ -19,6 +19,8 @@
 .tabletwo td {background:#eee; color:#000;}
 .tableone th, .tabletwo th {text-align:center;}
 .tabletwo tr.dk td {background:#ddd; color:#000;}
-.tabletwo tr {cursor: pointer;}
+.tabletwo tr:HOVER td:hover{cursor: pointer; background:lime;}
 
 .innerb {height:10em; overflow:auto;}
+
+.searchinput {width:500px;}

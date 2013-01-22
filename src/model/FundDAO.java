@@ -103,11 +103,51 @@ public class FundDAO {
             	
             }
             throw new MyDAOException(e);
-		}
-		
-		
-		
+		}	
 	}
+	
+	public ArrayList<Fund> lookup(String query) throws MyDAOException{
+	    Connection con = null;
+        try {
+            con = getConnection();
+
+            PreparedStatement pstmt = con.prepareStatement(
+                    "SELECT * FROM " + tableName + 
+                    " WHERE fund_id REGEXP ? " +
+                    " OR name REGEXP ? " + 
+                    " OR symbol REGEXP ?");
+            pstmt.setString(1, query);
+            pstmt.setString(2, query);
+            pstmt.setString(3, query);
+            
+            ResultSet rs = pstmt.executeQuery();
+
+            ArrayList<Fund> funds = new ArrayList<Fund>();
+            Fund fund = null;
+            while (rs.next()) {
+                fund = new Fund(); 
+                fund.setId(rs.getInt("fund_id"));
+                fund.setName(rs.getString("name"));
+                fund.setSymbol(rs.getString("symbol"));
+                funds.add(fund);
+            }
+
+            rs.close();
+            pstmt.close();
+            releaseConnection(con);
+            return funds;
+
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+    }
 	
 	private boolean tableExists() throws MyDAOException{
 		Connection con = null;

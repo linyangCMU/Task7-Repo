@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="style/table.css"/>
+
 </head>
 <body>
 
@@ -70,7 +71,7 @@
         pstmt.setString(1, fundId);
         ResultSet rs2 = pstmt.executeQuery();
         
-        out.println("<tr>");
+        out.println("<tr onclick=\" javascript:submitFund("+ fundId +")  \">");
         out.println("<td class=\"td1\">"+rs.getString("fund_id") + "</td>");
         out.println("<td class=\"td2\">"+rs.getString("name") + "</td>");
         out.println("<td class=\"td3\">"+rs.getString("symbol") + "</td>");

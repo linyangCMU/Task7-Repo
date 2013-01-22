@@ -7,6 +7,7 @@
     <title> Mutual Fund Management </title>
     <link rel="stylesheet" type="text/css" href="style/main.css" />
     <link rel="stylesheet" type="text/css" href="style/table.css" />
+    <script type="text/javascript" src="scripts/submit.js"></script>
     
     <script >
         function showCustomer(str) {
