@@ -7,60 +7,54 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import model.Model;
-import model.CustomerDAO;
+import model.EmployeeDAO;
 import model.MyDAOException;
 
 import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
 
-import databeans.Customer;
-import formbeans.CustomerRegisterForm;
+import databeans.Employee;
+import formbeans.Emp_RegisterForm;
 
-public class CustomerRegisterAction extends Action {
-	private FormBeanFactory<CustomerRegisterForm> formBeanFactory = FormBeanFactory.getInstance(CustomerRegisterForm.class);
+public class Emp_RegisterAction extends Action {
+	private FormBeanFactory<Emp_RegisterForm> formBeanFactory = FormBeanFactory.getInstance(Emp_RegisterForm.class);
 
-	private CustomerDAO CustomerDAO;
+	private EmployeeDAO employeeDAO;
 	
-	public CustomerRegisterAction(Model model) {
-		CustomerDAO = model.getCustomerDAO();
+	public Emp_RegisterAction(Model model) {
+		employeeDAO = model.getEmployeeDAO();
 	}
 
-	public String getName() { return "login2.do"; }
+	public String getName() { return "register1.do"; } //register1.do? Is it supposed to be login1.do?
 
     public String perform(HttpServletRequest request) {
         List<String> errors = new ArrayList<String>();
         request.setAttribute("errors",errors);
         
         try {
-        	CustomerRegisterForm form = formBeanFactory.create(request);
+        	Emp_RegisterForm form = formBeanFactory.create(request);
 	        request.setAttribute("form",form);
 	
 	        // If no params were passed, return with no errors so that the form will be
 	        // presented (we assume for the first time).
 	        if (!form.isPresent()) {
-	            return "createaccountA.html";
+	            return "createaccountE.html";
 	        }
 	
 	        // Any validation errors?
 	        errors.addAll(form.getValidationErrors());
 	        if (errors.size() != 0) {
 	        	System.out.println(errors.toString());
-	            return "createaccountA.html";
+	            return "createaccountE.html";
 	        }
 	        System.out.println("hahaha");
 	        // Create the user bean
-	        Customer user = new Customer();
+	        Employee user = new Employee();
 	        user.setUsername(form.getUserName());
 	        user.setFirstName(form.getFirstName());
 	        user.setLastName(form.getLastName());
 	        user.setPassword(form.getPassword());
-	        user.setAddr1(form.getAddr1());
-	        user.setAddr2(form.getAddr2());
-	        user.setCity(form.getCity());
-	        user.setState(form.getState());
-	        user.setZip(form.getZip());
-	        
-        	CustomerDAO.create(user);
+        	employeeDAO.create(user);
         
 			// Attach (this copy of) the user bean to the session
 	        HttpSession session = request.getSession(false);
@@ -72,7 +66,7 @@ public class CustomerRegisterAction extends Action {
 	        
 	        // If redirectTo is null, redirect to the "manage" action
 			String webapp = request.getContextPath();
-			return webapp + "/viewPortafolio.html";
+			return webapp + "/viewCustomerList.html";
         } catch (MyDAOException e) {
         	errors.add(e.getMessage());
         	return "register.jsp";

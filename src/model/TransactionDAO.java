@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
+
 import databeans.Transaction;
 
 public class TransactionDAO {
@@ -56,7 +57,7 @@ public class TransactionDAO {
 			pstmt.setInt(1, transaction.getCustomer_id());
 			pstmt.setInt(2, transaction.getFund_id());
 			pstmt.setDate(3, transaction.getExecute_date());
-			pstmt.setInt(4, transaction.getShares());
+			pstmt.setInt(4, (int)transaction.getShares() * 1000);	
 			pstmt.setString(5, transaction.getTransaction_type());
 			pstmt.setInt(6, transaction.getAmount());
 			int count = pstmt.executeUpdate();
@@ -72,13 +73,46 @@ public class TransactionDAO {
 			}
 		}
 	}
-	public Transaction lookup(int customer_id) throws MyDAOException{
-		//lookup method
-		
-		
-	}
+	
 	public Transaction[] getTransactions(int customer_id) throws MyDAOException {
-		// get Transaction Collection
+		Connection con = null;
+    	try {
+        	con = getConnection();
+
+            Statement stmt = con.createStatement();
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM " + tableName + "where customer_id=?");
+        	
+        	ResultSet rs = pstmt.executeQuery();
+            
+            List<Transaction> list = new ArrayList<Transaction>();
+            while (rs.next()) {
+            	Transaction transaction = new Transaction();
+            	transaction = new Transaction();
+				transaction.setTransaction_id(rs.getInt("transaction_id"));
+				transaction.setCustomer_id(rs.getInt("customer_id"));
+				transaction.setFund_id(rs.getInt("fund_id"));
+				transaction.setDate(rs.getDate("execute_date"));
+				transaction.setShares((double)rs.getInt("shares")/1000);
+				transaction.setTransaction_type(rs.getString("transaction_type"));
+				transaction.setAmount(rs.getInt("amount"));
+            	
+            	
+            	list.add(transaction);
+            }
+            stmt.close();
+            releaseConnection(con);
+            
+            return list.toArray(new Transaction[list.size()]);
+    	} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
+		}
 		
 	}
 	

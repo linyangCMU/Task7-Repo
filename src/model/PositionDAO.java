@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
+import databeans.History;
 import databeans.Position;
 
 public class PositionDAO {
@@ -55,8 +56,8 @@ public class PositionDAO {
 			
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (customer_id, fund_id, shares) VALUES (?,?,?)");
 			pstmt.setInt(1, position.getCustomer_id());
-			pstmt.setInt(2, position.getFundID());
-			pstmt.setInt(3, position.getShares());		
+			pstmt.setInt(2, position.getFund_id());
+			pstmt.setInt(3, (int)position.getShares() * 1000);		
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
 			pstmt.close();
@@ -72,7 +73,42 @@ public class PositionDAO {
 	}
 	
 	public Position lookup(int customer_id, int fund_id) throws MyDAOException {
-		// get Position 
+		Connection con = null;
+		try {
+			con = getConnection();
+
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM "
+					+ tableName + " WHERE customer_id=?, fund_id=?");
+			pstmt.setInt(1, customer_id);
+			pstmt.setInt(2, fund_id);			
+			ResultSet rs = pstmt.executeQuery();
+
+			Position position;
+			if (!rs.next()) {
+				position = null;
+			} else {
+				position = new Position();				
+				position.setCustomer_id(rs.getInt("customer_id"));
+				position.setFund_id(rs.getInt("fund_id"));
+				position.setShares((double)rs.getInt("shares")/1000);
+				
+			}
+
+			rs.close();
+			pstmt.close();
+			releaseConnection(con);
+			return position;
+
+		} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
+		}
 		
 	}
 	

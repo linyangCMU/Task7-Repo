@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import model.Model;
 
-public class EmployeeLogoutAction extends Action {	
+public class Emp_LogoutAction extends Action {	
 
-	public EmployeeLogoutAction(Model model) {
+	public Emp_LogoutAction(Model model) {
 		
 	}
 	

@@ -9,6 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
+
+import databeans.Employee;
+import databeans.Fund;
 public class FundDAO {
 	private List<Connection> connectionPool = new ArrayList<Connection>();	
 	private String jdbcDriver;
@@ -50,8 +53,8 @@ public class FundDAO {
 			con = getConnection();
 			
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (name, symbol) VALUES (?,?)");
-			pstmt.setString(1, fund.getFundName);
-			pstmt.setString(2, fund.getTicker());	
+			pstmt.setString(1, fund.getName());
+			pstmt.setString(2, fund.getSymbol());	
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
 			pstmt.close();
@@ -66,8 +69,42 @@ public class FundDAO {
 		}
 	}
 	
-	public Fund lookup(String name) throws MyDAOException{
-		//lookup method
+	public Fund lookup(int fund_id) throws MyDAOException{
+		Connection con = null;
+		try {
+			con = getConnection();
+
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM "
+					+ tableName + " WHERE fund_id=?");
+			pstmt.setInt(1, fund_id);
+			ResultSet rs = pstmt.executeQuery();
+
+			Fund fund;
+			if (!rs.next()) {
+				fund = null;
+			} else {
+				fund = new Fund();				
+				fund.setName(rs.getString("name"));
+				fund.setSymbol(rs.getString("symbol"));
+				
+			}
+
+			rs.close();
+			pstmt.close();
+			releaseConnection(con);
+			return fund;
+
+		} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
+		}
+		
 		
 		
 	}

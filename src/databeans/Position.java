@@ -4,30 +4,30 @@ public class Position {
 
 	private int customer_id = 0;
 	private int fund_id = 0;
-	private int shares = 0;
+	private double shares = 0;
 
 	public int getCustomer_id() {
 		return customer_id;
 	}
 	
-	public int getFundID() {
+	public int getFund_id() {
 		return fund_id;
 	}
 	
-	public int getShares() {
+	public double getShares() {
 		return shares;
 	}
 
 
-	public void setCustomID(int x) {
+	public void setCustomer_id(int x) {
 		customer_id = x;
 	}
 
-	public void setFundID(int x) {
+	public void setFund_id(int x) {
 		fund_id = x;
 	}
 	
-	public void setShares(int x) {
+	public void setShares(double x) {
 		shares = x;
 	}
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
+import databeans.Customer;
 import databeans.Employee;
 
 public class EmployeeDAO {
@@ -71,18 +72,107 @@ public class EmployeeDAO {
 		}
 	}
 	public Employee lookup(String username) throws MyDAOException{
-		//lookup method
+		Connection con = null;
+		try {
+			con = getConnection();
+
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM "
+					+ tableName + " WHERE username=?");
+			pstmt.setString(1, username);
+			ResultSet rs = pstmt.executeQuery();
+
+			Employee employee;
+			if (!rs.next()) {
+				employee = null;
+			} else {
+				employee = new Employee();				
+				employee.setUsername(rs.getString("username"));
+				employee.setFirstName(rs.getString("firstname"));
+				employee.setLastName(rs.getString("lastname"));
+			}
+
+			rs.close();
+			pstmt.close();
+			releaseConnection(con);
+			return employee;
+
+		} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
+		}
 		
 		
 	}
 	
 	public void setPassword(String username, String newPassword) throws MyDAOException{
-		//setPassword method
+		Connection con = null;		
+    	try {
+        	con = getConnection();
+        	
+        	
+            Statement stmt = con.createStatement();
+            PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET password=? WHERE username=?");
+            pstmt.setString(1, username);
+            pstmt.setString(2, newPassword);		
+			pstmt.executeUpdate();
+           
+            stmt.close();
+            releaseConnection(con);
+            
+        
+    	} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
+		}
 		
 		
 	}
 	public Employee[] getEmployees() throws MyDAOException {
-		// get Employee Collection
+		Connection con = null;
+    	try {
+        	con = getConnection();
+
+            Statement stmt = con.createStatement();
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM " + tableName + " ");
+        	
+        	ResultSet rs = pstmt.executeQuery();
+            
+            List<Employee> list = new ArrayList<Employee>();
+            while (rs.next()) {
+            	Employee employee = new Employee();
+            	employee.setUsername(rs.getString("username"));
+				employee.setFirstName(rs.getString("firstname"));
+				employee.setLastName(rs.getString("lastname"));
+            	
+            	
+            	list.add(employee);
+            }
+            stmt.close();
+            releaseConnection(con);
+            
+            return list.toArray(new Employee[list.size()]);
+    	} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
+		}
 		
 	}
 	private boolean tableExists() throws MyDAOException{

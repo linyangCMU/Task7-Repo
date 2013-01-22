@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
+import databeans.Fund;
+import databeans.History;
+
 public class HistoryDAO {
 	private List<Connection> connectionPool = new ArrayList<Connection>();	
 	private String jdbcDriver;
@@ -51,9 +54,10 @@ public class HistoryDAO {
 			con = getConnection();
 			
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (fund_id, price_date, price,) VALUES (?,?,?)");
-			pstmt.setInteger(1, history.getFundID());
-			pstmt.setDate(2, history.getPriceDate());
-			pstmt.setInteger(3, history.getPrice());					
+			pstmt.setInt(1, history.getId());
+			pstmt.setDate(2, history.getDate());
+			int int_price = (int) history.getPrice() * 100;
+			pstmt.setInt(3, int_price);					
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
 			pstmt.close();
@@ -68,14 +72,46 @@ public class HistoryDAO {
 		}
 	}
 	
-	public History lookup(int fund_id) throws MyDAOException {
-		// get history method
+	public History lookup(int fund_id, Date priceDate) throws MyDAOException {
+		Connection con = null;
+		try {
+			con = getConnection();
+
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM "
+					+ tableName + " WHERE fund_id=?, price_date=?");
+			pstmt.setInt(1, fund_id);
+			pstmt.setDate(2, priceDate);
+			ResultSet rs = pstmt.executeQuery();
+
+			History history;
+			if (!rs.next()) {
+				history = null;
+			} else {
+				history = new History();				
+				history.setId(rs.getInt("fund_id"));
+				history.setDate(rs.getDate("price_date"));
+				history.setPrice((double)rs.getInt("price")/100);
+				
+			}
+
+			rs.close();
+			pstmt.close();
+			releaseConnection(con);
+			return history;
+
+		} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
+		}
 		
 	}
-	public History[] lookupByDate(Date priceDate) throws MyDAOException {
-		// get history method
-		
-	}
+	
 	
 	private boolean tableExists() throws MyDAOException{
 		Connection con = null;
