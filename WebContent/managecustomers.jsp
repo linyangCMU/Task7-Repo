@@ -29,7 +29,7 @@
                     document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
                 }
             }
-            xmlhttp.open("GET","getcustomer.jsp?username="+str,true);
+            xmlhttp.open("GET","getcustomers.do?query="+str,true);
             xmlhttp.send();
         }
     </script>
@@ -73,7 +73,8 @@
                 <h2>Search for Customers</h2>
                 
                 <form action=""> 
-				<input type="text" name="customer" onkeyup="showCustomer(this.value)" onchange="showCustomer(this.value)"/>
+				<input class="searchinput" type="text" name="customer" placeholder="Type in username OR first name OR last name to search"
+				    onkeyup="showCustomer(this.value)" onchange="showCustomer(this.value)"/>
 				</form>
 				<br/>
 				<table class="tableone">
@@ -82,10 +83,13 @@
                             <th class="th3"> Username </th>
                             <th class="th3"> First Name </th>
                             <th class="th3"> Last Name </th> 
-                            <th class="th3"> First Name </th>
-                            <th class="th3"> Last Name </th>          
+                            <th class="th3"> City </th>
+                            <th class="th3"> State </th>          
                         </tr>
                     </thead>
+                    <tfoot>
+                    <tr><td colspan="5">Click ROW to view details for each account.</td></tr>
+                    </tfoot>
                     
                     <tbody>
 	                    <tr><td colspan="5">

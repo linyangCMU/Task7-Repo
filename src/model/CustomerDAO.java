@@ -132,7 +132,55 @@ public class CustomerDAO {
 
 	}
 
-	
+	public ArrayList<Customer> search(String query) throws MyDAOException {
+        Connection con = null;
+        try {
+            con = getConnection();
+            String sql = "SELECT * FROM " + tableName + 
+                         " WHERE username REGEXP ? " +
+                         " OR firstname REGEXP ? " +
+                         " OR lastname REGEXP ? ";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, query);
+            pstmt.setString(2, query);
+            pstmt.setString(3, query);
+            ResultSet rs = pstmt.executeQuery();
+
+            ArrayList<Customer> customers = new ArrayList<Customer>();
+            Customer customer;
+            while (rs.next()) {
+                customer = new Customer();
+                customer.setCustomerID(rs.getInt("customer_id"));
+                customer.setUsername(rs.getString("username"));
+                customer.setFirstName(rs.getString("firstname"));
+                customer.setLastName(rs.getString("lastname"));
+                customer.setAddr1(rs.getString("addr_line1"));
+                customer.setAddr2(rs.getString("addr_line2"));
+                customer.setCity(rs.getString("city"));
+                customer.setState(rs.getString("state"));
+                customer.setZip(rs.getString("zip"));
+                customer.setCash(rs.getInt("cash"));
+                
+                customers.add(customer);
+            }
+
+            rs.close();
+            pstmt.close();
+            releaseConnection(con);
+            return customers;
+
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+
+    }
 	 
 	 
 
