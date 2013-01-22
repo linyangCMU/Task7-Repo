@@ -1,6 +1,6 @@
 <jsp:include page="template-top.jsp" />
 <jsp:include page="error-list.jsp" />
-<jsp:include page="template-left.jsp" />
+<jsp:include page="template-left-emp.jsp" />
 
 <p style="font-size:medium">
 	Create Fund
