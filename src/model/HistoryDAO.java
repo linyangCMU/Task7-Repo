@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
-import databeans.Fund;
 import databeans.History;
 
 public class HistoryDAO {
@@ -112,6 +111,48 @@ public class HistoryDAO {
 		
 	}
 	
+	public String lookupLatestPriceAndDate(int fund_id, Date d ) throws MyDAOException {
+        Connection con = null;
+        try {
+            con = getConnection();
+
+            PreparedStatement pstmt = con.prepareStatement(
+                    "SELECT max(date), price FROM " + tableName + 
+                    " WHERE fund_id=?");
+            pstmt.setInt(1, fund_id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (!rs.next()) {
+                rs.close();
+                pstmt.close();
+                releaseConnection(con);
+                return null;
+            } else {
+                d.setTime(rs.getDate("max(date)").getTime());
+                double price = (double)rs.getInt("price")/100;
+                
+                rs.close();
+                pstmt.close();
+                releaseConnection(con);
+                
+                return String.format("%1$,.2f", price);
+            }
+
+            
+            
+
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+        
+    }
 	
 	private boolean tableExists() throws MyDAOException{
 		Connection con = null;

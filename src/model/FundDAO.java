@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
-import databeans.Employee;
 import databeans.Fund;
 public class FundDAO {
 	private List<Connection> connectionPool = new ArrayList<Connection>();	

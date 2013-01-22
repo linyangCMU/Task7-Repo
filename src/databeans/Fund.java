@@ -1,9 +1,13 @@
 package databeans;
 
+import java.sql.Date;
+
 public class Fund {
 	private int id = -1; // fund_id, primary key
 	private String name = null; // the full name for the fund
 	private String symbol = null; // the short name for the fund
+	private Date date; // the last update date for this fund
+	private String price; // the latest price for this fund and converted to String
 	
 	public int compareTo(Fund other) {
 		int c = name.compareTo(other.name);
@@ -22,10 +26,14 @@ public class Fund {
 	public String getName()      { return name;       }
 	public String getSymbol()    { return symbol;     }
 	public int    getId()        { return id;         }
+	public Date   getDate()      { return date;       }
+	public String getPrice()     { return price;      }
 	
 	public void setName(String a)    { name = a;   }
 	public void setSymbol(String a)  { symbol = a; }
 	public void setId(int a)         { id = a;     }
+	public void setDate(Date d)      { date = d;   }
+	public void setPrice(String p)   { price = p;  }
 	
 	public String toString() {
 		return "Fund("+getName()+","+getSymbol()+")";
