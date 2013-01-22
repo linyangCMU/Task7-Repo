@@ -36,15 +36,34 @@
     pstmt.setString(3,query);
     
     rs = pstmt.executeQuery();
+/*    
+    out.println("<table class='tableone' >");
+    out.println("<thead>");
+    out.println("   <tr>");
+    out.println("       <th class=\"th1\"> ID </th>");
+    out.println("       <th class=\"th2\"> Fund Name </th>");
+    out.println("       <th class=\"th3\"> Fund Symbol </th>");
+    out.println("       <th class=\"th4\"> Date </th>");
+    out.println("       <th class=\"th5\"> Price </th>");
+    out.println("   </tr>");
+    out.println("</thead>");
+   
+    pstmt = con.prepareStatement("select max(price_date) from task7_history");
+    ResultSet rss = pstmt.executeQuery();
     
-    out.println("<table class='mftable' >");
-    out.println("<tr>");
-    out.println("<th> Fund ID </th>");
-    out.println("<th> Fund Name </th>");
-    out.println("<th> Fund Symbol </th>");
-    out.println("<th> Date </th>");
-    out.println("<th> Price </th>");
-    out.println("</tr>");
+    if (rss.next()){
+        out.println("<tfoot>");
+        out.println("   <tr>");
+        out.println("   <td colspan=\"5\"> LAST UPDATE DATE: " + rss.getDate("max(price_date)") + "</td>");
+        out.println("   </tr>");
+        out.println("</tfoot>");
+    }
+    
+    out.println("<tbody>");
+    out.println("<tr><td colspan=\"5\">");
+    out.println("<div class=\"innerb\">");
+    out.println("   <table class=\"tabletwo\">");
+*/
     while (rs.next()) {        
         String fundId = rs.getString("fund_id");
         pstmt = con.prepareStatement("select max(price_date), price from task7_history where fund_id = ?");
@@ -52,21 +71,25 @@
         ResultSet rs2 = pstmt.executeQuery();
         
         out.println("<tr>");
-        out.println("<td>"+rs.getString("fund_id") + "</td>");
-        out.println("<td>"+rs.getString("name") + "</td>");
-        out.println("<td>"+rs.getString("symbol") + "</td>");
+        out.println("<td class=\"td1\">"+rs.getString("fund_id") + "</td>");
+        out.println("<td class=\"td2\">"+rs.getString("name") + "</td>");
+        out.println("<td class=\"td3\">"+rs.getString("symbol") + "</td>");
         if(rs2.next()){
-            out.println("<td>"+rs2.getDate("max(price_date)") + "</td>");
-            out.println("<td>"+rs2.getString("price") + "</td>");
+            out.println("<td class=\"td4\">"+rs2.getDate("max(price_date)") + "</td>");
+            out.println("<td class=\"td5\">"+rs2.getString("price") + "</td>");
         } else {
-            out.println("<td>"+ "" + "</td>");
-            out.println("<td>"+ "" + "</td>");
+            out.println("<td class=\"td4\">"+ "" + "</td>");
+            out.println("<td class=\"td5\">"+ "" + "</td>");
         }
         out.println("</tr>");
     }
+/*
+    out.println("   </table>");
+    out.println("</div>");
+    out.println("</td></tr>");
     
-    
-    out.println("</table>");
+    out.println("</tbody>");
+*/    
     
     rs.close();
     

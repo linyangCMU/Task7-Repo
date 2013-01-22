@@ -1,9 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title> Mutual Fund Management </title>
     <link rel="stylesheet" type="text/css" href="style/main.css" />
+    <link rel="stylesheet" type="text/css" href="style/table.css" />
     
     <script >
         function showCustomer(str) {
@@ -25,7 +28,7 @@
                     document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
                 }
             }
-            xmlhttp.open("GET","getCustomer.jsp?username="+str,true);
+            xmlhttp.open("GET","getcustomer.jsp?username="+str,true);
             xmlhttp.send();
         }
     </script>
@@ -66,18 +69,38 @@
             </div>
             
             <div id="content">
-                <h2>Customer List</h2>
+                <h2>Search for Customers</h2>
                 
                 <form action=""> 
 				<input type="text" name="customer" onkeyup="showCustomer(this.value)" onchange="showCustomer(this.value)"/>
 				</form>
 				<br/>
-				<div id="txtHint">Customer info will be listed here...</div>
+				<table class="tableone">
+                    <thead>
+                        <tr>
+                            <th class="th3"> Username </th>
+                            <th class="th3"> First Name </th>
+                            <th class="th3"> Last Name </th> 
+                            <th class="th3"> First Name </th>
+                            <th class="th3"> Last Name </th>          
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+	                    <tr><td colspan="5">
+	                    <div class="innerb">
+	                    <table class="tabletwo" id="txtHint">
+	                    
+	                    </table>
+	                    </div>
+	                    </td></tr>
+                    </tbody>
                 
+                </table>
             </div>
             
             <div id="footer">
-                Copyright © Mutual Fund Application by Team
+                Copyright Â© Mutual Fund Application by Team
                 e-Motion | CMU MSIT ebusiness Task7 2013
             </div>
         </div>
