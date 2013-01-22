@@ -39,17 +39,17 @@ public class Cus_GetFundsAction extends Action {
             Cus_FundSearchForm form = formBeanFactory.create(request);
             request.setAttribute("form",form);
 
-            
+          
             if (!form.isPresent()) {
-                return "getfunds.jsp";
+                return "search-fund-cus.jsp";
             }
 
             // Any validation errors?
             errors.addAll(form.getValidationErrors());
             if (errors.size() != 0) {
-                return "getfunds.jsp";
+                return "search-fund-cus.jsp";
             }
-            
+            System.out.print("123");
             // Look up the fund
             ArrayList<Fund> funds = fundDAO.lookup(form.getQuery());
             
@@ -65,7 +65,7 @@ public class Cus_GetFundsAction extends Action {
             session.setAttribute("funds",funds);
             
             String webapp = request.getContextPath();
-            return webapp + "/getfunds.jsp";
+            return webapp + "/get-fund-cus.jsp";
         } catch (MyDAOException e) {
             System.out.println("DAO error");
             errors.add(e.getMessage());

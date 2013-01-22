@@ -103,6 +103,7 @@ public class CustomerDAO {
 			} else {
 				customer = new Customer();
 				customer.setCustomerID(rs.getInt("customer_id"));
+				customer.setPassword(rs.getString("password"));
 				customer.setUsername(rs.getString("username"));
 				customer.setFirstName(rs.getString("firstname"));
 				customer.setLastName(rs.getString("lastname"));

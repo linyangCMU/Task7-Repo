@@ -25,7 +25,7 @@ public class Cus_LoginAction extends Action {
 		customerDAO = model.getCustomerDAO();
 	}
 	
-	public String getName() { return "login2.do"; }
+	public String getName() { return "customer-login.do"; }
 	
     public String perform(HttpServletRequest request) {
     	List<String> errors = new ArrayList<String>();
@@ -37,40 +37,38 @@ public class Cus_LoginAction extends Action {
 
 	        
 	        if (!form.isPresent()) {
-	        	System.out.println("haha1");
-	            return "login2.html";
+	        	
+	            return "login-cus.jsp";
 	        }
 
 	        // Any validation errors?
 	        errors.addAll(form.getValidationErrors());
 	        if (errors.size() != 0) {
-	        	System.out.println(errors.toString());
-	            return "login2.html";
+	        	
+	            return "login-cus.jsp";
 	        }
 	        
 	        // Look up the user
-	        Customer user = customerDAO.lookup(form.getUserName());
-	        System.out.println("haha");
+	        Customer customer = customerDAO.lookup(form.getUserName());
 	        
-	        if (user == null) {
-	            errors.add("User Name not found");
-	            System.out.println("not found");
-	            return "login2.html";
+	        if (customer == null) {
+	            errors.add("User Name not found");	           
+	            return "login-cus.jsp";
 	        }
-	        System.out.println(user.getCity());
 	        // Check the password
-	        if (!user.checkPassword(form.getPassword())) {
+	        if (!customer.checkPassword(form.getPassword())) {
 	            errors.add("Incorrect password");
-	            return "login2.html";
+	            return "login-cus.jsp";
 	        }
 	
 	        // Attach (this copy of) the user bean to the session
 	        HttpSession session = request.getSession();
-	        session.setAttribute("user",user);
+	        session.setAttribute("customer",customer);
 	
 	      
 			String webapp = request.getContextPath();
-			return webapp + "/viewPortafolio.html";
+			System.out.println("getfunds.do");
+			return webapp + "/getfunds.do";
         } catch (MyDAOException e) {
         	errors.add(e.getMessage());
         	return "error.jsp";

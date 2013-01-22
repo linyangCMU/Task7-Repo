@@ -40,13 +40,13 @@ public class Emp_GetCustomersAction extends Action {
 
             
             if (!form.isPresent()) {
-                return "getcustomers.jsp";
+                return "manage-customers-emp.jsp";
             }
-
+            
             // Any validation errors?
             errors.addAll(form.getValidationErrors());
             if (errors.size() != 0) {
-                return "getcustomers.jsp";
+                return "get-cus-emp.jsp";
             }
             
             // Look up the fund
@@ -57,7 +57,7 @@ public class Emp_GetCustomersAction extends Action {
             session.setAttribute("customers",customers);
             
             String webapp = request.getContextPath();
-            return webapp + "/getcustomers.jsp";
+            return webapp + "/get-cus-emp.jsp";
         } catch (MyDAOException e) {
             System.out.println("DAO error");
             errors.add(e.getMessage());

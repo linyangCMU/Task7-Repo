@@ -87,6 +87,7 @@ public class EmployeeDAO {
 			} else {
 				employee = new Employee();				
 				employee.setUsername(rs.getString("username"));
+				employee.setPassword(rs.getString("password"));
 				employee.setFirstName(rs.getString("firstname"));
 				employee.setLastName(rs.getString("lastname"));
 			}
