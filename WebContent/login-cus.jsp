@@ -28,14 +28,14 @@
                 <p align="left">
 	            <c:choose>
 	            	<c:when test="${ (empty user) }">
-						<span class="menu-item"><a href="login.do">Login</a></span><br/>
+						<span class="menu-item"><a href="customer-login.do">Login</a></span><br/>
 					</c:when>
 					<c:otherwise>
 						<span class="menu-head">${user.firstName} ${user.lastName}</span><br/>
 						<span class="menu-item"><a href="viewPortafolio.do">View Account</a></span><br/>
 						<span class="menu-item"><a href="ChangePwdA.do">Change password</a></span><br/>
 						<span class="menu-item"><a href="BuyFund.do">Buy Fund</a></span><br/>
-						<span class="menu-item"><a href="SellFund.do">sell Fund</a></span><br/>
+						<span class="menu-item"><a href="SellFund.do">Sell Fund</a></span><br/>
 						<span class="menu-item"><a href="RequestCheck.do">Request Check</a></span><br/>
 						<span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span><br/>
 						<span class="menu-item"><a href="researchFund.do">Research Fund</a></span><br/>
@@ -48,11 +48,11 @@
     
          <div id="content">
       <h2> Customer Login </h2>
-      <form method="post" action="login2.do">
+      <form method="post" action="customer-login.do">
         <table>
           <tr>
             <td> Username: </td>
-            <td><input type="text" name="username" value=""/></td>
+            <td><input type="text" name="userName" value=""/></td>
           </tr>
           <tr>
             <td> Password: </td>

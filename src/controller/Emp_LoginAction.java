@@ -25,7 +25,7 @@ public class Emp_LoginAction extends Action {
 		employeeDAO = model.getEmployeeDAO();
 	}
 	
-	public String getName() { return "login1.do"; }
+	public String getName() { return "employee-login.do"; }
 	
     public String perform(HttpServletRequest request) {
     	List<String> errors = new ArrayList<String>();
@@ -37,37 +37,37 @@ public class Emp_LoginAction extends Action {
 
 	        
 	        if (!form.isPresent()) {
-	            return "login1.html";
+	            return "login-emp.jsp";
 	        }
 
 	        // Any validation errors?
 	        errors.addAll(form.getValidationErrors());
 	        if (errors.size() != 0) {
-	        	System.out.println(errors.toString());
-	            return "login1.html";
+	        	
+	            return "login-emp.jsp";
 	        }
 	        
 	        // Look up the user
-	        Employee user = employeeDAO.lookup(form.getUserName());
+	        Employee employee = employeeDAO.lookup(form.getUserName());
 	        
-	        if (user == null) {
+	        if (employee == null) {
 	            errors.add("User Name not found");
-	            return "login1.html";
+	            return "login-emp.jsp";
 	        }
 
 	        // Check the password
-	        if (!user.checkPassword(form.getPassword())) {
+	        if (!employee.checkPassword(form.getPassword())) {
 	            errors.add("Incorrect password");
-	            return "login1.html";
+	            return "login-emp.jsp";
 	        }
 	
 	        // Attach (this copy of) the user bean to the session
 	        HttpSession session = request.getSession();
-	        session.setAttribute("user",user);
+	        session.setAttribute("employee",employee);
 	
 	      
 			String webapp = request.getContextPath();
-			return webapp + "/viewCustomerList.html";
+			return webapp + "/getcustomers.do";
         } catch (MyDAOException e) {
         	errors.add(e.getMessage());
         	return "error.jsp";

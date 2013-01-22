@@ -46,7 +46,7 @@ public class Cus_ResearchFundAction extends Action {
             // Any validation errors?
             errors.addAll(form.getValidationErrors());
             if (errors.size() != 0) {
-                return "getfunddetail.jsp";
+                return "get-funddetail-cus.jsp";
             }
             
             // Look up the fund
@@ -59,7 +59,7 @@ public class Cus_ResearchFundAction extends Action {
             session.setAttribute("histories", histories);
             
             String webapp = request.getContextPath();
-            return webapp + "/getfunddetail.jsp";
+            return webapp + "/get-funddetail-cus.jsp";
         } catch (MyDAOException e) {
             System.out.println("DAO error");
             errors.add(e.getMessage());
