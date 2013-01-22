@@ -10,7 +10,7 @@ public class Position {
 		return customer_id;
 	}
 	
-	public int getFundID() {
+	public int getFund_id() {
 		return fund_id;
 	}
 	
@@ -19,11 +19,11 @@ public class Position {
 	}
 
 
-	public void setCustomerID(int x) {
+	public void setCustomer_id(int x) {
 		customer_id = x;
 	}
 
-	public void setFundID(int x) {
+	public void setFund_id(int x) {
 		fund_id = x;
 	}
 	

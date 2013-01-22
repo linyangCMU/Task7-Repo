@@ -7,7 +7,7 @@ public class Transaction {
 	private int transaction_id = 0;
 	private int customer_id = 0;
 	private int fund_id = 0;
-	private int shares = 0;
+	private double shares = 0.0;
 	private Date execute_date = null;
 	private String transaction_type = null;
 	private int amount = 0;
@@ -30,10 +30,10 @@ public class Transaction {
 	public void setFund_id(int fund_id) {
 		this.fund_id = fund_id;
 	}
-	public int getShares() {
+	public double getShares() {
 		return shares;
 	}
-	public void setShares(int shares) {
+	public void setShares(double shares) {
 		this.shares = shares;
 	}
 	public Date getExecute_date() {

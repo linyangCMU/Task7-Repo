@@ -56,7 +56,7 @@ public class PositionDAO {
 			
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (customer_id, fund_id, shares) VALUES (?,?,?)");
 			pstmt.setInt(1, position.getCustomer_id());
-			pstmt.setInt(2, position.getFundID());
+			pstmt.setInt(2, position.getFund_id());
 			pstmt.setInt(3, (int)position.getShares() * 1000);		
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
@@ -88,8 +88,8 @@ public class PositionDAO {
 				position = null;
 			} else {
 				position = new Position();				
-				position.setCustomerID(rs.getInt("customer_id"));
-				position.setFundID(rs.getInt("fund_id"));
+				position.setCustomer_id(rs.getInt("customer_id"));
+				position.setFund_id(rs.getInt("fund_id"));
 				position.setShares((double)rs.getInt("shares")/1000);
 				
 			}
