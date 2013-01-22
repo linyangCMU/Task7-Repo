@@ -181,7 +181,32 @@ public class CustomerDAO {
         }
 
     }
-	 
+	
+	public void updateCash(Customer customer) throws MyDAOException {
+        Connection con = null;
+        try {
+            con = getConnection();
+            
+            PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET cash=? WHERE username=?");
+            pstmt.setDouble(1, customer.getCash());
+            pstmt.setString(2, customer.getUsername());
+            pstmt.executeUpdate();
+            
+            pstmt.close();
+            releaseConnection(con);
+            
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+
+    }
 	 
 
 	public void setPassword(String username, String password) throws MyDAOException {
