@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -30,19 +29,10 @@
                     document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
                 }
             }
-            xmlhttp.open("GET","getfund.jsp?fund="+str,true);
+            xmlhttp.open("POST","getfunds.do?query="+str,true);
             xmlhttp.send();
         }
-    </script>
-<%
-	Connection con;
-	ResultSet rs = null;
-	String url = "jdbc:mysql://localhost:3306/task7";
-	
-	String query = (String) request.getParameter("fund");
-	Class.forName("com.mysql.jdbc.Driver").newInstance();
-	con = DriverManager.getConnection(url, "", ""); 
-%>    
+    </script>   
 </head>
 
 <body>
@@ -86,20 +76,6 @@
 	                        <th class="th5"> Price </th>
 	                    </tr>
 	                </thead>
-	                <%
-	                
-	                 
-	                PreparedStatement pstmt = con.prepareStatement("select max(price_date) from task7_history");
-	                rs = pstmt.executeQuery();
-	                if (rs.next()){
-	                    out.println("<tfoot>");
-	                    out.println("   <tr>");
-	                    out.println("   <td colspan=\"5\"> LAST UPDATE DATE: " + rs.getDate("max(price_date)") + "</td>");
-	                    out.println("   </tr>");
-	                    out.println("</tfoot>");
-	                }
-	                
-	                %>
 	                
 	                <tbody>
                     <tr><td colspan="5">

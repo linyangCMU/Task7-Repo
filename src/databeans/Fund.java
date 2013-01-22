@@ -27,7 +27,7 @@ public class Fund {
 	public String getSymbol()    { return symbol;     }
 	public int    getId()        { return id;         }
 	public Date   getDate()      { return date;       }
-	public String getPrice()     { return price;      }
+	public String getPrice()     { return "$  " + price;      }
 	
 	public void setName(String a)    { name = a;   }
 	public void setSymbol(String a)  { symbol = a; }

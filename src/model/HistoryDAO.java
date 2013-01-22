@@ -117,18 +117,18 @@ public class HistoryDAO {
             con = getConnection();
 
             PreparedStatement pstmt = con.prepareStatement(
-                    "SELECT max(date), price FROM " + tableName + 
+                    "SELECT max(price_date), price FROM " + tableName + 
                     " WHERE fund_id=?");
             pstmt.setInt(1, fund_id);
             ResultSet rs = pstmt.executeQuery();
-
             if (!rs.next()) {
                 rs.close();
                 pstmt.close();
                 releaseConnection(con);
                 return null;
             } else {
-                d.setTime(rs.getDate("max(date)").getTime());
+                System.out.println(rs.getDate("max(price_date)").getTime());
+                d.setTime(rs.getDate("max(price_date)").getTime());
                 double price = (double)rs.getInt("price")/100;
                 
                 rs.close();
