@@ -37,14 +37,13 @@ public class Cus_LoginAction extends Action {
 
 	        
 	        if (!form.isPresent()) {
-	        	
 	            return "login-cus.jsp";
 	        }
 
 	        // Any validation errors?
 	        errors.addAll(form.getValidationErrors());
+	        
 	        if (errors.size() != 0) {
-	        	
 	            return "login-cus.jsp";
 	        }
 	        
@@ -55,6 +54,7 @@ public class Cus_LoginAction extends Action {
 	            errors.add("User Name not found");	           
 	            return "login-cus.jsp";
 	        }
+	        
 	        // Check the password
 	        if (!customer.checkPassword(form.getPassword())) {
 	            errors.add("Incorrect password");
@@ -67,7 +67,6 @@ public class Cus_LoginAction extends Action {
 	
 	      
 			String webapp = request.getContextPath();
-			System.out.println("getfunds.do");
 			return webapp + "/getfunds.do";
         } catch (MyDAOException e) {
         	errors.add(e.getMessage());

@@ -28,7 +28,7 @@ public class Cus_RequestCheckAction extends Action {
         customerDAO = model.getCustomerDAO();
     }
     
-    public String getName() { return "depositcheck.do"; }
+    public String getName() { return "requestcheck.do"; }
     
     public String perform(HttpServletRequest request) {
         List<String> errors = new ArrayList<String>();
@@ -37,16 +37,24 @@ public class Cus_RequestCheckAction extends Action {
         try {
             Cus_RequestCheckForm form = formBeanFactory.create(request);
             request.setAttribute("form",form);
-
+            
+            // Look up the customer
+            Customer customer = (Customer) request.getSession(false).getAttribute("customer");
+            
+            if (customer == null) {
+                return "login-cus.jsp";
+            }
+            
+            double balance = customerDAO.getCash(customer.getCustomerID());
+            request.setAttribute("cash", balance);
             
             if (!form.isPresent()) {
                 return "request-check-cus.jsp";
             }
             
             
-         // Look up the customer
-            Customer customer = (Customer) request.getSession(false).getAttribute("Customer");
-            double balance = customerDAO.getCash();
+            // Any validation errors?
+            errors.addAll(form.getValidationErrors());
             
             double withdrawAmount = Double.parseDouble(form.getWithdraw());
             
@@ -54,29 +62,20 @@ public class Cus_RequestCheckAction extends Action {
                 errors.add("Withdraw amount cannot be greater than your current balance!");
             }
             
-            // Any validation errors?
-            errors.addAll(form.getValidationErrors());
             if (errors.size() != 0) {
                 return "request-check-cus.jsp";
             }
             
-            customer.setCash(balance- withdrawAmount);
+            balance = balance - withdrawAmount;
+            customer.setCash(balance);
             
             customerDAO.updateCash(customer);
-            /*
-            Transaction transaction = new Transaction();
-            transaction.setCustomer_id(customer.getCustomerID());
-            transaction.setAmount((int)amount*1000);
-            transaction.setDate(execute_date);
-            transaction.set
-            transactionDAO.create(transaction);
-            */
-            // Attach (this copy of) the customer object to the session
-            HttpSession session = request.getSession();
-            session.setAttribute("Customer",customer);
+            
+            request.setAttribute("cash", balance);
             
             String webapp = request.getContextPath();
-            return webapp + "/view-customer-acct-emp.jsp";
+            return webapp + "/requestcheck.do";
+            
         } catch (MyDAOException e) {
             errors.add(e.getMessage());
             return "error.jsp";

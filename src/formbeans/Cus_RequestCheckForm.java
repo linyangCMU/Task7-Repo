@@ -6,10 +6,13 @@ import java.util.List;
 import org.mybeans.form.FormBean;
 
 public class Cus_RequestCheckForm extends FormBean {
-	private String withdraw;
+	private String userName;
+    private String withdraw;
 	
+    public String getUserName()   { return userName;   }
 	public String getWithdraw()   { return withdraw;   }
 	
+	public void setUserName(String s)   { userName = trimAndConvert(s,"<>\"");    } 
 	public void setWithdraw(String s)   { withdraw  = s.trim();                   }
 
 	public List<String> getValidationErrors() {

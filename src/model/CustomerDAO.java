@@ -189,7 +189,7 @@ public class CustomerDAO {
             con = getConnection();
             
             PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET cash=? WHERE username=?");
-            pstmt.setInt(1, (int)customer.getCash()*1000);
+            pstmt.setInt(1, (int)(customer.getCash()*100));
             pstmt.setString(2, customer.getUsername());
             pstmt.executeUpdate();
             
@@ -208,8 +208,44 @@ public class CustomerDAO {
         }
 
     }
-	 
-
+	
+	/* 
+	 * Get the cash balance by providing the customer's id
+	 * Author: Yuan Cao
+	 */
+	public double getCash(int customerId) throws MyDAOException {
+        Connection con = null;
+        try {
+            con = getConnection();
+            
+            String sql = "SELECT cash FROM "  + tableName + " WHERE customer_id=?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, customerId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            double cash = 0;
+            if (rs.next()) {
+                cash = rs.getInt("cash") * 1.0 / 100;
+            } else {
+                cash = 0;
+            }
+            rs.close();
+            pstmt.close();
+            releaseConnection(con);
+            
+            return cash;
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+    }
+	
 	public void setPassword(String username, String password) throws MyDAOException {
 		Connection con = null;		
     	try {

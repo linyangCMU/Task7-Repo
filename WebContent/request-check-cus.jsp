@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,61 +10,61 @@
 <body>
 
 <div id="container">
-  <div id="header">
-    <h1> Carnegie Financial Service - Mutual Fund Management </h1>
-  </div>
-  <div id="navigation">
-    <ul>
-      <li><a href="viewPortafolio.do">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Services</a></li>
-      <li><a href="#">Contact us</a></li>
-    </ul>
-  </div>
-  <div id="content-container">
-    <div id="section-navigation">
-    	<ul>
-              
-
-						<li><span class="menu-item"><a href="login.do">Change password</a></span></li>
-						<li><span class="menu-item"><a href="buyFund.do">Buy Fund</a></span></li>
-						<li><span class="menu-item"><a href="sellFund.do">sell Fund</a></span></li>
-						<li><span class="menu-item"><a href="RequestCheck.do">Request Check</a></span></li>
-						<li><span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span></li>
-						<li><span class="menu-item"><a href="viewPortafolio.do">View Account</a></span></li>
-						<li><span class="menu-item"><a href="researchfund.do">Research Fund</a></span></li>
-						<li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
-			
-		</ul>
-          <h2> Request Check</h2>
-      <p>
-      <form method="post" action="requestCheck.do">
-        <table>
-          <tr>
-            <td> Current Balance: $</td>
-             <td>    
-                <%
-      			double cash = (double) request.getAttribute("cash");
-      			out.println(cash);
-      			%>
-      		</td>
-          </tr>
-          <tr>
-            <td> Withdraw Amount: </td>
-            <td><input type="text" name="requestCheck" value=""/></td>
-          </tr>
-          <tr>
-            <td colspan="2" align="center"><input type="submit" name="button" value="Submit"/></td>
-          </tr>
-        </table>
-      </form>
-      </p>
-       <div id="aside">
-      <h3> Welcome to CFS- Mutual Fund Management </h3>
-      <p> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan. </p>
+    <div id="header">
+        <h1> Carnegie Financial Service - Mutual Fund Management </h1>
     </div>
-    <div id="footer"> Copyright © Mutual Fund Application by Team e-Motion | CMU MSIT ebusiness Task7 2013 </div>
-  </div>
+    <div id="navigation">
+        <ul>
+            <li><a href="viewPortafolio.do">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact us</a></li>
+        </ul>
+    </div>
+    <div id="content-container">
+        <div id="section-navigation">
+            <ul>
+                <li><span class="menu-item"><a href="login.do">Change password</a></span></li>
+                <li><span class="menu-item"><a href="buyFund.do">Buy Fund</a></span></li>
+                <li><span class="menu-item"><a href="sellFund.do">sell Fund</a></span></li>
+                <li><span class="menu-item"><a href="RequestCheck.do">Request Check</a></span></li>
+                <li><span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span></li>
+                <li><span class="menu-item"><a href="viewPortafolio.do">View Account</a></span></li>
+                <li><span class="menu-item"><a href="researchfund.do">Research Fund</a></span></li>
+                <li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h2> Request Check</h2>
+            <form method="post" action="requestcheck.do">
+                <table>
+                    <tr>
+                        <td> Current Balance: $</td>
+                        <td>    
+                        <%
+	                        Double cash = (Double) request.getAttribute("cash");
+	                        if (cash!=null)
+	                            out.println(cash);
+                        %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> Withdraw Amount: </td>
+                        <td><input type="text" name="withdraw" value=""/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center"><input type="submit" name="button" value="Submit"/></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="aside">
+            <h3> Welcome to CFS- Mutual Fund Management </h3>
+            <p> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan. </p>
+        </div>
+        <div id="footer"> Copyright © Mutual Fund Application by Team e-Motion | CMU MSIT ebusiness Task7 2013 </div>
+    </div>
 </div>
+
 </body>
 </html>
