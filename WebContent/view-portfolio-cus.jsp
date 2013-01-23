@@ -42,100 +42,61 @@
         </div>
         <div class="content">
             <h2> Customer Account </h2>
-            <form method="post" action="viewPortafolio.do">
-                <table>
-                    <tr>
-                        <td> <b>Name</b> </td>
-                        <td>
-				            <%
-				            Customer customer = (Customer) session.getAttribute("customer");
-				            if(customer==null){
-				                
-				            }
-				            out.println(customer.getFirstName());
-				            out.println(customer.getLastName());
-				            
-				            %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> <b>Address</b> </td>
-                        <td>
-				            <%
-				            out.println(customer.getAddrL1());
-				            %>
-                        </td>
-                        <td>
-				            <%
-				            out.println(customer.getAddrL2());
-				            %>
-				        </td>
-			            <td>
-				            <%
-				            out.println(customer.getCity());
-				            %>
-			            </td>
-			            <td>
-				            <%
-				            out.println(customer.getState());
-				            %>
-			            </td>
-			            <td>
-				            <%
-				            out.println(customer.getZip());
-				            %>
-			            </td>
-                    </tr>
-                    <tr>
-                        <td> <b>Last Trading Date</b> </td>
-			            <td>
-			            <%= (Date) session.getAttribute("lastExecuteDate") %>
-			            	
-			            </td>
-					</tr>
-					<tr>
-					   <td> <b>Cash Balance</b> </td>
-					   <td> 
-					       <%
-					       out.println(customer.getCash());
-					       %>
-					   </td>
-					</tr>
-                </table>
-            </form>
-      <form method="post" action="viewPortafolio.do">
-        <table>
-          <tr>
-            <td> <b>Fund Name</b> </td>
-            <td> <b>Share Amount</b> </td>
-            <td> <b>Value per Share</b> </td>
-            <td> <b>Total Value</b> </td>
-          </tr>
-          <%
+            <%
+				Customer customer = (Customer) session.getAttribute("customer");
+				if(customer==null){
+				    return;
+			    }
+		    %>
+            <table>
+                <tr>
+                    <td> <b>Name</b> </td>
+                    <td><%=customer.getFirstName()%> <%=customer.getLastName()%></td>
+                </tr>
+                <tr>
+                    <td> <b>Address</b> </td>
+                    <td><%=customer.getAddrL1()%></td>
+                    <td><%=customer.getAddrL2()%></td>
+					<td><%=customer.getCity()%></td>
+					<td><%=customer.getState()%> </td>
+					<td><%=customer.getZip()%></td>
+                </tr>
+                <tr>
+                    <td> <b>Last Trading Date</b> </td>
+                    <td><%= (Date) session.getAttribute("lastExecuteDate") %></td>
+                </tr>
+                <tr>
+					<td> <b>Cash Balance</b> </td>
+					<td> <%=customer.getCash()%></td>
+				</tr>
+            </table>
+            <table>
+				<tr>
+					<td> <b>Fund Name</b> </td>
+					<td> <b>Share Amount</b> </td>
+					<td> <b>Value per Share</b> </td>
+					<td> <b>Total Value</b> </td>
+				</tr>
+<%
           ArrayList<Portfolio> portfolios = (ArrayList<Portfolio>) request.getAttribute("portfolios");
           if(portfolios != null){
         	  for(Portfolio portfolio:portfolios){
-            	  out.println("<td>");
-            	  out.println(portfolio.getFundName());
-            	  out.println("</td><td>");
-            	  out.println(portfolio.getShares());
-            	  out.println("</td><td>");
-            	  out.println(portfolio.getPrice());
-            	  out.println("</td><td>");
-            	  out.println(portfolio.getTotal());
-            	  out.println("</td>");	
+%>
+                <tr>
+                    <td> <%=portfolio.getFundName() %> </td>
+                    <td> <%=portfolio.getShares() %> </td>
+                    <td> <%=portfolio.getPrice() %> </td>
+                    <td> <%=portfolio.getTotal() %> </td>
+                </tr>
+<%
         	  }
           }
-          %>
-          </tr>
-        </table>
-      </form>
-             <div id="aside">
-      <h3> Welcome to CFS- Mutual Fund Management </h3>
-      <p> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan. </p>
+%>
+            </table>
+        </div>
+        
+        <div id="footer"> Copyright © Mutual Fund Application by Team e-Motion | CMU MSIT ebusiness Task7 2013 </div>
     </div>
-    <div id="footer"> Copyright © Mutual Fund Application by Team e-Motion | CMU MSIT ebusiness Task7 2013 </div>
-  </div>
 </div>
 </body>
 </html>
