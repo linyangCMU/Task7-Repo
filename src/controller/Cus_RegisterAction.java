@@ -25,8 +25,7 @@ public class Cus_RegisterAction extends Action {
 		CustomerDAO = model.getCustomerDAO();
 	}
 
-	public String getName() { return "login2.do"; }
-
+	public String getName() { return "create-customer-acct.do"; }
     public String perform(HttpServletRequest request) {
         List<String> errors = new ArrayList<String>();
         request.setAttribute("errors",errors);
@@ -37,15 +36,15 @@ public class Cus_RegisterAction extends Action {
 	
 	        // If no params were passed, return with no errors so that the form will be
 	        // presented (we assume for the first time).
-	        if (!form.isPresent()) {
-	            return "createaccountA.html";
-	        }
+//	        if (!form.isPresent()) {
+//	            return "create-acct-cus.jsp";
+//	        }
 	
 	        // Any validation errors?
 	        errors.addAll(form.getValidationErrors());
 	        if (errors.size() != 0) {
 	        	System.out.println(errors.toString());
-	            return "createaccountA.html";
+	            return "create-acct-cus.jsp";
 	        }
 	        System.out.println("hahaha");
 	        // Create the user bean
@@ -72,13 +71,15 @@ public class Cus_RegisterAction extends Action {
 	        
 	        // If redirectTo is null, redirect to the "manage" action
 			String webapp = request.getContextPath();
-			return webapp + "/viewPortafolio.html";
-        } catch (MyDAOException e) {
+			System.out.println("getfunds.do");
+
+			return webapp + "//getfunds.do";        
+		} catch (MyDAOException e) {
         	errors.add(e.getMessage());
-        	return "register.jsp";
+        	return "error.jsp";
         } catch (FormBeanException e) {
         	errors.add(e.getMessage());
-        	return "register.jsp";
+        	return "error.jsp";
         }
     }
 }

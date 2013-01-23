@@ -3,7 +3,7 @@
 <jsp:include page="template-left-emp.jsp" />
 
 <p style="font-size:medium">
-	Create Employee Account
+	Create Customer Account
 </p>
 <p>
 	<form method="post" action="create-customer-acct.do">
@@ -29,12 +29,12 @@
 				<td><input type="password" name="confirmPassword" value=""/></td>
 			</tr>
 			<tr>
-				<td> Address Line1: </td>
-				<td><input type="text" name="address1" value="${form.addr1}"/></td>
+<%-- 				<td> Address Line1: </td>
+				<td><input type="text" name="addr1" value="${form.addr1}"/></td>
 			</tr>
 			<tr>
 				<td> Address Line2: </td>
-				<td><input type="text" name="address2" value="${form.addr2}"/></td>
+				<td><input type="text" name="addr2" value="${form.addr2}"/></td>
 			</tr>
 			<tr>
 				<td> City: </td>
@@ -47,7 +47,7 @@
 			<tr>
 				<td> Zip: </td>
 				<td><input type="text" name="zip" value="${form.zip}"/></td>
-			</tr>
+			</tr> --%>
 			<tr>
 				<td colspan="2" align="center">
 					<input type="submit" name="button" value="Create Account"/>

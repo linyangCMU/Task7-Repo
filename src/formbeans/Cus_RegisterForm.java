@@ -10,7 +10,7 @@ public class Cus_RegisterForm extends FormBean {
 	private String lastName;
 	private String userName;
 	private String password;
-	private String confirm ;
+	private String confirmPassword ;
 	private String addr1;
 	private String addr2;
 	private String city;
@@ -21,7 +21,7 @@ public class Cus_RegisterForm extends FormBean {
 	public String getLastName()  { return lastName;  }
 	public String getUserName()  { return userName;  }
 	public String getPassword()  { return password;  }
-	public String getConfirm()   { return confirm;   }
+	public String getConfirm()   { return confirmPassword;   }
 	public String getAddr1()    { return addr1;    }
 	public String getAddr2()    { return addr2;    }
 	public String getCity()      { return city;      }
@@ -32,7 +32,7 @@ public class Cus_RegisterForm extends FormBean {
 	public void setLastName(String s)  { lastName  = trimAndConvert(s,"<>\"");  }
 	public void setUserName(String s)  { userName  = trimAndConvert(s,"<>\"");  }
 	public void setPassword(String s)  { password  = s.trim();                  }
-	public void setConfirm(String s)   { confirm   = s.trim();                  }
+	public void setConfirm(String s)   { confirmPassword   = s.trim();                  }
 	
 	public void setAddr1(String addr1) {
 		this.addr1 = addr1.trim();
@@ -70,7 +70,7 @@ public class Cus_RegisterForm extends FormBean {
 			errors.add("Password is required");
 		}
 
-		if (confirm == null || confirm.length() == 0) {
+		if (confirmPassword == null || confirmPassword.length() == 0) {
 			errors.add("Confirm Password is required");
 		}
 		
@@ -78,7 +78,7 @@ public class Cus_RegisterForm extends FormBean {
 			return errors;
 		}
 		
-		if (!password.equals(confirm)) {
+		if (!password.equals(confirmPassword)) {
 			errors.add("Passwords are not the same");
 		}
 		

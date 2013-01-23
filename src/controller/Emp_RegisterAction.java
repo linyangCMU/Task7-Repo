@@ -25,7 +25,7 @@ public class Emp_RegisterAction extends Action {
 		employeeDAO = model.getEmployeeDAO();
 	}
 
-	public String getName() { return "register1.do"; } //register1.do? Is it supposed to be login1.do?
+	public String getName() { return "create-employee-acct.do"; } 
 
     public String perform(HttpServletRequest request) {
         List<String> errors = new ArrayList<String>();
@@ -38,14 +38,14 @@ public class Emp_RegisterAction extends Action {
 	        // If no params were passed, return with no errors so that the form will be
 	        // presented (we assume for the first time).
 	        if (!form.isPresent()) {
-	            return "createaccountE.html";
+	            return "create-acct-emp.jsp";
 	        }
 	
 	        // Any validation errors?
 	        errors.addAll(form.getValidationErrors());
 	        if (errors.size() != 0) {
 	        	System.out.println(errors.toString());
-	            return "createaccountE.html";
+	            return "create-acct-emp.jsp";
 	        }
 	        System.out.println("hahaha");
 	        // Create the user bean
@@ -66,13 +66,13 @@ public class Emp_RegisterAction extends Action {
 	        
 	        // If redirectTo is null, redirect to the "manage" action
 			String webapp = request.getContextPath();
-			return webapp + "/viewCustomerList.html";
+			return webapp + "//getcustomers.do";
         } catch (MyDAOException e) {
         	errors.add(e.getMessage());
-        	return "register.jsp";
+        	return "error.jsp";
         } catch (FormBeanException e) {
         	errors.add(e.getMessage());
-        	return "register.jsp";
+        	return "error.jsp";
         }
     }
 }
