@@ -38,11 +38,7 @@ public class Cus_ViewTransactionHistoryAction extends Action {
         try {
             Cus_FundSearchForm form = formBeanFactory.create(request);
             request.setAttribute("form",form);
-
-            /*
-            if (!form.isPresent()) {
-                return "getfunddetail.jsp";
-            }*/
+            
             // Any validation errors?
             errors.addAll(form.getValidationErrors());
             if (errors.size() != 0) {

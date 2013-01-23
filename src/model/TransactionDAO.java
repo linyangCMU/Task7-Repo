@@ -80,8 +80,9 @@ public class TransactionDAO {
         	con = getConnection();
 
             Statement stmt = con.createStatement();
-            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM " + tableName + "where customer_id=?");
-        	
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM " + tableName + " where customer_id=?");
+        	pstmt.setInt(1, customer_id);
+            
         	ResultSet rs = pstmt.executeQuery();
             
             List<Transaction> list = new ArrayList<Transaction>();
@@ -115,6 +116,47 @@ public class TransactionDAO {
 		}
 		
 	}
+	
+	public Transaction getLastTransaction(int customer_id) throws MyDAOException {
+        Connection con = null;
+        try {
+            con = getConnection();
+
+            Statement stmt = con.createStatement();
+            PreparedStatement pstmt = con.prepareStatement("SELECT *, max(execute_date) FROM " + tableName + " where customer_id=?");
+            pstmt.setInt(1, customer_id);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            Transaction transaction;;
+            if (!rs.next()) {
+                transaction = null;
+            } else {
+                transaction = new Transaction();
+                transaction.setTransaction_id(rs.getInt("transaction_id"));
+                transaction.setCustomer_id(rs.getInt("customer_id"));
+                transaction.setFund_id(rs.getInt("fund_id"));
+                transaction.setDate(rs.getDate("execute_date"));
+                transaction.setShares((double)rs.getInt("shares")/1000);
+                transaction.setTransaction_type(rs.getString("transaction_type"));
+                transaction.setAmount(rs.getInt("amount"));                
+            }
+            stmt.close();
+            releaseConnection(con);
+            
+            return transaction;
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+        
+    }
 	
 	private boolean tableExists() throws MyDAOException{
 		Connection con = null;
