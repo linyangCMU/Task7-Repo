@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 
-import databeans.History;
 import databeans.Position;
 
 public class PositionDAO {
@@ -111,6 +110,44 @@ public class PositionDAO {
 		}
 		
 	}
+	
+	
+	public ArrayList<Position> getPositionsByCustomerId(int customer_id) throws MyDAOException {
+        Connection con = null;
+        try {
+            con = getConnection();
+
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM "
+                    + tableName + " WHERE customer_id=?");
+            pstmt.setInt(1, customer_id);         
+            ResultSet rs = pstmt.executeQuery();
+
+            ArrayList<Position> positions = new ArrayList<Position>();
+            Position position = null;
+            while (!rs.next()) {
+                position = new Position();
+                position.setCustomer_id(rs.getInt("customer_id"));
+                position.setFund_id(rs.getInt("fund_id"));
+                position.setShares((double)rs.getInt("shares")/1000);
+                positions.add(position);
+            }
+
+            rs.close();
+            pstmt.close();
+            releaseConnection(con);
+            return positions;
+
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+    }
 	
 	private boolean tableExists() throws MyDAOException{
 		Connection con = null;

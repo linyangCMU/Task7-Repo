@@ -55,7 +55,7 @@ public class Cus_GetFundsAction extends Action {
             
             for (Fund fund:funds){
                 Date date = new Date(0);
-                String price = historyDAO.lookupLatestPriceAndDate(fund.getId(), date);
+                double price = historyDAO.lookupLatestPriceAndDate(fund.getId(), date);
                 fund.setDate(date);
                 fund.setPrice(price);
             }

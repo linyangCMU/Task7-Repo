@@ -7,7 +7,7 @@ public class Fund {
 	private String name = null; // the full name for the fund
 	private String symbol = null; // the short name for the fund
 	private Date date; // the last update date for this fund
-	private String price; // the latest price for this fund and converted to String
+	private double price; // the latest price for this fund and converted to String
 	
 	public int compareTo(Fund other) {
 		int c = name.compareTo(other.name);
@@ -33,7 +33,7 @@ public class Fund {
 	public void setSymbol(String a)  { symbol = a; }
 	public void setId(int a)         { id = a;     }
 	public void setDate(Date d)      { date = d;   }
-	public void setPrice(String p)   { price = p;  }
+	public void setPrice(double pr)   { price = pr;  }
 	
 	public String toString() {
 		return "Fund("+getName()+","+getSymbol()+")";
