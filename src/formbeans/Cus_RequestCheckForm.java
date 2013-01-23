@@ -1,0 +1,32 @@
+package formbeans;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybeans.form.FormBean;
+
+public class Cus_RequestCheckForm extends FormBean {
+	private String withdraw;
+	
+	public String getWithdraw()   { return withdraw;   }
+	
+	public void setWithdraw(String s)   { withdraw  = s.trim();                   }
+
+	public List<String> getValidationErrors() {
+		List<String> errors = new ArrayList<String>();
+
+		if (withdraw == null || withdraw.length() == 0) {
+			errors.add("Withdraw amount is required");
+		}
+
+		// missing validation for cash 
+		// withdraw must be valid number
+		// no need to consider overflow here
+		
+		if (errors.size() > 0) {
+			return errors;
+		}
+		
+		return errors;
+	}
+}

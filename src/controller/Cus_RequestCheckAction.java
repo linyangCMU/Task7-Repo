@@ -11,6 +11,7 @@ import org.mybeans.form.FormBeanFactory;
 
 import databeans.Customer;
 import databeans.Transaction;
+import formbeans.Cus_RequestCheckForm;
 import formbeans.Emp_DepositCheckForm;
 
 import model.Model;
@@ -19,14 +20,12 @@ import model.CustomerDAO;
 import model.MyDAOException;
 
 
-public class Emp_DepositCheckAction extends Action {   
-    private FormBeanFactory<Emp_DepositCheckForm> formBeanFactory = FormBeanFactory.getInstance(Emp_DepositCheckForm.class);
+public class Cus_RequestCheckAction extends Action {   
+    private FormBeanFactory<Cus_RequestCheckForm> formBeanFactory = FormBeanFactory.getInstance(Cus_RequestCheckForm.class);
     private CustomerDAO customerDAO;
-    private TransactionDAO transactionDAO;
     
-    public Emp_DepositCheckAction(Model model) {
+    public Cus_RequestCheckAction(Model model) {
         customerDAO = model.getCustomerDAO();
-        transactionDAO = model.getTransactionDAO();
     }
     
     public String getName() { return "depositcheck.do"; }
@@ -36,24 +35,32 @@ public class Emp_DepositCheckAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
-            Emp_DepositCheckForm form = formBeanFactory.create(request);
+            Cus_RequestCheckForm form = formBeanFactory.create(request);
             request.setAttribute("form",form);
 
             
             if (!form.isPresent()) {
-                return "deposit-check-emp.jsp";
+                return "request-check-cus.jsp";
+            }
+            
+            
+         // Look up the customer
+            Customer customer = (Customer) request.getSession(false).getAttribute("Customer");
+            double balance = customerDAO.getCash();
+            
+            double withdrawAmount = Double.parseDouble(form.getWithdraw());
+            
+            if (withdrawAmount > balance) {
+                errors.add("Withdraw amount cannot be greater than your current balance!");
             }
             
             // Any validation errors?
             errors.addAll(form.getValidationErrors());
             if (errors.size() != 0) {
-                return "deposit-check-emp.jsp";
+                return "request-check-cus.jsp";
             }
             
-            // Look up the customer
-            Customer customer = customerDAO.lookup(form.getUserName());
-            double amount = Double.parseDouble(form.getDeposit());
-            customer.setCash(customer.getCash() + amount);
+            customer.setCash(balance- withdrawAmount);
             
             customerDAO.updateCash(customer);
             /*
