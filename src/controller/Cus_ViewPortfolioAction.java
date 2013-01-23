@@ -57,8 +57,8 @@ public class Cus_ViewPortfolioAction extends Action {
             }
             
             int customerId = customer.getCustomerID();
-            ArrayList<Position> positions = new ArrayList<Position>();
-            positions = positionDAO.getPositionsByCustomerId(customerId);
+            ArrayList<Position> positions = positionDAO.getPositionsByCustomerId(customerId);
+            
             ArrayList<Portfolio> portfolios = new ArrayList<Portfolio>();
             for (Position position : positions) {
                 int fundId = position.getFund_id();
@@ -74,6 +74,8 @@ public class Cus_ViewPortfolioAction extends Action {
                 portfolio.setShares(shares);
                 portfolio.setPrice(price);
                 portfolio.setTotal(shares * price);
+                
+                System.out.println(portfolio.toString());
                 portfolios.add(portfolio);
             }
             
@@ -86,12 +88,11 @@ public class Cus_ViewPortfolioAction extends Action {
             }
             
             // Attach (this copy of) the funds object to the session
-            HttpSession session = request.getSession();
-            session.setAttribute("portfolios",portfolios);
-            session.setAttribute("lastExecuteDate",date);
+            request.setAttribute("portfolios",portfolios);
+            request.setAttribute("lastExecuteDate",date);
             
             String webapp = request.getContextPath();
-            return webapp + "/view-portfolio-cus.jsp";
+            return "view-portfolio-cus.jsp";
         } catch (MyDAOException e) {
             errors.add(e.getMessage());
             return "error.jsp";

@@ -16,88 +16,93 @@
 <body>
 
 <div id="container">
-  <div id="header">
-    <h1> Carnegie Financial Service - Mutual Fund Management </h1>
-  </div>
-  <div id="navigation">
+    <div id="header">
+        <h1> Carnegie Financial Service - Mutual Fund Management </h1>
+    </div>
+    <div id="navigation">
     <ul>
-      <li><a href="viewPortafolio.do">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Services</a></li>
-      <li><a href="#">Contact us</a></li>
+		<li><a href="viewPortafolio.do">Home</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Services</a></li>
+		<li><a href="#">Contact us</a></li>
     </ul>
-  </div>
-  <div id="content-container">
-     <div id="section-navigation">
-    	<ul>
-              
-
-						<li><span class="menu-item"><a href="login.do">Change password</a></span></li>
-						<li><span class="menu-item"><a href="buyFund.do">Buy Fund</a></span></li>
-						<li><span class="menu-item"><a href="sellFund.do">sell Fund</a></span></li>
-						<li><span class="menu-item"><a href="RequestCheck.do">Request Check</a></span></li>
-						<li><span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span></li>
-						<li><span class="menu-item"><a href="viewPortafolio.do">View Account</a></span></li>
-						<li><span class="menu-item"><a href="researchfund.do">Research Fund</a></span></li>
-						<li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
-			
-		</ul>
-     <h2> Customer Account </h2>
-      <p>
-      <form method="post" action="viewPortafolio.do">
-        <table>
-          <tr>
-            <td> <b>Name</b> </td>
-            <td>
-            <%
-            Customer customer = (Customer) request.getAttribute("Customer");
-            out.println(customer.getFirstName());
-            out.println(customer.getLastName());
-            %>
-            </td>
-          </tr>
-          <tr>
-            <td> <b>Address</b> </td>
-            <td>
-            <%
-            out.println(customer.getAddrL1());
-            %>
-            </td>
-            <td>
-            <%
-            out.println(customer.getAddrL2());
-            %></td>
-            <td>
-            <%
-            out.println(customer.getCity());
-            %>
-            </td>
-            <td>
-            <%
-            out.println(customer.getState());
-            %>
-            </td>
-            <td>
-            <%
-            out.println(customer.getZip());
-            %></td>
-          </tr>
-          <tr>
-            <td> <b>Last Trading Date</b> </td>
-            <td>
-            <%
-            	Date lastDate = (Date) request.getAttribute("lastExecuteDate");
-            	out.println(lastDate);
-            
-            %>
-            </td>
-          </tr>
-          <tr>
-            <td> <b>Cash Balance</b> </td>
-            <td> {$Customer.cash}</td>
-          </tr>
-        </table>
-      </form>
+    </div>
+    <div id="content-container">
+        <div id="section-navigation">
+            <ul>
+				<li><span class="menu-item"><a href="login.do">Change password</a></span></li>
+				<li><span class="menu-item"><a href="buyFund.do">Buy Fund</a></span></li>
+				<li><span class="menu-item"><a href="sellFund.do">sell Fund</a></span></li>
+				<li><span class="menu-item"><a href="RequestCheck.do">Request Check</a></span></li>
+				<li><span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span></li>
+				<li><span class="menu-item"><a href="viewPortafolio.do">View Account</a></span></li>
+				<li><span class="menu-item"><a href="researchfund.do">Research Fund</a></span></li>
+				<li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h2> Customer Account </h2>
+            <form method="post" action="viewPortafolio.do">
+                <table>
+                    <tr>
+                        <td> <b>Name</b> </td>
+                        <td>
+				            <%
+				            Customer customer = (Customer) session.getAttribute("customer");
+				            if(customer==null){
+				                
+				            }
+				            out.println(customer.getFirstName());
+				            out.println(customer.getLastName());
+				            
+				            %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <b>Address</b> </td>
+                        <td>
+				            <%
+				            out.println(customer.getAddrL1());
+				            %>
+                        </td>
+                        <td>
+				            <%
+				            out.println(customer.getAddrL2());
+				            %>
+				        </td>
+			            <td>
+				            <%
+				            out.println(customer.getCity());
+				            %>
+			            </td>
+			            <td>
+				            <%
+				            out.println(customer.getState());
+				            %>
+			            </td>
+			            <td>
+				            <%
+				            out.println(customer.getZip());
+				            %>
+			            </td>
+                    </tr>
+                    <tr>
+                        <td> <b>Last Trading Date</b> </td>
+			            <td>
+			            <%= (Date) session.getAttribute("lastExecuteDate") %>
+			            	
+			            </td>
+					</tr>
+					<tr>
+					   <td> <b>Cash Balance</b> </td>
+					   <td> 
+					       <%
+					       out.println(customer.getCash());
+					       %>
+					   </td>
+					</tr>
+                </table>
+            </form>
       <form method="post" action="viewPortafolio.do">
         <table>
           <tr>

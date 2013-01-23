@@ -31,4 +31,12 @@ public class Portfolio {
     public void setTotal(double total) {
         this.total = total;
     }
+    
+    @Override
+    public String toString() {
+        return "Portfolio [fundName=" + fundName + ", shares=" + shares
+                + ", price=" + price + ", total=" + total + "]";
+    }
+    
+    
 }

@@ -124,7 +124,7 @@ public class PositionDAO {
 
             ArrayList<Position> positions = new ArrayList<Position>();
             Position position = null;
-            while (!rs.next()) {
+            while (rs.next()) {
                 position = new Position();
                 position.setCustomer_id(rs.getInt("customer_id"));
                 position.setFund_id(rs.getInt("fund_id"));
