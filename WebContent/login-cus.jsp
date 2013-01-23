@@ -22,31 +22,7 @@
     </ul>
   </div>
   <div id="content-container">
-
-    <div id="section-navigation">
-    
-                <p align="left">
-	            <c:choose>
-	            	<c:when test="${ (empty user) }">
-						<span class="menu-item"><a href="customer-login.do">Login</a></span><br/>
-					</c:when>
-					<c:otherwise>
-						<span class="menu-head">${user.firstName} ${user.lastName}</span><br/>
-						<span class="menu-item"><a href="viewPortafolio.do">View Account</a></span><br/>
-						<span class="menu-item"><a href="ChangePwdA.do">Change password</a></span><br/>
-						<span class="menu-item"><a href="BuyFund.do">Buy Fund</a></span><br/>
-						<span class="menu-item"><a href="SellFund.do">Sell Fund</a></span><br/>
-						<span class="menu-item"><a href="RequestCheck.do">Request Check</a></span><br/>
-						<span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span><br/>
-						<span class="menu-item"><a href="researchFund.do">Research Fund</a></span><br/>
-						<span class="menu-item"><a href="Index.do">Logout</a></span><br/>
-
-					</c:otherwise>
-					</c:choose>
-					</p>
-    </div>
-    
-         <div id="content">
+    <div id="content">
       <h2> Customer Login </h2>
       <form method="post" action="customer-login.do">
         <table>
@@ -68,7 +44,6 @@
        
        
       <h3> Welcome to CFS- Mutual Fund Management </h3>
-      <p> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan. </p>
     </div>
     <div id="footer"> Copyright © Mutual Fund Application by Team e-Motion | CMU MSIT ebusiness Task7 2013 </div>
   </div>

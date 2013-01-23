@@ -24,27 +24,21 @@
   </div>
   <div id="content-container">
     <div id="section-navigation">
-    
-                <p align="left">
-	            <c:choose>
-	            	<c:when test="${ (empty user) }">
-						<span class="menu-item"><a href="login.do">Login</a></span><br/>
-					</c:when>
-					<c:otherwise>
-				<!--	<span class="menu-head">${user.firstName} ${user.lastName}</span><br/>  -->	
-						<span class="menu-item"><a href="viewPortafolio.do">View Account</a></span><br/>
-						<span class="menu-item"><a href="ChangePwdA.do">Change password</a></span><br/>
-						<span class="menu-item"><a href="BuyFund.do">Buy Fund</a></span><br/>
-						<span class="menu-item"><a href="SellFund.do">sell Fund</a></span><br/>
-						<span class="menu-item"><a href="RequestCheck.do">Request Check</a></span><br/>
-						<span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span><br/>
-						<span class="menu-item"><a href="researchFund.do">Research Fund</a></span><br/>
-						<span class="menu-item"><a href="Index.do">Logout</a></span><br/>
+    	<ul>
+              
 
-					</c:otherwise>
-					</c:choose>
-					</p>
+						<li><span class="menu-item"><a href="login.do">Change password</a></span></li>
+						<li><span class="menu-item"><a href="buyFund.do">Buy Fund</a></span></li>
+						<li><span class="menu-item"><a href="sellFund.do">sell Fund</a></span></li>
+						<li><span class="menu-item"><a href="RequestCheck.do">Request Check</a></span></li>
+						<li><span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span></li>
+						<li><span class="menu-item"><a href="viewPortafolio.do">View Account</a></span></li>
+						<li><span class="menu-item"><a href="researchfund.do">Research Fund</a></span></li>
+						<li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
+			
+		</ul>
     </div>
+         <h2> Change Password </h2>
           <p>
       <form method="post" action="changepwdA.do">
         <table>

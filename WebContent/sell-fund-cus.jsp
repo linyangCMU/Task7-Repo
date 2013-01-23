@@ -1,5 +1,6 @@
        <%@page import="java.util.List"%>
        <%@page import="databeans.Fund"%>
+       <%@page import="databeans.Position"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -22,27 +23,19 @@
   </div>
   <div id="content-container">
     <div id="section-navigation">
-    
-                <p align="left">
-	            <c:choose>
-	            	<c:when test="${ (empty user) }">
-						<span class="menu-item"><a href="login.do">Login</a></span><br/>
-					</c:when>
-					<c:otherwise>
-						<span class="menu-head">${user.firstName} ${user.lastName}</span><br/>
-						<span class="menu-item"><a href="viewPortafolio.do">View Account</a></span><br/>
-						<span class="menu-item"><a href="ChangePwdA.do">Change password</a></span><br/>
-						<span class="menu-item"><a href="BuyFund.do">Buy Fund</a></span><br/>
-						<span class="menu-item"><a href="SellFund.do">sell Fund</a></span><br/>
-						<span class="menu-item"><a href="RequestCheck.do">Request Check</a></span><br/>
-						<span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span><br/>
-						<span class="menu-item"><a href="researchFund.do">Research Fund</a></span><br/>
-						<span class="menu-item"><a href="Index.do">Logout</a></span><br/>
+    	<ul>
+              
 
-					</c:otherwise>
-					</c:choose>
-					</p>
-    </div>
+						<li><span class="menu-item"><a href="login.do">Change password</a></span></li>
+						<li><span class="menu-item"><a href="buyFund.do">Buy Fund</a></span></li>
+						<li><span class="menu-item"><a href="sellFund.do">sell Fund</a></span></li>
+						<li><span class="menu-item"><a href="RequestCheck.do">Request Check</a></span></li>
+						<li><span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span></li>
+						<li><span class="menu-item"><a href="viewPortafolio.do">View Account</a></span></li>
+						<li><span class="menu-item"><a href="researchfund.do">Research Fund</a></span></li>
+						<li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
+			
+		</ul>
          <h2>Sell Fund </h2>
       <p>Type in the number of shares you want to sell. Remmember, it could not be larger than the number you have.</p>
       <hr />
@@ -57,23 +50,20 @@
           <tr>
 			 <%
 			 	 Fund[] fund = (Fund[]) request.getAttribute("fund");
+			 	 Position[] position=(Position[]) request.getAttribute("position");
 				 for(int i=0; i<fund.length; i++){
-				 out.println(fund[i]);
-			 	 out.println("<td><input type=\"text\" name=\"sellfund\" value=\"0\"/></td>");
+					out.println("<td>");
+				 	out.println(fund[i].getName());
+				 	for(int j=0; j<position.length;j++){
+				 		if(fund[i].getId()==position[j].getFund_id()){
+				 			out.println(":$ </td><td>");
+				 			out.println(position[j].getShares());
+				 			out.println("</td>");
+			 	 			out.println("<td><input type=\"text\" name=\"sellfund\" value=\"0\"/></td>");
+				 		}
+				 	}
 			 }
 		      %>
-						<c:forEach var="f" items="${Fund}">
-						    <span class="menu-item">
-								<a href="fund.do?id=${f.id}">
-								  <tr>
-						            <td> ${Fund.fundName}: $ </td>
-						            <td> ${Fund.ownShares}</td>
-						            <td><input type="text" name="sellFund" value="0"/></td>
-						          </tr>
-								</a>
-							</span>
-							<br/>
-						</c:forEach>
           
           <tr>
             <td colspan="3" align="center"><input type="submit" name="button" value="submit"/></td>

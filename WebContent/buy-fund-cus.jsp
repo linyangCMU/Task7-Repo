@@ -25,28 +25,20 @@
     </ul>
   </div>
   <div id="content-container">
-    <div id="section-navigation">
-    
-                <p align="left">
-	            <c:choose>
-	            	<c:when test="${ (empty user) }">
-						<span class="menu-item"><a href="login.do">Login</a></span><br/>
-					</c:when>
-					<c:otherwise>
-			<!--    	<span class="menu-head">${user.firstName} ${user.lastName}</span><br/>   -->
-						<span class="menu-item"><a href="viewPortafolio.do">View Account</a></span><br/>
-						<span class="menu-item"><a href="ChangePwdA.do">Change password</a></span><br/>
-						<span class="menu-item"><a href="BuyFund.do">Buy Fund</a></span><br/>
-						<span class="menu-item"><a href="SellFund.do">sell Fund</a></span><br/>
-						<span class="menu-item"><a href="RequestCheck.do">Request Check</a></span><br/>
-						<span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span><br/>
-						<span class="menu-item"><a href="researchFund.do">Research Fund</a></span><br/>
-						<span class="menu-item"><a href="Index.do">Logout</a></span><br/>
+     <div id="section-navigation">
+    	<ul>
+              
 
-					</c:otherwise>
-					</c:choose>
-					</p>
-    </div>
+						<li><span class="menu-item"><a href="login.do">Change password</a></span></li>
+						<li><span class="menu-item"><a href="buyFund.do">Buy Fund</a></span></li>
+						<li><span class="menu-item"><a href="sellFund.do">sell Fund</a></span></li>
+						<li><span class="menu-item"><a href="RequestCheck.do">Request Check</a></span></li>
+						<li><span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span></li>
+						<li><span class="menu-item"><a href="viewPortafolio.do">View Account</a></span></li>
+						<li><span class="menu-item"><a href="researchfund.do">Research Fund</a></span></li>
+						<li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
+			
+		</ul>
     
           <h2>Buy Fund </h2>
       <p>Type in the dollar amount if you want to buy the specified fund. Remmember, it should be number.</p>
@@ -58,9 +50,9 @@
         <table>
 			 <tr>
 			 <%
-			 	 Fund[] fund = (Fund[]) request.getAttribute("fund");
+			 	 Fund[] fund = (Fund[]) request.getAttribute("Fund");
 				 for(int i=0; i<fund.length; i++){
-				 out.println(fund[i]);
+				 out.println(fund[i].getName());
 			 	 out.println("<td><input type=\"text\" name=\"buyfund\" value=\"0\"/></td>");
 			 }
 		      %>
