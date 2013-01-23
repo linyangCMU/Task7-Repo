@@ -48,15 +48,39 @@
         <table>
           <tr>
             <td> <b>Name</b> </td>
-            <td> {$Customer.firstname} {$Customer.lastname} </td>
+            <td>
+            <%
+            Customer customer = (Customer) request.getAttribute("Customer");
+            out.println(customer.getFirstName());
+            out.println(customer.getLastName());
+            %>
+            </td>
           </tr>
           <tr>
             <td> <b>Address</b> </td>
-            <td>{$Customer.addr_line1}</td>
-            <td>{$Customer.addr_line2}</td>
-            <td>{$Customer.city}</td>
-            <td>{$Customer.state}</td>
-            <td>{$Customer.zip}</td>
+            <td>
+            <%
+            out.println(customer.getAddrL1());
+            %>
+            </td>
+            <td>
+            <%
+            out.println(customer.getAddrL2());
+            %></td>
+            <td>
+            <%
+            out.println(customer.getCity());
+            %>
+            </td>
+            <td>
+            <%
+            out.println(customer.getState());
+            %>
+            </td>
+            <td>
+            <%
+            out.println(customer.getZip());
+            %></td>
           </tr>
           <tr>
             <td> <b>Last Trading Date</b> </td>
