@@ -39,7 +39,8 @@
 						<li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
 			
 		</ul>
-    
+    </div>
+	<div class="content">
           <h2>Buy Fund </h2>
       <p>Type in the dollar amount if you want to buy the specified fund. Remmember, it should be number.</p>
       Your Cash amount: $
@@ -61,7 +62,7 @@
           </tr>
         </table>
       </form>
-    
+      </div>
        <div id="aside">
       <h3> Welcome to CFS- Mutual Fund Management </h3>
       <p> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan. </p>
