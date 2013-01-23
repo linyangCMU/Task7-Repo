@@ -29,7 +29,7 @@
 				<td><input type="password" name="confirmPassword" value=""/></td>
 			</tr>
 			<tr>
-<%-- 				<td> Address Line1: </td>
+ 				<td> Address Line1: </td>
 				<td><input type="text" name="addr1" value="${form.addr1}"/></td>
 			</tr>
 			<tr>
@@ -47,7 +47,7 @@
 			<tr>
 				<td> Zip: </td>
 				<td><input type="text" name="zip" value="${form.zip}"/></td>
-			</tr> --%>
+			</tr>
 			<tr>
 				<td colspan="2" align="center">
 					<input type="submit" name="button" value="Create Account"/>

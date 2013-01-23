@@ -32,7 +32,7 @@ public class Cus_RegisterForm extends FormBean {
 	public void setLastName(String s)  { lastName  = trimAndConvert(s,"<>\"");  }
 	public void setUserName(String s)  { userName  = trimAndConvert(s,"<>\"");  }
 	public void setPassword(String s)  { password  = s.trim();                  }
-	public void setConfirm(String s)   { confirmPassword   = s.trim();                  }
+	public void setConfirmPassword(String s)   { confirmPassword   = s.trim();                  }
 	
 	public void setAddr1(String addr1) {
 		this.addr1 = addr1.trim();
