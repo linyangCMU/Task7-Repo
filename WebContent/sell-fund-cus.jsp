@@ -36,6 +36,8 @@
 						<li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
 			
 		</ul>
+		</div>
+		<div class="content">
          <h2>Sell Fund </h2>
       <p>Type in the number of shares you want to sell. Remmember, it could not be larger than the number you have.</p>
       <hr />
@@ -70,6 +72,7 @@
           </tr>
         </table>
       </form>
+      </div>
        <div id="aside">
       <h3> Welcome to CFS- Mutual Fund Management </h3>
       <p> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan. </p>
