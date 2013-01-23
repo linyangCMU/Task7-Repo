@@ -14,6 +14,7 @@ import databeans.Customer;
 import databeans.Fund;
 import databeans.Portfolio;
 import databeans.Position;
+import databeans.Transaction;
 import formbeans.Cus_FundSearchForm;
 
 import model.Model;
@@ -21,6 +22,7 @@ import model.Model;
 import model.HistoryDAO;
 import model.FundDAO;
 import model.PositionDAO;
+import model.TransactionDAO;
 import model.MyDAOException;
 
 
@@ -28,11 +30,13 @@ public class Cus_ViewPortfolioAction extends Action {
     private FundDAO fundDAO;
     private HistoryDAO historyDAO;
     private PositionDAO positionDAO;
+    private TransactionDAO transactionDAO;
     
     public Cus_ViewPortfolioAction(Model model) {
         fundDAO = model.getFundDAO();
         historyDAO = model.getHistoryDAO();
         positionDAO = model.getPositionDAO();
+        transactionDAO = model.getTransactionDAO();
     }
     
     public String getName() { return "viewportfolio.do"; }
@@ -73,9 +77,18 @@ public class Cus_ViewPortfolioAction extends Action {
                 portfolios.add(portfolio);
             }
             
+            Transaction transaction = transactionDAO.getLastTransaction(customerId);
+            Date date;
+            if (transaction!=null){
+                date = transaction.getExecute_date();
+            } else {
+                date = new Date(0);
+            }
+            
             // Attach (this copy of) the funds object to the session
             HttpSession session = request.getSession();
             session.setAttribute("portfolios",portfolios);
+            session.setAttribute("lastExecuteDate",date);
             
             String webapp = request.getContextPath();
             return webapp + "/view-portfolio-cus.jsp";

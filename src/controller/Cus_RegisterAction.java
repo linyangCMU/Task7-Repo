@@ -36,9 +36,9 @@ public class Cus_RegisterAction extends Action {
 	
 	        // If no params were passed, return with no errors so that the form will be
 	        // presented (we assume for the first time).
-//	        if (!form.isPresent()) {
-//	            return "create-acct-cus.jsp";
-//	        }
+	        if (!form.isPresent()) {
+	            return "create-acct-cus.jsp";
+	        }
 	
 	        // Any validation errors?
 	        errors.addAll(form.getValidationErrors());
@@ -71,8 +71,6 @@ public class Cus_RegisterAction extends Action {
 	        
 	        // If redirectTo is null, redirect to the "manage" action
 			String webapp = request.getContextPath();
-			System.out.println("getfunds.do");
-
 			return webapp + "//getfunds.do";        
 		} catch (MyDAOException e) {
         	errors.add(e.getMessage());
