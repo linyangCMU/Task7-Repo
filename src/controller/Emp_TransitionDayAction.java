@@ -43,7 +43,7 @@ public class Emp_TransitionDayAction extends Action {
         transactionDAO = model.getTransactionDAO();
     }
     
-    public String getName() { return "viewcustomeraccount.do"; }
+    public String getName() { return "transitionday.do"; }
     
     public String perform(HttpServletRequest request) {
         List<String> errors = new ArrayList<String>();

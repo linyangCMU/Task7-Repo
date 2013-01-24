@@ -52,7 +52,7 @@ public class Emp_ViewTransactionHistoryAction extends Action {
             // Look up the Customer
             Customer customer = customerDAO.lookup(form.getUserName());
             if (customer == null) {
-                errors.add("No such customer with user name: " + form.getUserName());
+                errors.add("No such customer with user name");
                 return "error.jsp";
             }
             

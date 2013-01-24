@@ -33,7 +33,7 @@
         <div class="content">
             <h2> Customer Account </h2>
 <%
-    Customer customer = (Customer) session.getAttribute("customer");
+    Customer customer = (Customer) request.getAttribute("customer");
     if(customer==null){
         return;
     }

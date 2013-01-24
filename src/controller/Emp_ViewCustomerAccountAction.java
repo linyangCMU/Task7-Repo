@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
@@ -59,9 +58,8 @@ public class Emp_ViewCustomerAccountAction extends Action {
             }
             
             if (!form.isPresent()) {
-                return "manage-customers-emp.jsp";
+                //return "manage-customers-emp.jsp";
             }
-
             // Any validation errors?
             errors.addAll(form.getValidationErrors());
             if (errors.size() != 0) {
@@ -72,7 +70,7 @@ public class Emp_ViewCustomerAccountAction extends Action {
             Customer customer = customerDAO.lookup(form.getUserName());
             
             if (customer == null) {
-                errors.add("User Name not found");
+                errors.add("User not found");
                 return "manage-customers-emp.jsp";
             }
             

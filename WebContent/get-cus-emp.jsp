@@ -16,7 +16,7 @@
 ArrayList<Customer> customers = (ArrayList<Customer>) session.getAttribute("customers");
 if(customers!=null) {
     for (Customer customer : customers) {
-	    out.println("<tr onclick=\" javascript:submitCustomer("+ customer.getCustomerID() +")  \">");
+	    out.println("<tr onclick=\" javascript:submitCustomer('"+ customer.getUsername() +"')  \">");
 	    out.println("  <td class=\"td4\">"+customer.getUsername()+ "</td>");
 	    out.println("  <td class=\"td4\">"+customer.getFirstName() + "</td>");
 	    out.println("  <td class=\"td4\">"+customer.getLastName() + "</td>");

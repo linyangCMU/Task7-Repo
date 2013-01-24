@@ -13,18 +13,41 @@ function submitFund(id) {
     form.submit();
 }
 
-function submitCustomer(id) {
+function submitCustomer(username) {
 	var form = document.createElement("form");
     form.setAttribute("method", "POST");
     form.setAttribute("action", "viewcustomeraccount.do");
     
     var hiddenField = document.createElement("input");
     hiddenField.setAttribute("type", "hidden");
-    hiddenField.setAttribute("name", "id");
-    hiddenField.setAttribute("value", id);
+    hiddenField.setAttribute("name", "userName");
+    hiddenField.setAttribute("value", username);
 
     form.appendChild(hiddenField);
     document.body.appendChild(form);
     form.submit();
+}
+
+function showCustomer(str) {
+    var xmlhttp;    
+    if (str=="") {
+        document.getElementById("txtHint").innerHTML="";
+        return;
+    }
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }
+    else {
+        // code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+        }
+    };
+    xmlhttp.open("GET","getcustomers.do?query="+str,true);
+    xmlhttp.send();
 }
 

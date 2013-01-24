@@ -132,6 +132,51 @@ public class CustomerDAO {
 		}
 
 	}
+	
+	public Customer lookup(int customerId) throws MyDAOException {
+        Connection con = null;
+        try {
+            con = getConnection();
+
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM "
+                    + tableName + " WHERE customer_id=?");
+            pstmt.setInt(1, customerId);
+            ResultSet rs = pstmt.executeQuery();
+
+            Customer customer;
+            if (!rs.next()) {
+                customer = null;
+            } else {
+                customer = new Customer();
+                customer.setCustomerID(rs.getInt("customer_id"));
+                customer.setPassword(rs.getString("password"));
+                customer.setUsername(rs.getString("username"));
+                customer.setFirstName(rs.getString("firstname"));
+                customer.setLastName(rs.getString("lastname"));
+                customer.setAddr1(rs.getString("addr_line1"));
+                customer.setAddr2(rs.getString("addr_line2"));
+                customer.setCity(rs.getString("city"));
+                customer.setState(rs.getString("state"));
+                customer.setZip(rs.getString("zip"));
+                customer.setCash(rs.getInt("cash"));
+            }
+
+            rs.close();
+            pstmt.close();
+            releaseConnection(con);
+            return customer;
+
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+	}
 
 	public ArrayList<Customer> search(String query) throws MyDAOException {
         Connection con = null;
