@@ -31,13 +31,16 @@
 			 	 ArrayList<Fund> funds = (ArrayList<Fund>) request.getAttribute("funds");
 			 	 if(funds != null){
 			 		 for(Fund fund : funds){
-			 			 out.println(fund.getName());
-			 		 }
-				 }
-		      %>
-		      			</td>
+			 %>
+			 <%=fund.getName() %>
+				</td>
 		      			<td><input type="text" name="buyfund" value="0"/></td>
 	         		</tr>
+			<%	
+				}
+			}
+		      %>
+		      		
            			<td colspan="2" align="center"><input type="submit" name="button" value="submit"/></td>
         
         			</table>
