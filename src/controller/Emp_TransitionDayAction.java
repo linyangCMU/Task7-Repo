@@ -71,9 +71,9 @@ public class Emp_TransitionDayAction extends Action {
             
             request.setAttribute("funds", funds);
             
-            
+            // if the transition day form is not ready:
+            // present the form
             if (!form.isPresent()) {
-                
                 return "transition-day-emp.jsp";
             }
 
@@ -82,6 +82,11 @@ public class Emp_TransitionDayAction extends Action {
             if (errors.size() != 0) {
                 return "transition-day-emp.jsp";
             }
+            
+            // update the fund history database with new fund prices
+            
+            
+            // Traverse the Transaction History table
             
             return "transition-day-emp.jsp";
         } catch (MyDAOException e) {
