@@ -41,13 +41,13 @@ public class Emp_ViewTransactionHistoryAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
-            Emp_ViewCustomerForm form = formBeanFactory.create(request);
-            request.setAttribute("form",form);
-            
             Employee employee = (Employee) request.getSession(false).getAttribute("employee");
             if (employee == null) {
                 return "login-emp.jsp";
             }
+            
+            Emp_ViewCustomerForm form = formBeanFactory.create(request);
+            request.setAttribute("form",form);
             
             // Look up the Customer
             Customer customer = customerDAO.lookup(form.getUserName());

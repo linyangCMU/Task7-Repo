@@ -4,24 +4,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Change Password</title>
+<title>Mutual Fund Management</title>
 <link rel="stylesheet" type="text/css" href="style/main.css">
 </head>
 <body>
+    <div id="container">
+        <jsp:include page="template-header-navigation.jsp" />
+        <div id="content-container">
+            <jsp:include page="template-section-navigation-emp.jsp" />
 
-<div id="container">
-    <jsp:include page="template-header-navigation.jsp" />
-    <div id="content-container">
-        <jsp:include page="template-section-navigation-emp.jsp" />
-        
-        <div class="content">
+            <div class="content">
 	        <h2> Change Password </h2>
             
             <jsp:include page="error-list.jsp" />
             
 			<form method="POST" action="emp_changePwd.do">
 				<table>
-					
 					<tr>
 						<td> New Password: </td>
 						<td><input type="password" name="newPassword" value=""/></td>
