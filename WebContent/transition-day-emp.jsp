@@ -28,7 +28,7 @@ if (funds!=null) {
 %>
                     <tr>
                         <td> <%=fund.getName()%> </td>
-                        <td> <input type="text" name="fund_<%=fund.getId()%>" /> </td>
+                        <td> <input type="text" name="fund_<%=fund.getId()%>" value="<%=fund.getPrice() %>"/> </td>
                     </tr>
 <%
     }
