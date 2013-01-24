@@ -12,22 +12,31 @@
 <div id="container">
     <jsp:include page="template-header-navigation.jsp" />
     <div id="content-container">
-        <jsp:include page="template-section-navigation-cus.jsp" />
+        <jsp:include page="template-section-navigation-emp.jsp" />
         
         <div class="content">
             <h2> Create Fund </h2>
             
             <jsp:include page="error-list.jsp" />
-
-			<form method="post" action="create-fund.do">
+<%
+String fundName = "";
+String fundSymbol = "";
+if(request.getParameter("fundName")!=null && request.getAttribute("fund")==null){
+    fundName = request.getParameter("fundName");
+}
+if(request.getParameter("fundSymbol")!=null & request.getAttribute("fund")==null){
+    fundSymbol = request.getParameter("fundSymbol");
+}
+%>
+			<form method="post" action="createfund.do">
 				<table>
 					<tr>
 						<td> Fund Name: </td>
-						<td><input type="text" name="userName" value="${fund.name}"/></td>
+						<td><input type="text" name="fundName" value="<%=fundName %>"/></td>
 					</tr>
 					<tr>
 						<td> Ticker: </td>
-						<td><input type="text" name="deposit" value="${fund.symbol})"/></td>
+						<td><input type="text" name="fundSymbol" value="<%=fundSymbol %>"/></td>
 					</tr>
 					<tr>  
 						<td colspan="2" align="center">

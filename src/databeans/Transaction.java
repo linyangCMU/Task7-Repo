@@ -10,7 +10,7 @@ public class Transaction {
 	private double shares = 0.0;
 	private Date execute_date = null;
 	private String transaction_type = null;
-	private int amount = 0;
+	private double amount = 0.0;
 	private String status = "";
 	
 	private String fundName = "";
@@ -52,10 +52,10 @@ public class Transaction {
 	public void setTransaction_type(String transaction_type) {
 		this.transaction_type = transaction_type;
 	}
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
     public String getStatus() {

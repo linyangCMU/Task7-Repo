@@ -16,6 +16,7 @@ import databeans.Fund;
 import databeans.Portfolio;
 import databeans.Position;
 import databeans.Transaction;
+import formbeans.Emp_TransitionDayForm;
 import formbeans.Emp_ViewCustomerForm;
 
 import model.FundDAO;
@@ -50,74 +51,38 @@ public class Emp_TransitionDayAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
-            Emp_ViewCustomerForm form = formBeanFactory.create(request);
-            request.setAttribute("form",form);
             
             Employee employee = (Employee) request.getSession(false).getAttribute("employee");
             if(employee == null) {
                 return "login-emp.jsp";
             }
             
+            //process request form
+            Emp_TransitionDayForm form = new Emp_TransitionDayForm(request);
+            request.setAttribute("form",form);
+            
+            //get fund info:
+            ArrayList<Fund> funds = fundDAO.lookup(".");
+            for (Fund fund : funds) {
+                fund.setPrice(historyDAO.lookupLatestPriceAndDate(fund.getId(), new Date(0)));
+            }
+            
+            request.setAttribute("funds", funds);
+            
+            
             if (!form.isPresent()) {
-                return "manage-customers-emp.jsp";
+                
+                return "transition-day-emp.jsp";
             }
 
             // Any validation errors?
             errors.addAll(form.getValidationErrors());
             if (errors.size() != 0) {
-                return "manage-customers-emp.jsp";
+                return "transition-day-emp.jsp";
             }
             
-            // Look up the customer
-            Customer customer = customerDAO.lookup(form.getUserName());
-            
-            if (customer == null) {
-                errors.add("User Name not found");
-                return "manage-customers-emp.jsp";
-            }
-            
-            int customerId = customer.getCustomerID();
-            ArrayList<Position> positions = positionDAO.getPositionsByCustomerId(customerId);
-            
-            ArrayList<Portfolio> portfolios = new ArrayList<Portfolio>();
-            for (Position position : positions) {
-                int fundId = position.getFund_id();
-                double shares = position.getShares();
-                Fund fund = fundDAO.lookup(fundId);
-                String fundName = fund.getName();
-                String fundSymbol = fund.getSymbol();
-                Date date = new Date(0);
-                double price = historyDAO.lookupLatestPriceAndDate(fundId, date);
-                
-                Portfolio portfolio = new Portfolio();
-                portfolio.setFundName(fundName);
-                portfolio.setShares(shares);
-                portfolio.setPrice(price);
-                portfolio.setTotal(shares * price);
-                
-                portfolios.add(portfolio);
-            }
-            
-            Transaction transaction = transactionDAO.getLastTransaction(customerId);
-            Date date;
-            if (transaction!=null){
-                date = transaction.getExecute_date();
-            } else {
-                date = new Date(0);
-            }
-            
-            // Attach (this copy of) the funds object to the session
-            request.setAttribute("portfolios",portfolios);
-            request.setAttribute("lastExecuteDate",date);
-            
-            // Attach (this copy of) the user bean to the request
-            request.setAttribute("customer",customer);
-          
-            return "view-customer-acct-emp.jsp";
+            return "transition-day-emp.jsp";
         } catch (MyDAOException e) {
-            errors.add(e.getMessage());
-            return "error.jsp";
-        } catch (FormBeanException e) {
             errors.add(e.getMessage());
             return "error.jsp";
         }

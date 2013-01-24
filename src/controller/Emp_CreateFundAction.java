@@ -33,13 +33,14 @@ public class Emp_CreateFundAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
-            Emp_CreateFundForm form = formBeanFactory.create(request);
-            request.setAttribute("form",form);
             
             Employee employee = (Employee) request.getSession(false).getAttribute("employee");
             if(employee == null) {
-                return "login-emp.jsp";
+                return "employee-login.do";
             }
+            
+            Emp_CreateFundForm form = formBeanFactory.create(request);
+            request.setAttribute("form",form);
             
             if (!form.isPresent()) {
                 return "create-fund-emp.jsp";
@@ -52,14 +53,20 @@ public class Emp_CreateFundAction extends Action {
             }
             
             // Create new fund
-            Fund fund = new Fund();
+            Fund fund = fundDAO.lookup(form.getFundName(), form.getFundSymbol());
+            if (fund!=null) {
+                errors.add(fund.getName() + "["+fund.getSymbol()+"] already exists!");
+                return "create-fund-emp.jsp";
+            }
+            
+            fund = new Fund();
             fund.setName(form.getFundName());
             fund.setSymbol(form.getFundSymbol());
             
             fundDAO.create(fund);
             
-            request.setAttribute("message", "Fund has been created");
-          
+            request.setAttribute("fund", fund);
+            //errors.add("Fund has been created");
             return "create-fund-emp.jsp";
         } catch (MyDAOException e) {
             errors.add(e.getMessage());

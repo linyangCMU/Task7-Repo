@@ -16,10 +16,10 @@
         <li><a href="#">Reset Customer Password</a></li>
         <li><a href="#">View Customer</a></li>
         <li><a href="#">View Customer</a></li>
-        <li><a href="#">Deposit Check</a></li>
-        <li><a href="#">Create Fund</a></li>
+        <li><a href="depositcheck.do">Deposit Check</a></li>
+        <li><a href="createfund.do">Create Fund</a></li>
         <li><a href="#">Transition Day</a></li>
-        <li><a href="#">Logout</a></li>
+        <li><a href="logout-emp.do">Logout</a></li>
 <%
     }
 %>

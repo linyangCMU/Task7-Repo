@@ -49,13 +49,14 @@ public class Emp_ViewCustomerAccountAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
-            Emp_ViewCustomerForm form = formBeanFactory.create(request);
-            request.setAttribute("form",form);
             
             Employee employee = (Employee) request.getSession(false).getAttribute("employee");
             if(employee == null) {
                 return "login-emp.jsp";
             }
+            
+            Emp_ViewCustomerForm form = formBeanFactory.create(request);
+            request.setAttribute("form",form);
             
             if (!form.isPresent()) {
                 //return "manage-customers-emp.jsp";
@@ -67,7 +68,9 @@ public class Emp_ViewCustomerAccountAction extends Action {
             }
             
             // Look up the customer
-            Customer customer = customerDAO.lookup(form.getUserName());
+            Customer customer = (Customer) request.getAttribute("customer");
+            if (customer == null)
+                customer = customerDAO.lookup(form.getUserName());
             
             if (customer == null) {
                 errors.add("User not found");

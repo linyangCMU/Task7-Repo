@@ -105,6 +105,43 @@ public class FundDAO {
 		}	
 	}
 	
+	public Fund lookup(String name, String symbol) throws MyDAOException{
+        Connection con = null;
+        try {
+            con = getConnection();
+
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM "
+                    + tableName + " WHERE name=? OR symbol=?");
+            pstmt.setString(1, name);
+            pstmt.setString(2, symbol);
+            ResultSet rs = pstmt.executeQuery();
+
+            Fund fund;
+            if (!rs.next()) {
+                fund = null;
+            } else {
+                fund = new Fund();              
+                fund.setName(rs.getString("name"));
+                fund.setSymbol(rs.getString("symbol"));
+            }
+
+            rs.close();
+            pstmt.close();
+            releaseConnection(con);
+            return fund;
+
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }   
+    }
+	
 	public ArrayList<Fund> lookup(String query) throws MyDAOException{
 	    Connection con = null;
         try {
