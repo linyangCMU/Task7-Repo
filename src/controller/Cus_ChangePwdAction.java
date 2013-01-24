@@ -44,16 +44,15 @@ public class Cus_ChangePwdAction extends Action {
 			// will be
 			// presented (we assume for the first time).
 			if (!form.isPresent()) {
-				return "changepwdA.html";
+				return "change-pwd-cus.jsp";
 			}
 
 			// Any validation errors?
 			errors.addAll(form.getValidationErrors());
 			if (errors.size() != 0) {
 				System.out.println(errors.toString());
-				return "changepwdA.html";
+				return "change-pwd-cus.jsp";
 			}
-			System.out.println("hahaha");
 
 			Customer customer = (Customer) request.getSession().getAttribute("customer");
 			
