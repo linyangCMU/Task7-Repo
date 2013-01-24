@@ -64,8 +64,7 @@ public class Emp_LoginAction extends Action {
 	        // Attach (this copy of) the user bean to the session
 	        HttpSession session = request.getSession();
 	        session.setAttribute("employee",employee);
-	
-	      
+	        
 			String webapp = request.getContextPath();
 			return webapp + "/getcustomers.do";
         } catch (MyDAOException e) {

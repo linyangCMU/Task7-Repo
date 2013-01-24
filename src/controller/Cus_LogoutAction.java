@@ -14,11 +14,11 @@ public class Cus_LogoutAction extends Action {
 
 	public Cus_LogoutAction(Model model) { }
 
-	public String getName() { return "logout.do"; }
+	public String getName() { return "logout-cus.do"; }
 
 	public String perform(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        session.setAttribute("user",null);
+        session.setAttribute("customer",null);
 
 		request.setAttribute("message","You are now logged out");
         return "success.jsp";

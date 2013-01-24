@@ -112,7 +112,7 @@ public class CustomerDAO {
 				customer.setCity(rs.getString("city"));
 				customer.setState(rs.getString("state"));
 				customer.setZip(rs.getString("zip"));
-				customer.setCash(rs.getInt("cash"));
+				customer.setCash((double)rs.getInt("cash")*1.0/100.0);
 			}
 
 			rs.close();

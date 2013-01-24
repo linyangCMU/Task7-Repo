@@ -16,7 +16,7 @@
 		<li><span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span></li>
 		<li><span class="menu-item"><a href="viewPortafolio.do">View Account</a></span></li>
 		<li><span class="menu-item"><a href="researchfund.do">Research Fund</a></span></li>
-		<li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
+		<li><span class="menu-item"><a href="logout-cus.do">Logout</a></span></li>
 <%
     }
 %>

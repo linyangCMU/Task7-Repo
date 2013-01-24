@@ -53,9 +53,16 @@ public class Emp_DepositCheckAction extends Action {
             // Look up the customer
             Customer customer = customerDAO.lookup(form.getUserName());
             double amount = Double.parseDouble(form.getDeposit());
-            customer.setCash(customer.getCash() + amount);
+            //customer.setCash(customer.getCash() + amount);
             
-            customerDAO.updateCash(customer);
+            //customerDAO.updateCash(customer);
+            Transaction transaction = new Transaction();
+            transaction.setAmount(amount);
+            transaction.setCustomer_id(customer.getCustomerID());
+            transaction.setDate(null);
+            transaction.setTransaction_type("DEPOSIT");
+            transaction.setStatus("PENDING");
+            transactionDAO.create(transaction);
             /*
             Transaction transaction = new Transaction();
             transaction.setCustomer_id(customer.getCustomerID());
@@ -65,11 +72,9 @@ public class Emp_DepositCheckAction extends Action {
             transactionDAO.create(transaction);
             */
             // Attach (this copy of) the customer object to the session
-            HttpSession session = request.getSession();
-            session.setAttribute("Customer",customer);
+            request.setAttribute("customer",customer);
             
-            String webapp = request.getContextPath();
-            return webapp + "/view-customer-acct-emp.jsp";
+            return "viewcustomeraccount.do";
         } catch (MyDAOException e) {
             errors.add(e.getMessage());
             return "error.jsp";
