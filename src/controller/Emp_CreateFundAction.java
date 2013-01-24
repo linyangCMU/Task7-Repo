@@ -10,6 +10,7 @@ import org.mybeans.form.FormBeanFactory;
 
 import databeans.Employee;
 import databeans.Fund;
+import formbeans.Emp_CreateFundForm;
 import formbeans.Emp_RegisterForm;
 
 import model.FundDAO;
@@ -18,7 +19,7 @@ import model.MyDAOException;
 
 
 public class Emp_CreateFundAction extends Action {   
-    private FormBeanFactory<Emp_RegisterForm> formBeanFactory = FormBeanFactory.getInstance(Emp_RegisterForm.class);
+    private FormBeanFactory<Emp_CreateFundForm> formBeanFactory = FormBeanFactory.getInstance(Emp_CreateFundForm.class);
     private FundDAO fundDAO;
     
     public Emp_CreateFundAction(Model model) {
@@ -32,7 +33,7 @@ public class Emp_CreateFundAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
-            Emp_RegisterForm form = formBeanFactory.create(request);
+            Emp_CreateFundForm form = formBeanFactory.create(request);
             request.setAttribute("form",form);
             
             Employee employee = (Employee) request.getSession(false).getAttribute("employee");
