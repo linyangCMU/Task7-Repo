@@ -5,50 +5,75 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.mybeans.form.FormBeanException;
+import org.mybeans.form.FormBeanFactory;
 
 import databeans.Customer;
+import databeans.Employee;
 import databeans.Fund;
 import databeans.Portfolio;
 import databeans.Position;
 import databeans.Transaction;
+import formbeans.Emp_ViewCustomerForm;
 
-import model.Model;
-
-import model.HistoryDAO;
 import model.FundDAO;
+import model.HistoryDAO;
+import model.Model;
+import model.CustomerDAO;
+import model.MyDAOException;
 import model.PositionDAO;
 import model.TransactionDAO;
-import model.MyDAOException;
 
 
-public class Cus_ViewPortfolioAction extends Action {   
+public class Emp_ViewCustomerAccountAction extends Action {   
+    private FormBeanFactory<Emp_ViewCustomerForm> formBeanFactory = FormBeanFactory.getInstance(Emp_ViewCustomerForm.class);
+    private CustomerDAO customerDAO;
+    private PositionDAO positionDAO;
     private FundDAO fundDAO;
     private HistoryDAO historyDAO;
-    private PositionDAO positionDAO;
     private TransactionDAO transactionDAO;
     
-    public Cus_ViewPortfolioAction(Model model) {
+    public Emp_ViewCustomerAccountAction(Model model) {
+        customerDAO = model.getCustomerDAO();
+        positionDAO = model.getPositionDAO();
         fundDAO = model.getFundDAO();
         historyDAO = model.getHistoryDAO();
-        positionDAO = model.getPositionDAO();
         transactionDAO = model.getTransactionDAO();
     }
     
-    public String getName() { return "viewportfolio.do"; }
+    public String getName() { return "viewcustomeraccount.do"; }
     
     public String perform(HttpServletRequest request) {
         List<String> errors = new ArrayList<String>();
         request.setAttribute("errors",errors);
         
         try {
-            Customer customer = (Customer) request.getSession(false).getAttribute("customer");
+            Emp_ViewCustomerForm form = formBeanFactory.create(request);
+            request.setAttribute("form",form);
             
-            if(customer == null) {
-                return "login-cus.jsp";
+            Employee employee = (Employee) request.getSession(false).getAttribute("employee");
+            if(employee == null) {
+                return "login-emp.jsp";
             }
             
+            if (!form.isPresent()) {
+                return "manage-customers-emp.jsp";
+            }
+
+            // Any validation errors?
+            errors.addAll(form.getValidationErrors());
             if (errors.size() != 0) {
-                return "error.jsp";
+                return "manage-customers-emp.jsp";
+            }
+            
+            // Look up the customer
+            Customer customer = customerDAO.lookup(form.getUserName());
+            
+            if (customer == null) {
+                errors.add("User Name not found");
+                return "manage-customers-emp.jsp";
             }
             
             int customerId = customer.getCustomerID();
@@ -85,8 +110,14 @@ public class Cus_ViewPortfolioAction extends Action {
             request.setAttribute("portfolios",portfolios);
             request.setAttribute("lastExecuteDate",date);
             
-            return "view-portfolio-cus.jsp";
+            // Attach (this copy of) the user bean to the request
+            request.setAttribute("customer",customer);
+          
+            return "view-customer-acct-emp.jsp";
         } catch (MyDAOException e) {
+            errors.add(e.getMessage());
+            return "error.jsp";
+        } catch (FormBeanException e) {
             errors.add(e.getMessage());
             return "error.jsp";
         }

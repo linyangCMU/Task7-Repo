@@ -5,43 +5,61 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.mybeans.form.FormBeanException;
+import org.mybeans.form.FormBeanFactory;
+
 import databeans.Customer;
+import databeans.Employee;
 import databeans.Fund;
 import databeans.Transaction;
+import formbeans.Cus_FundSearchForm;
+import formbeans.Emp_ViewCustomerForm;
 
+import model.CustomerDAO;
 import model.Model;
 import model.FundDAO;
 import model.MyDAOException;
 import model.TransactionDAO;
 
 
-public class Cus_ViewTransactionHistoryAction extends Action {   
+public class Emp_ViewTransactionHistoryAction extends Action {   
+    private FormBeanFactory<Emp_ViewCustomerForm> formBeanFactory = FormBeanFactory.getInstance(Emp_ViewCustomerForm.class);
     private FundDAO fundDAO;
     private TransactionDAO transactionDAO;
+    private CustomerDAO customerDAO;
     
-    public Cus_ViewTransactionHistoryAction(Model model) {
+    public Emp_ViewTransactionHistoryAction(Model model) {
         fundDAO = model.getFundDAO();
         transactionDAO = model.getTransactionDAO();
+        customerDAO = model.getCustomerDAO();
     }
     
-    public String getName() { return "cusviewhistory.do"; }
+    public String getName() { return "empviewhistory.do"; }
     
     public String perform(HttpServletRequest request) {
         List<String> errors = new ArrayList<String>();
         request.setAttribute("errors",errors);
         
         try {
+            Emp_ViewCustomerForm form = formBeanFactory.create(request);
+            request.setAttribute("form",form);
             
-            Customer customer = (Customer) request.getSession(false).getAttribute("customer");
+            Employee employee = (Employee) request.getSession(false).getAttribute("employee");
+            if (employee == null) {
+                return "login-emp.jsp";
+            }
+            
+            // Look up the Customer
+            Customer customer = customerDAO.lookup(form.getUserName());
             if (customer == null) {
-                return "login-cus.jsp";
+                errors.add("No such customer with user name: " + form.getUserName());
+                return "error.jsp";
             }
             
             if (errors.size() != 0) {
                 return "error.jsp";
             }
             
-            // Look up the fund
             int customerId = customer.getCustomerID();
             ArrayList<Transaction> transactions = transactionDAO.getTransactions(customerId);
             
@@ -57,8 +75,11 @@ public class Cus_ViewTransactionHistoryAction extends Action {
             // Attach (this copy of) the transactions object to the request
             request.setAttribute("transactions",transactions);
             
-            return "view-transaction-history-cus.jsp";
+            return "view-transaction-history-emp.jsp";
         } catch (MyDAOException e) {
+            errors.add(e.getMessage());
+            return "error.jsp";
+        } catch (FormBeanException e) {
             errors.add(e.getMessage());
             return "error.jsp";
         }

@@ -11,6 +11,10 @@ public class Transaction {
 	private Date execute_date = null;
 	private String transaction_type = null;
 	private int amount = 0;
+	private String status = "";
+	
+	private String fundName = "";
+	private double fundPrice = 0.0;
 	
 	public int getTransaction_id() {
 		return transaction_id;
@@ -54,5 +58,24 @@ public class Transaction {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public String getFundName() {
+        return fundName;
+    }
+    public void setFundName(String fundName) {
+        this.fundName = fundName;
+    }
+    public double getFundPrice() {
+        return fundPrice;
+    }
+    public void setFundPrice(double fundPrice) {
+        this.fundPrice = fundPrice;
+    }
+	
 	
 }

@@ -7,8 +7,6 @@ import javax.servlet.http.*;
 
 import model.Model;
 
-import databeans.*;
-
 
 public class Controller extends HttpServlet {
 
@@ -32,7 +30,7 @@ public class Controller extends HttpServlet {
 		Action.add(new Emp_LogoutAction(model));
 		Action.add(new Emp_RegisterAction(model));
 		Action.add(new Emp_DepositCheckAction(model));
-		
+		Action.add(new Emp_ViewTransactionHistoryAction(model));
 	}
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

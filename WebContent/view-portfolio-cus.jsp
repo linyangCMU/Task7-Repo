@@ -28,26 +28,15 @@
     </ul>
     </div>
     <div id="content-container">
-        <div id="section-navigation">
-            <ul>
-				<li><span class="menu-item"><a href="login.do">Change password</a></span></li>
-				<li><span class="menu-item"><a href="buyFund.do">Buy Fund</a></span></li>
-				<li><span class="menu-item"><a href="sellFund.do">sell Fund</a></span></li>
-				<li><span class="menu-item"><a href="RequestCheck.do">Request Check</a></span></li>
-				<li><span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span></li>
-				<li><span class="menu-item"><a href="viewPortafolio.do">View Account</a></span></li>
-				<li><span class="menu-item"><a href="researchfund.do">Research Fund</a></span></li>
-				<li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
-            </ul>
-        </div>
+        <jsp:include page="section-navigation-cus.jsp" />
         <div class="content">
             <h2> Customer Account </h2>
-            <%
-				Customer customer = (Customer) session.getAttribute("customer");
-				if(customer==null){
-				    return;
-			    }
-		    %>
+<%
+	Customer customer = (Customer) session.getAttribute("customer");
+	if(customer==null){
+	    return;
+	}
+%>
             <table>
                 <tr>
                     <td> <b>Name</b> </td>
@@ -63,7 +52,7 @@
                 </tr>
                 <tr>
                     <td> <b>Last Trading Date</b> </td>
-                    <td><%= (Date) session.getAttribute("lastExecuteDate") %></td>
+                    <td><%= (Date) request.getAttribute("lastExecuteDate") %></td>
                 </tr>
                 <tr>
 					<td> <b>Cash Balance</b> </td>
@@ -78,9 +67,9 @@
 					<td> <b>Total Value</b> </td>
 				</tr>
 <%
-          ArrayList<Portfolio> portfolios = (ArrayList<Portfolio>) request.getAttribute("portfolios");
-          if(portfolios != null){
-        	  for(Portfolio portfolio:portfolios){
+	ArrayList<Portfolio> portfolios = (ArrayList<Portfolio>) request.getAttribute("portfolios");
+	if(portfolios != null){
+	    for(Portfolio portfolio:portfolios){
 %>
                 <tr>
                     <td> <%=portfolio.getFundName() %> </td>
@@ -89,8 +78,8 @@
                     <td> <%=portfolio.getTotal() %> </td>
                 </tr>
 <%
-        	  }
-          }
+        }
+	}
 %>
             </table>
         </div>

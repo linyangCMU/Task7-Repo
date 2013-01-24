@@ -74,7 +74,7 @@ public class TransactionDAO {
 		}
 	}
 	
-	public Transaction[] getTransactions(int customer_id) throws MyDAOException {
+	public ArrayList<Transaction> getTransactions(int customer_id) throws MyDAOException {
 		Connection con = null;
     	try {
         	con = getConnection();
@@ -85,7 +85,7 @@ public class TransactionDAO {
             
         	ResultSet rs = pstmt.executeQuery();
             
-            List<Transaction> list = new ArrayList<Transaction>();
+        	ArrayList<Transaction> list = new ArrayList<Transaction>();
             while (rs.next()) {
             	Transaction transaction = new Transaction();
             	transaction = new Transaction();
@@ -96,14 +96,14 @@ public class TransactionDAO {
 				transaction.setShares((double)rs.getInt("shares")/1000);
 				transaction.setTransaction_type(rs.getString("transaction_type"));
 				transaction.setAmount(rs.getInt("amount"));
-            	
+            	transaction.setStatus(rs.getString("status"));
             	
             	list.add(transaction);
             }
             stmt.close();
             releaseConnection(con);
             
-            return list.toArray(new Transaction[list.size()]);
+            return list;
     	} catch (SQLException e) {
             try { 
             	if (con != null) 
@@ -182,7 +182,7 @@ public class TransactionDAO {
         try {
         	con = getConnection();
             Statement stmt = con.createStatement();
-            stmt.executeUpdate("CREATE TABLE " + tableName + " (transaction_id INT NOT NULL AUTO_INCREMENT, customer_id INT NOT NULL, fund_id INT NOT NULL, execute_date DATE, shares INT, transaction_type VARCHAR(255), amount INT, PRIMARY KEY(transaction_id))");           
+            stmt.executeUpdate("CREATE TABLE " + tableName + " (transaction_id INT NOT NULL AUTO_INCREMENT, customer_id INT NOT NULL, fund_id INT NOT NULL, execute_date DATE, shares INT, transaction_type VARCHAR(255), amount INT, status VARCHAR(255), PRIMARY KEY(transaction_id))");           
             stmt.close();
         	
         	releaseConnection(con);
