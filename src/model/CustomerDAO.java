@@ -61,7 +61,7 @@ public class CustomerDAO {
 			PreparedStatement pstmt = con
 					.prepareStatement("INSERT INTO "
 							+ tableName
-							+ " (username, password, firstname, lastname, addr_line1, add_line2, city, state, zip, cash) VALUES (?,?,?,?,?,?,?,?,?,?)");
+							+ " (username, password, firstname, lastname, addr_line1, addr_line2, city, state, zip, cash) VALUES (?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1, customer.getUsername());
 			pstmt.setString(2, customer.getPassword());
 			pstmt.setString(3, customer.getFirstName());
