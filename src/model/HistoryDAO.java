@@ -163,9 +163,11 @@ public class HistoryDAO {
                 rs.close();
                 pstmt.close();
                 releaseConnection(con);
-                return -1.0;
+                return 0.0;
             } else {
-                d.setTime(rs.getDate("max(price_date)").getTime());
+                Date date = rs.getDate("max(price_date)");
+                if(date!=null)
+                    d.setTime(date.getTime());
                 double price = (double)rs.getInt("price")/100;
                 
                 rs.close();

@@ -53,13 +53,14 @@ public class TransactionDAO {
 		try{
 			con = getConnection();
 			
-        	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (customer_id, fund_id, execute_date, lastname, shares, transaction_type, amount) VALUES (?,?,?,?,?,?,?)");
+        	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (customer_id, fund_id, execute_date, shares, transaction_type, amount, status) VALUES (?,?,?,?,?,?,?)");
 			pstmt.setInt(1, transaction.getCustomer_id());
 			pstmt.setInt(2, transaction.getFund_id());
 			pstmt.setDate(3, transaction.getExecute_date());
 			pstmt.setInt(4, (int)transaction.getShares() * 1000);	
 			pstmt.setString(5, transaction.getTransaction_type());
 			pstmt.setInt(6, (int)(transaction.getAmount()*1000));
+			pstmt.setString(7, transaction.getStatus());
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
 			pstmt.close();

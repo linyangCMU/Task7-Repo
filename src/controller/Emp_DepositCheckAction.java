@@ -62,15 +62,10 @@ public class Emp_DepositCheckAction extends Action {
             transaction.setDate(null);
             transaction.setTransaction_type("DEPOSIT");
             transaction.setStatus("PENDING");
+            transaction.setFund_id(0);
+            transaction.setShares(0);
             transactionDAO.create(transaction);
-            /*
-            Transaction transaction = new Transaction();
-            transaction.setCustomer_id(customer.getCustomerID());
-            transaction.setAmount((int)amount*1000);
-            transaction.setDate(execute_date);
-            transaction.set
-            transactionDAO.create(transaction);
-            */
+            
             // Attach (this copy of) the customer object to the session
             request.setAttribute("customer",customer);
             

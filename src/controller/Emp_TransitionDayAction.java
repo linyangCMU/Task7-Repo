@@ -64,7 +64,9 @@ public class Emp_TransitionDayAction extends Action {
             //get fund info:
             ArrayList<Fund> funds = fundDAO.lookup(".");
             for (Fund fund : funds) {
+                
                 fund.setPrice(historyDAO.lookupLatestPriceAndDate(fund.getId(), new Date(0)));
+                System.out.println(fund.getName() + ":");
             }
             
             request.setAttribute("funds", funds);
