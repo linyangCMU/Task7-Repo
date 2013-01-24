@@ -67,7 +67,7 @@ public class Cus_LoginAction extends Action {
 	
 	      
 			String webapp = request.getContextPath();
-			return webapp + "/getfunds.do";
+			return webapp + "/cus_changePwd.do";
         } catch (MyDAOException e) {
         	errors.add(e.getMessage());
         	return "error.jsp";

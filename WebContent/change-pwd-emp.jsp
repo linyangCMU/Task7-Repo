@@ -12,19 +12,16 @@
 <div id="container">
     <jsp:include page="template-header-navigation.jsp" />
     <div id="content-container">
-        <jsp:include page="template-section-navigation-cus.jsp" />
+        <jsp:include page="template-section-navigation-emp.jsp" />
         
         <div class="content">
 	        <h2> Change Password </h2>
             
             <jsp:include page="error-list.jsp" />
             
-			<form method="POST" action="change-emoloyee-pwd.do">
+			<form method="POST" action="emp_changePwd.do">
 				<table>
-					<tr>
-						<td> Current Password: </td>
-						<td><input type="password" name="currentPassword" value=""/></td>
-					</tr>
+					
 					<tr>
 						<td> New Password: </td>
 						<td><input type="password" name="newPassword" value=""/></td>

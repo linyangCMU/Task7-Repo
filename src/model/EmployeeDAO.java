@@ -119,8 +119,8 @@ public class EmployeeDAO {
         	
             Statement stmt = con.createStatement();
             PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET password=? WHERE username=?");
-            pstmt.setString(1, username);
-            pstmt.setString(2, newPassword);		
+            pstmt.setString(1, newPassword);
+            pstmt.setString(2, username);		
 			pstmt.executeUpdate();
            
             stmt.close();
