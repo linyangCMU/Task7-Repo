@@ -15,7 +15,7 @@ public class Model {
 		String jdbcURL   = config.getInitParameter("jdbcURL");
 		
 		try{
-			customerDAO = new CustomerDAO(jdbcDriverName, jdbcURL, "task7_custormer");
+			customerDAO = new CustomerDAO(jdbcDriverName, jdbcURL, "task7_customer");
 			employeeDAO = new EmployeeDAO(jdbcDriverName, jdbcURL, "task7_employee");
 			transactionDAO = new TransactionDAO(jdbcDriverName, jdbcURL, "task7_transaction");
 			fundDAO = new FundDAO(jdbcDriverName, jdbcURL, "task7_fund");
