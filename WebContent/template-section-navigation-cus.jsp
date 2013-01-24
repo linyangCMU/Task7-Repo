@@ -9,7 +9,7 @@
 <%   
     } else {
 %>
-		<li><span class="menu-item"><a href="login.do">Change password</a></span></li>
+		<li><span class="menu-item"><a href="cus_changePwd.do">Change password</a></span></li>
 		<li><span class="menu-item"><a href="buyFund.do">Buy Fund</a></span></li>
 		<li><span class="menu-item"><a href="sellFund.do">sell Fund</a></span></li>
 		<li><span class="menu-item"><a href="RequestCheck.do">Request Check</a></span></li>

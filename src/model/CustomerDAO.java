@@ -299,8 +299,8 @@ public class CustomerDAO {
         	
             Statement stmt = con.createStatement();
             PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET password=? WHERE username=?");
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);		
+            pstmt.setString(1, password);
+            pstmt.setString(2, username);		
 			pstmt.executeUpdate();
            
             stmt.close();

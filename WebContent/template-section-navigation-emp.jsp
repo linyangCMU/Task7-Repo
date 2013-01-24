@@ -10,7 +10,7 @@
 <%   
     } else {
 %>
-        <li><a href="#">Change Password</a></li>
+        <li><a href="emp_changePwd.do">Change Password</a></li>
         <li><a href="#">Create Employee Account</a></li>
         <li><a href="#">Create Customer Account</a></li>
         <li><a href="createfund.do">Create Fund</a></li>

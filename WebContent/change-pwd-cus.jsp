@@ -27,9 +27,9 @@
     	<ul>
               
 
-						<li><span class="menu-item"><a href="login.do">Change password</a></span></li>
+						<li><span class="menu-item"><a href="cus_changePwd.do">Change password</a></span></li>
 						<li><span class="menu-item"><a href="buyFund.do">Buy Fund</a></span></li>
-						<li><span class="menu-item"><a href="sellFund.do">sell Fund</a></span></li>
+						<li><span class="menu-item"><a href="sellFund.do">Sell Fund</a></span></li>
 						<li><span class="menu-item"><a href="RequestCheck.do">Request Check</a></span></li>
 						<li><span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span></li>
 						<li><span class="menu-item"><a href="viewPortafolio.do">View Account</a></span></li>
@@ -40,15 +40,16 @@
     </div>
          <h2> Change Password </h2>
           <p>
-      <form method="post" action="changepwdA.do">
+      <form method="post" action="cus_changePwd.do">
         <table>
+        
           <tr>
             <td> New Password: </td>
             <td><input type="password" name="newPassword" value=""/></td>
           </tr>
           <tr>
             <td> Confirm New Password: </td>
-            <td><input type="password" name="ConfirmPassword" value=""/></td>
+            <td><input type="password" name="confirmPassword" value=""/></td>
           </tr>
           <tr>
             <td colspan="2" align="center"><input type="submit" name="button" value="Submit"/></td>

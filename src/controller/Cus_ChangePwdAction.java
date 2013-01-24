@@ -4,20 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
+import model.CustomerDAO;
+import model.Model;
 
 import org.mybeans.form.FormBeanFactory;
 
-import model.CustomerDAO;
-import model.EmployeeDAO;
-import model.Model;
-import model.MyDAOException;
-
 import databeans.Customer;
-import databeans.Employee;
-
 import formbeans.Cus_ChangePwdForm;
-import formbeans.Emp_RegisterForm;
 
 public class Cus_ChangePwdAction extends Action {
 	private FormBeanFactory<Cus_ChangePwdForm> formBeanFactory = FormBeanFactory
@@ -30,7 +24,7 @@ public class Cus_ChangePwdAction extends Action {
 	}
 
 	public String getName() {
-		return "login.do";
+		return "cus_changePwd.do";
 	}
 
 	public String perform(HttpServletRequest request) {
@@ -56,9 +50,8 @@ public class Cus_ChangePwdAction extends Action {
 
 			Customer customer = (Customer) request.getSession().getAttribute("customer");
 			
-			// Change the password
 			customerDAO.setPassword(customer.getUsername(), form.getNewPassword());
-
+			
 			request.setAttribute("message","Password changed for "+customer.getCustomerID());
 	        return "viewPortafolio.jsp";
 	  } catch (Exception e) {
