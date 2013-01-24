@@ -27,7 +27,9 @@
     </ul>
     </div>
     <div id="content-container">
-        <jsp:include page="section-navigation-emp.jsp" />
+        
+        <jsp:include page="template-section-navigation-emp.jsp" />
+        
         <div class="content">
             <h2> Customer Account </h2>
 <%

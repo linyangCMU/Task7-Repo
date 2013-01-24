@@ -31,6 +31,9 @@ public class Controller extends HttpServlet {
 		Action.add(new Emp_RegisterAction(model));
 		Action.add(new Emp_DepositCheckAction(model));
 		Action.add(new Emp_ViewTransactionHistoryAction(model));
+		Action.add(new Emp_ViewCustomerAccountAction(model));
+		Action.add(new Emp_CreateFundAction(model));
+		Action.add(new Emp_TransitionDayAction(model));
 	}
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

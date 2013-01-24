@@ -53,21 +53,8 @@
         </div>
         
         <div id="content-container">
-            <div id="section-navigation">
-                <ul>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Change Password</a></li>
-                    <li><a href="#">Create Employee Account</a></li>
-                    <li><a href="#">Create Customer Account</a></li>
-                    <li><a href="#">Reset Customer Password</a></li>
-                    <li><a href="#">View Customer Account</a></li>
-                    <li><a href="#">View Customer Transaction History</a></li>
-                    <li><a href="#">Deposit Check</a></li>
-                    <li><a href="#">Create Fund</a></li>
-                    <li><a href="#">Transition Day</a></li>
-                    <li><a href="#">Logout</a></li>
-                </ul>
-            </div>
+            
+            <jsp:include page="template-section-navigation-emp.jsp" />
             
             <div id="content">
                 <h2>Search for Customers</h2>
@@ -104,10 +91,8 @@
                 </table>
             </div>
             
-            <div id="footer">
-                Copyright Â© Mutual Fund Application by Team
-                e-Motion | CMU MSIT ebusiness Task7 2013
-            </div>
+            <jsp:include page="template-footer.jsp" />
+            
         </div>
     </div>
 </body>

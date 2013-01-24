@@ -90,13 +90,9 @@
 	                </tbody>
 	            
 	            </table>
-            </div>    
-            
-            <div id="footer">
-                Copyright Â© Mutual Fund Application by Team
-                e-Motion | CMU MSIT ebusiness Task7 2013
             </div>
-        </div>
+        <jsp:include page="template-footer.jsp" />
     </div>
+</div>
 </body>
 </html>

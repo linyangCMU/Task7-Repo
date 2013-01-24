@@ -4,38 +4,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Customer template</title>
+<title>Employee Login</title>
 <link rel="stylesheet" type="text/css" href="style/main.css">
 </head>
 <body>
 
 <div id="container">
-    <div id="header">
-        <h1> Carnegie Financial Service - Mutual Fund Management </h1>
-    </div>
-    <div id="navigation">
-        <ul>
-            <li><a href="viewPortafolio.do">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Contact us</a></li>
-        </ul>
-    </div>
+    <jsp:include page="template-header-navigation.jsp" />
     <div id="content-container">
-        <div id="section-navigation">
-            <ul>
-                <li><span class="menu-item"><a href="login.do">Change password</a></span></li>
-                <li><span class="menu-item"><a href="buyFund.do">Buy Fund</a></span></li>
-                <li><span class="menu-item"><a href="sellFund.do">sell Fund</a></span></li>
-                <li><span class="menu-item"><a href="RequestCheck.do">Request Check</a></span></li>
-                <li><span class="menu-item"><a href="transactionhistory.do">Transaction History</a></span></li>
-                <li><span class="menu-item"><a href="viewPortafolio.do">View Account</a></span></li>
-                <li><span class="menu-item"><a href="researchfund.do">Research Fund</a></span></li>
-                <li><span class="menu-item"><a href="logout.do">Logout</a></span></li>
-            </ul>
-        </div>
+        <jsp:include page="template-section-navigation-cus.jsp" />
+        
         <div class="content">
             <h2> Request Check</h2>
+            
+            <jsp:include page="error-list.jsp" />
+            
             <form method="post" action="requestcheck.do">
                 <table>
                     <tr>
@@ -58,13 +41,8 @@
                 </table>
             </form>
         </div>
-        <div id="aside">
-            <h3> Welcome to CFS- Mutual Fund Management </h3>
-            <p> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan. </p>
-        </div>
-        <div id="footer"> Copyright © Mutual Fund Application by Team e-Motion | CMU MSIT ebusiness Task7 2013 </div>
+        <jsp:include page="template-footer.jsp" />
     </div>
 </div>
-
 </body>
 </html>
