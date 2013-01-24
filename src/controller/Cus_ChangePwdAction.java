@@ -35,8 +35,7 @@ public class Cus_ChangePwdAction extends Action {
 			Cus_ChangePwdForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
 			// If no params were passed, return with no errors so that the form
-			// will be
-			// presented (we assume for the first time).
+			// will be presented (we assume for the first time).
 			if (!form.isPresent()) {
 				return "change-pwd-cus.jsp";
 			}
@@ -53,7 +52,7 @@ public class Cus_ChangePwdAction extends Action {
 			customerDAO.setPassword(customer.getUsername(), form.getNewPassword());
 			
 			request.setAttribute("message","Password changed for "+customer.getCustomerID());
-	        return "viewPortafolio.jsp";
+	        return "viewportfolio.do";
 	  } catch (Exception e) {
       	errors.add(e.toString());
       	return "viewPortafolio.jsp";

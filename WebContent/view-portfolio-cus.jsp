@@ -23,6 +23,7 @@
         
         <div class="content">
             <h2> Customer Account </h2>
+            <jsp:include page="error-list.jsp" />
 <%
 	Customer customer = (Customer) session.getAttribute("customer");
 	if(customer==null){
