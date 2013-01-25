@@ -15,7 +15,7 @@
 		<li><span class="menu-item"><a href="requestcheck.do">Request Check</a></span></li>
 		<li><span class="menu-item"><a href="cusviewhistory.do">Transaction History</a></span></li>
 		<li><span class="menu-item"><a href="viewportfolio.do">View Account</a></span></li>
-		<li><span class="menu-item"><a href="researchfund.do">Research Fund</a></span></li>
+		<li><span class="menu-item"><a href="search-fund-cus.jsp">Research Fund</a></span></li>
 		<li><span class="menu-item"><a href="logout-cus.do">Logout</a></span></li>
 <%
     }
