@@ -326,7 +326,9 @@ public class CustomerDAO {
     	try {
         	con = getConnection();       	  	
             Statement stmt = con.createStatement();
-            
+            Customer customer = lookup(username);
+            if(customer == null)
+            	return null;
             Random random = new Random();
             String tempPassword = String.valueOf(random.nextInt(8192)+1);
             String password = hash(tempPassword);

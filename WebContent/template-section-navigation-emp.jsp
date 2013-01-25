@@ -24,7 +24,7 @@ if (session.getAttribute("employee") == null) {
 	if (request.getAttribute("customer") != null) {
 %>
         <li>Actions for this Customer</li>
-        <li><a href="#">Reset Password</a></li>
+        <li><a href="emp_resetPwd.do">Reset Password</a></li>
         <li><a href="#">View Account</a></li>
         <li><a href="#">Transaction History</a></li>
         <li><a href="depositcheck.do">Deposit Check</a></li>        
