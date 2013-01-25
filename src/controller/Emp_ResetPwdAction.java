@@ -39,6 +39,7 @@ public class Emp_ResetPwdAction extends Action{
 			Emp_ResetPwdForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
 			String newPwd = null;
+			String username;
 			// If no params were passed, return with no errors so that the form
 			// will be
 			// presented (we assume for the first time).
@@ -54,19 +55,20 @@ public class Emp_ResetPwdAction extends Action{
 			}
 			
 
-			Customer customer = (Customer) request.getSession().getAttribute("customer");
-			if(customer == null){
+			username = form.getUserName();
+			if(username == null){
 				errors.add("No such users!");
 			}
 			// Change the password
-			newPwd = customerDAO.resetPassword(customer.getUsername());
-			
-			request.setAttribute("message",newPwd);
-			System.out.print(newPwd);
-	        return "get-cus-emp.jsp";
+			newPwd = customerDAO.resetPassword(username);
+			if(newPwd == null || newPwd.length() == 0)
+				errors.add("No such user!");
+			else
+				errors.add("The password has been reset to " + newPwd);
+	        return "reset-customer-pwd-emp.jsp";
 	  } catch (Exception e) {
       	errors.add(e.toString());
-      	return "change-pwd-emp.jsp";
+      	return "reset-customer-pwd-emp.jsp";
       }
 	}
 }

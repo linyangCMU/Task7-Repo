@@ -19,20 +19,18 @@
             
             <jsp:include page="error-list.jsp" />
             
-			<form method="POST" action="reset-customer-pwd.do">
+			<form method="POST" action="emp_resetPwd.do">
 				<table>
 					<tr>
-						<td> Are you sure? </td>
-					</tr>	
-					<tr>
-						<td colspan="2" align="center">
-							<input type="submit" name="action" value="Yes"/>
-						</td>
-						<td colspan="2" align="center">
-							<input type="submit" name="action" value="No"/>
-						</td>
+						<td> Customer UserName: </td>
+						<td><input type="text" name="userName" value=""/></td>
 					</tr>
 					
+					<tr>
+						<td colspan="2" align="center">
+							<input type="submit" name="action" value="Reset Password"/>
+						</td>
+					</tr>
 				</table>
 			</form>
         </div>
