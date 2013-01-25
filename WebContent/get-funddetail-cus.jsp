@@ -38,36 +38,19 @@ if(fund!=null)
 
 <body>
 <div id="container">
-    <div id="header">
-        <h1> Carnegie Financial Service - Mutual Fund Management </h1>
-    </div>
-    <div id="navigation">
-        <ul>
-            <li><a href="viewPortafolio.html">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Contact us</a></li>
-        </ul>
-    </div>
+    <jsp:include page="template-header-navigation.jsp" />
+   
+        
     <div id="content-container">
-        <div id="section-navigation">
-            <ul>
-                <li><a href="changepwdA.html">Change Password</a></li>
-		        <li><a href="viewCustomerAccount.html">View Account</a><a href="#"></a></li>
-		        <li><a href="BuyFund.html">Buy Fund</a></li>
-		        <li><a href="SellFund.html">sell Fund</a></li>
-		        <li><a href="RequestCheck.html">Request Check</a></li>
-		        <li><a href="transactionhistory.html">Transaction History</a></li>
-		        <li><a href="researchFund.html">Research Fund</a></li>
-		        <li><a href="Index.html">Logout</a></li>
-            </ul>
-        </div>
+        <jsp:include page="template-section-navigation-cus.jsp" />
+            
+        
 	    <div id="content">
 		    
 	      
 	    </div>
     
-        <div id="footer"> Copyright ? Mutual Fund Application by Team e-Motion | CMU MSIT ebusiness Task7 2013 </div>
+         <jsp:include page="template-footer.jsp" />
     </div>
 
 <script src="scripts/highstock.js"></script>

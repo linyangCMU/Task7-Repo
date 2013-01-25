@@ -1,6 +1,7 @@
 package model;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,7 +57,7 @@ public class TransactionDAO {
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (customer_id, fund_id, execute_date, shares, transaction_type, amount, status) VALUES (?,?,?,?,?,?,?)");
 			pstmt.setInt(1, transaction.getCustomer_id());
 			pstmt.setInt(2, transaction.getFund_id());
-			pstmt.setDate(3, transaction.getExecute_date());
+			pstmt.setDate(3, (Date) transaction.getExecute_date());
 			pstmt.setInt(4, (int)transaction.getShares() * 1000);	
 			pstmt.setString(5, transaction.getTransaction_type());
 			pstmt.setInt(6, (int)(transaction.getAmount()*1000));

@@ -24,6 +24,8 @@ public class Controller extends HttpServlet {
 		Action.add(new Cus_ResearchFundAction(model));
 		Action.add(new Cus_RegisterAction(model));
 		Action.add(new Cus_RequestCheckAction(model));
+		Action.add(new Cus_BuyFundAction(model));
+		//Action.add(new Cus_SellFundAction(model));
 		Action.add(new Cus_ViewTransactionHistoryAction(model));		
 		Action.add(new Cus_ViewPortfolioAction(model));
 		Action.add(new Emp_GetCustomersAction(model));

@@ -100,7 +100,7 @@ public class Emp_ViewCustomerAccountAction extends Action {
             }
             
             Transaction transaction = transactionDAO.getLastTransaction(customerId);
-            Date date;
+            java.util.Date date;
             if (transaction!=null){
                 date = transaction.getExecute_date();
             } else {

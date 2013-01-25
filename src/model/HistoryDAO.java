@@ -149,7 +149,7 @@ public class HistoryDAO {
         
     }
 	
-	public double lookupLatestPriceAndDate(int fund_id, Date d) throws MyDAOException {
+	public double lookupLatestPriceAndDate(int fund_id, java.util.Date date2) throws MyDAOException {
         Connection con = null;
         try {
             con = getConnection();
@@ -167,7 +167,7 @@ public class HistoryDAO {
             } else {
                 Date date = rs.getDate("max(price_date)");
                 if(date!=null)
-                    d.setTime(date.getTime());
+                    date2.setTime(date.getTime());
                 double price = (double)rs.getInt("price")/100;
                 
                 rs.close();

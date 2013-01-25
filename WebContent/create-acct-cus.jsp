@@ -26,11 +26,11 @@
 						<td><input type="text" name="userName" value="${form.userName}"/></td>
 					</tr>
 					<tr>
-						<td> first Name: </td>
+						<td> First Name: </td>
 						<td><input type="text" name="firstName" value="${form.firstName}"/></td>
 					</tr>
 					<tr>
-						<td> lastName: </td>
+						<td> LastName: </td>
 						<td><input type="text" name="lastName" value="${form.lastName}"/></td>
 					</tr>
 					<tr>

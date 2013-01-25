@@ -23,7 +23,7 @@
     				<tr> Your Cash amount: $
       				<%=(Double) request.getAttribute("cash")%>
       				</tr>
-      				<form method="post" action="buy.do">
+      				<form method="post" action="cus_buyFund.do">
         			<table>
 					  <tr>
 			 			<td>
@@ -34,14 +34,15 @@
 			 %>
 			 <%=fund.getName() %>
 				</td>
-		      			<td><input type="text" name="buyfund" value="0"/></td>
+		      			<td><input type="text" name="amount" value="0"/></td>
+		      			<td><input type="hidden" name="fundName" value="fund.getName()"/></td>
 	         		</tr>
 			<%	
 				}
 			}
 		      %>
 		      		
-           			<td colspan="2" align="center"><input type="submit" name="button" value="submit"/></td>
+           			<td colspan="2" align="center"><input type="submit" name="button" value="Submit"/></td>
         
         			</table>
       				</form>
