@@ -49,7 +49,7 @@ public class Cus_GetFundsAction extends Action {
             if (errors.size() != 0) {
                 return "search-fund-cus.jsp";
             }
-            System.out.print("123");
+
             // Look up the fund
             ArrayList<Fund> funds = fundDAO.lookup(form.getQuery());
             
@@ -60,18 +60,14 @@ public class Cus_GetFundsAction extends Action {
                 fund.setPrice(price);
             }
             
-            // Attach (this copy of) the funds object to the session
-            HttpSession session = request.getSession();
-            session.setAttribute("funds",funds);
+            // Attach (this copy of) the funds object to the request
+            request.setAttribute("funds",funds);
             
-            String webapp = request.getContextPath();
-            return webapp + "/get-fund-cus.jsp";
+            return "get-fund-cus.jsp";
         } catch (MyDAOException e) {
-            System.out.println("DAO error");
             errors.add(e.getMessage());
             return "error.jsp";
         } catch (FormBeanException e) {
-            System.out.println("FormBean error");
             errors.add(e.getMessage());
             return "error.jsp";
         }

@@ -14,10 +14,10 @@
             <jsp:include page="template-section-navigation-cus.jsp" />
 
             <div class="content">
-				<h2>Create Customer Account</h2>
+				<h2>Change Password</h2>
 
 				<jsp:include page="error-list.jsp" />
-				<h2>Change Password</h2>
+				
 				<form method="post" action="cus_changePwd.do">
 					<table>
 						<tr>

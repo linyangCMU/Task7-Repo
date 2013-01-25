@@ -5,62 +5,35 @@
 <%@ page import="databeans.Fund" %>
 
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Mutual Fund Management</title>
-	<link rel="stylesheet" type="text/css" href="style/main.css" />
-	<link rel="stylesheet" type="text/css" href="style/envision.min.css" />
-	<script type="text/javascript" src="scripts/jquery.js"></script>
-	
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Mutual Fund Management</title>
+<link rel="stylesheet" type="text/css" href="style/main.css">
+<link rel="stylesheet" type="text/css" href="style/table.css">
+<script type="text/javascript" src="scripts/jquery.js"></script>
+
+<script>
+var financeData = [];
+var fundName = "No Fund";
 <%
-ArrayList<History> histories = (ArrayList<History>) session.getAttribute("histories");
-Fund fund = (Fund) session.getAttribute("fund");
-out.println("<script>");
-out.println("var financeData = [ ");
+ArrayList<History> histories = (ArrayList<History>) request.getAttribute("histories");
+Fund fund = (Fund) request.getAttribute("fund");
+out.println("financeData = [ ");
 if (histories!=null) {
     for (History history : histories) {
         out.println("["+history.getDate().getTime()+","+ history.getPrice() + "],");   
     }
 }
 out.println("];");
-out.println("var fundName = '" + fund.getName() + "';");
-out.println("</script>");
+if(fund!=null)
+    out.println("fundName = '" + fund.getName() + "';");
 %>
-
-<script type="text/javascript">
-$(function() {
-    // Create the chart
-    window.chart = new Highcharts.StockChart({
-        chart : {
-            renderTo : 'content'
-        },
-
-        rangeSelector : {
-            selected : 1
-        },
-
-        title : {
-            text : fundName
-        },
-        
-        series : [{
-            name : fundName,
-            data : financeData,
-            marker : {
-                enabled : true,
-                radius : 3
-            },
-            shadow : true,
-            tooltip : {
-                valueDecimals : 2
-            }
-        }]
-    });
-});
 </script>
-	
+
+<script type="text/javascript" src="scripts/draw.js"></script>
+
 </head>
 
 <body>
