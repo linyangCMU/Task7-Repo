@@ -12,7 +12,7 @@
 <div id="container">
     <jsp:include page="template-header-navigation.jsp" />
     <div id="content-container">
-        <jsp:include page="template-section-navigation-cus.jsp" />
+        <jsp:include page="template-section-navigation-emp.jsp" />
         
         <div class="content">
             <h2> Create Customer Account </h2>

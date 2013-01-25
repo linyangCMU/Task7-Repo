@@ -46,7 +46,6 @@ public class Cus_RegisterAction extends Action {
 	        	System.out.println(errors.toString());
 	            return "create-acct-cus.jsp";
 	        }
-	        System.out.println("hahaha");
 	        // Create the user bean
 	        Customer user = new Customer();
 	        user.setUsername(form.getUserName());
@@ -70,8 +69,7 @@ public class Cus_RegisterAction extends Action {
 	        if (redirectTo != null) return redirectTo;
 	        
 	        // If redirectTo is null, redirect to the "manage" action
-			String webapp = request.getContextPath();
-			return webapp + "//getfunds.do";        
+			return "manage-customers-emp.jsp";        
 		} catch (MyDAOException e) {
         	errors.add(e.getMessage());
         	return "error.jsp";
