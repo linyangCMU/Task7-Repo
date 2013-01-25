@@ -1,5 +1,7 @@
 package model;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -14,7 +16,7 @@ import java.sql.PreparedStatement;
 
 
 import databeans.Customer;
-
+import java.util.Random;
 
 public class CustomerDAO {
 	private List<Connection> connectionPool = new ArrayList<Connection>();
@@ -319,7 +321,60 @@ public class CustomerDAO {
 		}
 	}
 
-	
+	public String resetPassword(String username) throws MyDAOException {
+		Connection con = null;		
+    	try {
+        	con = getConnection();       	  	
+            Statement stmt = con.createStatement();
+            
+            Random random = new Random();
+            String tempPassword = String.valueOf(random.nextInt(8192)+1);
+            String password = hash(tempPassword);
+            PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET password=? WHERE username=?");
+            pstmt.setString(1, password);
+            pstmt.setString(2, username);		
+			pstmt.executeUpdate();
+           
+            stmt.close();
+            releaseConnection(con);
+            return password;
+        
+    	} catch (SQLException e) {
+            try { 
+            	if (con != null) 
+            		con.close(); 
+            } 
+            catch (SQLException e2) {
+            	
+            }
+            throw new MyDAOException(e);
+		}
+	}
+	private String hash(String clearPassword) {
+		
+
+		MessageDigest md = null;
+		try {
+		  md = MessageDigest.getInstance("SHA1");
+		} catch (NoSuchAlgorithmException e) {
+		  throw new AssertionError("Can't find the SHA1 algorithm in the java.security package");
+		}
+
+		md.update(clearPassword.getBytes());
+		byte[] digestBytes = md.digest();
+
+		// Format the digest as a String
+		StringBuffer digestSB = new StringBuffer();
+		for (int i=0; i<digestBytes.length; i++) {
+		  int lowNibble = digestBytes[i] & 0x0f;
+		  int highNibble = (digestBytes[i]>>4) & 0x0f;
+		  digestSB.append(Integer.toHexString(highNibble));
+		  digestSB.append(Integer.toHexString(lowNibble));
+		}
+		String digestStr = digestSB.toString();
+
+		return digestStr;
+	}
 	public Customer[] getCustomers() throws MyDAOException {
 		Connection con = null;
     	try {

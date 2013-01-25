@@ -5,55 +5,64 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import model.CustomerDAO;
 import model.EmployeeDAO;
 import model.Model;
 
 import org.mybeans.form.FormBeanFactory;
 
+import databeans.Customer;
 import databeans.Employee;
 import formbeans.Emp_ChangePwdForm;
+import formbeans.Emp_ResetPwdForm;
 
-public class Emp_ChangePwdAction extends Action{
-	private FormBeanFactory<Emp_ChangePwdForm> formBeanFactory = FormBeanFactory
-			.getInstance(Emp_ChangePwdForm.class);
+public class Emp_ResetPwdAction extends Action{
+	private FormBeanFactory<Emp_ResetPwdForm> formBeanFactory = FormBeanFactory
+			.getInstance(Emp_ResetPwdForm.class);
 
-	private EmployeeDAO employeeDAO;
+	private CustomerDAO customerDAO;
 
-	public Emp_ChangePwdAction(Model model) {
-		employeeDAO = model.getEmployeeDAO();
+	public Emp_ResetPwdAction(Model model) {
+		customerDAO = model.getCustomerDAO();
 	}
 
 	public String getName() {
-		return "emp_changePwd.do";
+		return "emp_resetPwd.do";
 	}
 
+	@SuppressWarnings("unused")
 	public String perform(HttpServletRequest request) {
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
 
 		try {
-			Emp_ChangePwdForm form = formBeanFactory.create(request);
+			Emp_ResetPwdForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
+			String newPwd = null;
 			// If no params were passed, return with no errors so that the form
 			// will be
 			// presented (we assume for the first time).
 			if (!form.isPresent()) {
-				return "change-pwd-emp.jsp";
+				return "reset-customer-pwd-emp.jsp";
 			}
 
 			// Any validation errors?
 			errors.addAll(form.getValidationErrors());
 			if (errors.size() != 0) {
 				System.out.println(errors.toString());
-				return "change-pwd-emp.jsp";
+				return "reset-customer-pwd-emp.jsp";
 			}
-
-			Employee employee = (Employee) request.getSession().getAttribute("employee");
-		
-			// Change the password
-			employeeDAO.setPassword(employee.getUsername(), form.getNewPassword());
 			
-			request.setAttribute("message","Password changed for "+employee.getUserId());
+
+			Customer customer = (Customer) request.getSession().getAttribute("customer");
+			if(customer == null){
+				errors.add("No such users!");
+			}
+			// Change the password
+			newPwd = customerDAO.resetPassword(customer.getUsername());
+			
+			request.setAttribute("message",newPwd);
+			System.out.print(newPwd);
 	        return "get-cus-emp.jsp";
 	  } catch (Exception e) {
       	errors.add(e.toString());
