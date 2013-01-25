@@ -3,6 +3,7 @@
 <%@page import="databeans.Transaction" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.Date" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,7 +21,7 @@
     </div>
     <div id="navigation">
     <ul>
-        <li><a href="viewPortafolio.do">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Services</a></li>
         <li><a href="#">Contact us</a></li>
@@ -33,7 +34,10 @@
         <div class="content">
             <h2> Customer Account </h2>
 <%
-    Customer customer = (Customer) request.getAttribute("customer");
+DecimalFormat nf = new DecimalFormat("$#0.00");
+nf.setMaximumFractionDigits(2);
+nf.setMinimumFractionDigits(2);
+    Customer customer = (Customer) session.getAttribute("cus");
     if(customer==null){
         return;
     }
@@ -74,9 +78,9 @@
 %>
                 <tr>
                     <td> <%=portfolio.getFundName() %> </td>
-                    <td> <%=portfolio.getShares() %> </td>
-                    <td> <%=portfolio.getPrice() %> </td>
-                    <td> <%=portfolio.getTotal() %> </td>
+                    <td> <%=nf.format(portfolio.getShares()) %> </td>
+                    <td> <%=nf.format(portfolio.getPrice()) %> </td>
+                    <td> <%=nf.format(portfolio.getTotal()) %> </td>
                 </tr>
 <%
         }

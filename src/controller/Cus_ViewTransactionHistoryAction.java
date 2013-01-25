@@ -47,6 +47,7 @@ public class Cus_ViewTransactionHistoryAction extends Action {
             
             for (Transaction transaction : transactions) {
                 String type = transaction.getTransaction_type();
+                System.out.println(type);
                 if (type.equalsIgnoreCase("BUY") || type.equalsIgnoreCase("SELL")) {
                     int fundId = transaction.getFund_id();
                     Fund fund = fundDAO.lookup(fundId);
@@ -54,6 +55,8 @@ public class Cus_ViewTransactionHistoryAction extends Action {
                     transaction.setFundPrice(transaction.getAmount() / transaction.getShares());
                 }//withdraw or deposit
             }
+            
+            System.out.println("hahahaha");
             // Attach (this copy of) the transactions object to the request
             request.setAttribute("transactions",transactions);
             

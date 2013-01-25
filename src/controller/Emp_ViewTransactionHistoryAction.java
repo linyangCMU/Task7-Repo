@@ -50,7 +50,8 @@ public class Emp_ViewTransactionHistoryAction extends Action {
             request.setAttribute("form",form);
             
             // Look up the Customer
-            Customer customer = customerDAO.lookup(form.getUserName());
+            //Customer customer = customerDAO.lookup(form.getUserName());
+            Customer customer = (Customer) request.getSession(false).getAttribute("cus");
             if (customer == null) {
                 errors.add("No such customer with user name");
                 return "error.jsp";

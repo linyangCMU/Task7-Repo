@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
@@ -69,8 +70,12 @@ public class Emp_ViewCustomerAccountAction extends Action {
             
             // Look up the customer
             Customer customer = (Customer) request.getAttribute("customer");
+            
             if (customer == null)
                 customer = customerDAO.lookup(form.getUserName());
+            
+            if (customer == null)
+                customer = (Customer) request.getSession().getAttribute("cus");
             
             if (customer == null) {
                 errors.add("User not found");
@@ -111,8 +116,9 @@ public class Emp_ViewCustomerAccountAction extends Action {
             request.setAttribute("portfolios",portfolios);
             request.setAttribute("lastExecuteDate",date);
             
-            // Attach (this copy of) the user bean to the request
-            request.setAttribute("customer",customer);
+            // Attach (this copy of) the user bean to the session
+            HttpSession session = request.getSession();
+            session.setAttribute("cus",customer);
           
             return "view-customer-acct-emp.jsp";
         } catch (MyDAOException e) {

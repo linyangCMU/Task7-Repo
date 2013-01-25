@@ -13,7 +13,7 @@
 
 
 <%
-ArrayList<Customer> customers = (ArrayList<Customer>) session.getAttribute("customers");
+ArrayList<Customer> customers = (ArrayList<Customer>) request.getAttribute("customers");
 if(customers!=null) {
     for (Customer customer : customers) {
 	    out.println("<tr onclick=\" javascript:submitCustomer('"+ customer.getUsername() +"')  \">");
