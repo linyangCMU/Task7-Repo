@@ -1,6 +1,7 @@
        <%@page import="java.util.List"%>
        <%@page import="databeans.Fund"%>
        <%@page import="databeans.Position"%>
+       <%@ page import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -14,10 +15,9 @@
 
 <div id="container">
     <jsp:include page="template-header-navigation.jsp" />
-    <div id="content-container">
-        <jsp:include page="template-section-navigation-cus.jsp" />
-        
-        <div class="content">
+    	<div id="content-container">
+        	<jsp:include page="template-section-navigation-cus.jsp" />
+       			 <div class="content">
             <h2> Sell Fund </h2>
             
             <jsp:include page="error-list.jsp" />
@@ -33,18 +33,20 @@
                     </tr>
                     <tr>
 <%
-Fund[] fund = (Fund[]) request.getAttribute("fund");
-Position[] position=(Position[]) request.getAttribute("position");
-for(int i=0; i<fund.length; i++){
-    out.println("<td>");
-	out.println(fund[i].getName());
-	for(int j=0; j<position.length;j++){
-		if(fund[i].getId()==position[j].getFund_id()){
-			out.println(":$ </td><td>");
-			out.println(position[j].getShares());
-			out.println("</td>");
- 			out.println("<td><input type=\"text\" name=\"sellfund\" value=\"0\"/></td>");
-		}
+ArrayList<Fund> funds = (ArrayList<Fund>) request.getAttribute("funds");
+if(funds!=null){
+	for(Fund fund:funds){
+		%>
+		<td>
+		<%=fund.getName() %>
+		:$
+		</td><td>;
+		<%
+	//	out.println(fund.getShares());
+		%>
+		</td>;
+		<td><input type="text" name="sellfund" value="0"/></td>
+		<%
 	}
 }
 %>
