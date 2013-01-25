@@ -61,7 +61,7 @@ public class Cus_ResearchFundAction extends Action {
             ArrayList<History> histories = historyDAO.lookup(Integer.parseInt(form.getId()));
             
             // Attach (this copy of) the funds object to the session
-            request.setAttribute("fund",fund);
+            request.getSession().setAttribute("fund",fund);
             request.setAttribute("histories", histories);
             
             return "get-funddetail-cus.jsp";

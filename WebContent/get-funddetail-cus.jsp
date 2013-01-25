@@ -19,7 +19,7 @@ var financeData = [];
 var fundName = "No Fund";
 <%
 ArrayList<History> histories = (ArrayList<History>) request.getAttribute("histories");
-Fund fund = (Fund) request.getAttribute("fund");
+Fund fund = (Fund) session.getAttribute("fund");
 out.println("financeData = [ ");
 if (histories!=null) {
     for (History history : histories) {

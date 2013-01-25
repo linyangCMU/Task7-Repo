@@ -74,7 +74,7 @@ public class Cus_BuyFundAction extends Action{
 	        return "viewportfolio.do";
 	  } catch (Exception e) {
       	errors.add(e.toString());
-      	return "viewPortafolio.jsp";
+      	return "error.jsp";
       }
 	}
 }

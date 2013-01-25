@@ -64,7 +64,6 @@ public class Cus_LoginAction extends Action {
 	        // Attach (this copy of) the user bean to the session
 	        HttpSession session = request.getSession();
 	        session.setAttribute("customer",customer);
-	
 	      
 			String webapp = request.getContextPath();
 			return webapp + "/cus_changePwd.do";

@@ -20,17 +20,16 @@
        			 <div class="content">
           			<h2>Buy Fund </h2>
       				<tr><p>Type in the dollar amount if you want to buy the specified fund. Remmember, it should be number.</p></tr>
-    				<tr> Your Cash amount: $
-      				<%=(Double) request.getAttribute("cash")%>
+    				<tr> Your Cash Balance: $
+      				<%=(Double) session.getAttribute("cash")%>
       				</tr>
       				<form method="post" action="cus_buyFund.do">
         			<table>
 					  <tr>
 			 			<td>
 			 <%
-			 	 ArrayList<Fund> funds = (ArrayList<Fund>) request.getAttribute("funds");
-			 	 if(funds != null){
-			 		 for(Fund fund : funds){
+			 	 Fund fund = (Fund) session.getAttribute("fund");
+			 	 if(fund != null){
 			 %>
 			 <%=fund.getName() %>
 				</td>
@@ -39,7 +38,6 @@
 	         		</tr>
 			<%	
 				}
-			}
 		      %>
 		      		
            			<td colspan="2" align="center"><input type="submit" name="button" value="Submit"/></td>
