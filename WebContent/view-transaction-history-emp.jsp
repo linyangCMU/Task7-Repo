@@ -26,13 +26,13 @@
 							<th width="auto">Date</th>
 							<th width="auto">Operation</th>
 							<th width="auto">Fund Name</th>
-							<th width="auto">Number of Share</th>
+							<th width="auto">Shares</th>
 							<th width="auto">Price</th>
 							<th width="auto">Dollar Amount</th>
                         </tr>
 						
 <%
-DecimalFormat nf = new DecimalFormat("$#0.00");
+DecimalFormat nf = new DecimalFormat("#0.00");
 nf.setMaximumFractionDigits(2);
 nf.setMinimumFractionDigits(2);
 ArrayList<Transaction> transactions = (ArrayList<Transaction>)request.getAttribute("transactions");
@@ -43,10 +43,10 @@ if(transactions!=null) {
                             <td><div align="center"> <%=transaction.getExecute_date() %></div></td>
                             <td><div align="center"> <%=transaction.getTransaction_type() %></div></td>
                             <td><div align="center"> <%=transaction.getFundName() %></div></td>
-                            <td><div align="center"> <%=nf.format(transaction.getShares()) %></div></td>
-                            <td><div align="center"> <%=nf.format(transaction.getFundPrice()) %></div></td>
-                            <td><div align="center"> <%=nf.format(transaction.getAmount()) %></div></td>
-                        </tr>
+                            <td><div align="right"> <%=nf.format(transaction.getShares()) %></div></td>
+                            <td><div align="right"> $<%=nf.format(transaction.getFundPrice()) %></div></td>
+                            <td><div align="right"> $<%=nf.format(transaction.getAmount()) %></div></td>
+                        </tr> 
 <%
     }
 }

@@ -26,13 +26,13 @@
 							<th width="auto">Date</th>
 							<th width="auto">Operation</th>
 							<th width="auto">Fund Name</th>
-							<th width="auto">Number of Share</th>
+							<th width="auto">Share</th>
 							<th width="auto">Price</th>
 							<th width="auto">Dollar Amount</th>
                         </tr>
 						
 <%
-DecimalFormat nf = new DecimalFormat("$#0.00");
+DecimalFormat nf = new DecimalFormat("#0.00");
 nf.setMaximumFractionDigits(2);
 nf.setMinimumFractionDigits(2);
 ArrayList<Transaction> transactions = (ArrayList<Transaction>)request.getAttribute("transactions");

@@ -5,7 +5,7 @@
 <%@page import="databeans.Transaction" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.Date" %>
-
+<%@ page import="java.text.DecimalFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,6 +24,7 @@
         <div class="content">
             <h2> Customer Account </h2>
             <jsp:include page="error-list.jsp" />
+            
 <%
 	Customer customer = (Customer) session.getAttribute("customer");
 	if(customer==null){
@@ -52,6 +53,9 @@
 					<td> <%=customer.getCash()%></td>
 				</tr>
             </table>
+            
+            <p>&nbsp</p>
+            
             <table>
 				<tr>
 					<td> <b>Fund Name</b> </td>
@@ -60,15 +64,18 @@
 					<td> <b>Total Value</b> </td>
 				</tr>
 <%
+DecimalFormat nf = new DecimalFormat("#0.00");
+nf.setMaximumFractionDigits(2);
+nf.setMinimumFractionDigits(2);
 	ArrayList<Portfolio> portfolios = (ArrayList<Portfolio>) request.getAttribute("portfolios");
 	if(portfolios != null){
 	    for(Portfolio portfolio:portfolios){
 %>
                 <tr>
                     <td> <%=portfolio.getFundName() %> </td>
-                    <td> <%=portfolio.getShares() %> </td>
-                    <td> <%=portfolio.getPrice() %> </td>
-                    <td> <%=portfolio.getTotal() %> </td>
+                    <td align="right"> <%=nf.format(portfolio.getShares()) %> </td>
+                    <td align="right"> $ <%=nf.format(portfolio.getPrice()) %> </td>
+                    <td align="right"> $ <%=nf.format(portfolio.getTotal()) %> </td>
                 </tr>
 <%
         }
