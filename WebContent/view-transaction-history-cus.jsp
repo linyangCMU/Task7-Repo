@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.*"%>
+<%@page import="java.text.DecimalFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,7 +32,10 @@
                         </tr>
 						
 <%
-ArrayList<Transaction> transactions = (ArrayList<Transaction>)request.getAttribute("Transaction");
+DecimalFormat nf = new DecimalFormat("$#0.00");
+nf.setMaximumFractionDigits(2);
+nf.setMinimumFractionDigits(2);
+ArrayList<Transaction> transactions = (ArrayList<Transaction>)request.getAttribute("transactions");
 if(transactions!=null) {
     for(Transaction transaction : transactions){
 %>
@@ -39,9 +43,9 @@ if(transactions!=null) {
 							<td><div align="center"> <%=transaction.getExecute_date() %></div></td>
 							<td><div align="center"> <%=transaction.getTransaction_type() %></div></td>
 							<td><div align="center"> <%=transaction.getFundName() %></div></td>
-							<td><div align="center"> <%=transaction.getShares() %></div></td>
-							<td><div align="center"> <%=transaction.getFundPrice() %></div></td>
-	   						<td><div align="center"> <%=transaction.getAmount() %></div></td>
+							<td><div align="center"> <%=nf.format(transaction.getShares()) %></div></td>
+							<td><div align="center"> <%=nf.format(transaction.getFundPrice()) %></div></td>
+	   						<td><div align="center"> <%=nf.format(transaction.getAmount()) %></div></td>
 			            </tr>
 <%
     }

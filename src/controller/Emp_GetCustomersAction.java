@@ -53,11 +53,9 @@ public class Emp_GetCustomersAction extends Action {
             ArrayList<Customer> customers = customerDAO.search(form.getQuery());
             
             // Attach (this copy of) the customers object to the session
-            HttpSession session = request.getSession();
-            session.setAttribute("customers",customers);
+            request.setAttribute("customers",customers);
             
-            String webapp = request.getContextPath();
-            return webapp + "/get-cus-emp.jsp";
+            return "get-cus-emp.jsp";
         } catch (MyDAOException e) {
             System.out.println("DAO error");
             errors.add(e.getMessage());
