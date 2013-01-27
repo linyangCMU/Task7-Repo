@@ -44,14 +44,14 @@ public class Cus_SellFundAction extends Action{
 			// If no params were passed, return with no errors so that the form
 			// will be presented (we assume for the first time).
 			if (!form.isPresent()) {
-				return "buy-fund-cus.jsp";
+				return "sell-fund-cus.jsp";
 			}
 
 			// Any validation errors?
 			errors.addAll(form.getValidationErrors());
 			if (errors.size() != 0) {
 				System.out.println(errors.toString());
-				return "buy-fund-cus.jsp";
+				return "sell-fund-cus.jsp";
 			}
 			Customer customer = (Customer) request.getSession().getAttribute("customer");
 			int customer_id = customerDAO.lookup(customer.getUsername()).getCustomerID();
