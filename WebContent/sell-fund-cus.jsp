@@ -24,7 +24,7 @@
             
             <p>Type in the number of shares you want to sell. Remmember, it could not be larger than the number you have.</p>
             <hr />
-            <form method="post" action="sell.do">
+            <form method="post" action="cus_sellFund.do">
                 <table>
                     <tr>
                         <td> <div align="center">FundName:  </div></td>
@@ -45,7 +45,8 @@ if(funds!=null){
 	//	out.println(fund.getShares());
 		%>
 		</td>;
-		<td><input type="text" name="sellfund" value="0"/></td>
+		<td><input type="text" name="shares" value="0"/></td>
+		<td><input type="hidden" name="fundId" value="fund.getId()"/></td>
 		<%
 	}
 }
