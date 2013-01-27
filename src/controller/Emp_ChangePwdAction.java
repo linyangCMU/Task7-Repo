@@ -54,7 +54,7 @@ public class Emp_ChangePwdAction extends Action{
 			employeeDAO.setPassword(employee.getUsername(), form.getNewPassword());
 			
 			request.setAttribute("message","Password changed for "+employee.getUserId());
-	        return "get-cus-emp.jsp";
+	        return "getcustomers.do";
 	  } catch (Exception e) {
       	errors.add(e.toString());
       	return "change-pwd-emp.jsp";
