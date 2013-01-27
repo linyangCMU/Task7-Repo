@@ -23,11 +23,9 @@ public class Cus_BuyFundAction extends Action{
 			.getInstance(Cus_BuyFundForm.class);
 	
 	private TransactionDAO transactionDAO;
-	private FundDAO fundDAO;
 	private CustomerDAO customerDAO;
 	public Cus_BuyFundAction(Model model) {
 		transactionDAO = model.getTransactionDAO();
-		fundDAO = model.getFundDAO();
 		customerDAO = model.getCustomerDAO();
 	}
 	
@@ -56,17 +54,14 @@ public class Cus_BuyFundAction extends Action{
 			Customer customer = (Customer) request.getSession().getAttribute("customer");
 			int customer_id = customerDAO.lookup(customer.getUsername()).getCustomerID();
 			Transaction t = new Transaction();
+			
+			System.out.println(customer_id + "     " + form.getFundId());
+			
 			t.setCustomer_id(customer_id);
-			
-			String fundname = form.getFundName();
-			int fund_id = fundDAO.lookup(fundname,null).getId();
-			
-			t.setFund_id(fund_id);
-			
+			t.setFund_id(Integer.parseInt(form.getFundId()));
 			Date date = new Date();
 			t.setDate(date);
-			
-			t.setTransaction_type("Pending");
+			t.setTransaction_type("PENDING");
 			t.setAmount(Double.parseDouble(form.getAmount()));
 			
 			transactionDAO.create(t); 

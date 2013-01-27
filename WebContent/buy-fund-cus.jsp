@@ -19,6 +19,7 @@
         <jsp:include page="template-section-navigation-cus.jsp" />
         <div class="content">
             <h2>Buy Fund </h2>
+            <jsp:include page="error-list.jsp" />
             <p>
                 Type in the dollar amount if you want to buy the specified fund. 
                 Remember, it should be number.
@@ -56,7 +57,7 @@ if(fund == null){
                         </td>
                     </tr>
                 </table>
-                <input type="hidden" name="fundName" value="<%=fund.getName() %>"/>
+                <input type="text" name="fundId" value="<%=fund.getId()%>"/>
             </form>
         </div>
         <jsp:include page="template-footer.jsp" />

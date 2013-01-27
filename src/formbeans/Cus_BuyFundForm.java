@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.mybeans.form.FormBean;
 public class Cus_BuyFundForm extends FormBean{
-	private String fundName;
+	private String fundId;
 	private String amount;
-	public String getFundName() {
-		return fundName;
+	public String getFundId() {
+		return fundId;
 	}
-	public void setFundName(String fundName) {
-		this.fundName = fundName;
+	public void setFundId(String fundId) {
+		this.fundId = fundId;
 	}
 	public String getAmount() {
 		return amount;
@@ -22,7 +22,7 @@ public class Cus_BuyFundForm extends FormBean{
 	public List<String> getValidationErrors() {
 		List<String> errors = new ArrayList<String>();
 		
-		if (fundName == null || fundName.length() == 0) {
+		if (fundId == null || fundId.length() == 0) {
 			errors.add("No such fund !");
 		}
 		
