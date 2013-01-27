@@ -18,8 +18,8 @@ if (session.getAttribute("employee") == null) {
         <li><a href="manage-customers-emp.jsp">Search Customer</a></li>
         <li><a href="logout-emp.do">Logout</a></li>
         
-        <br/>
-        <br/>
+        <li>&nbsp</li>
+        <li>&nbsp</li>
 <%
 	if (session.getAttribute("cus") != null) {
 %>

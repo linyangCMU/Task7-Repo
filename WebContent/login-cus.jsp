@@ -23,7 +23,7 @@
 		        <table>
 		            <tr>
 		                <td> User Name: </td>
-		                <td><input type="text" name="userName" value="${form.userName}"/></td>
+		                <td><input type="text" name="userName" value="<%=((request.getParameter("userName")==null)?"":request.getParameter("userName"))%>"/></td>
 		            </tr>
 		            <tr>
 		                <td> Password: </td>

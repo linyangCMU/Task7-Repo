@@ -1,6 +1,6 @@
-       <%@page import="java.util.List"%>
-       <%@page import="databeans.Fund"%>
-       <%@ page import="java.util.*" %>
+<%@page import="databeans.Customer"%>
+<%@page import="databeans.Fund"%>
+<%@ page import="java.util.*" %>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -8,43 +8,57 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Customer template</title>
-<link rel="stylesheet" type="text/css" href="style/main.css">
+    <title>Mutual Fund Management</title>
+    <link rel="stylesheet" type="text/css" href="style/main.css">
 </head>
 <body>
 
 <div id="container">
     <jsp:include page="template-header-navigation.jsp" />
-    	<div id="content-container">
-        	<jsp:include page="template-section-navigation-cus.jsp" />
-       			 <div class="content">
-          			<h2>Buy Fund </h2>
-      				<tr><p>Type in the dollar amount if you want to buy the specified fund. Remmember, it should be number.</p></tr>
-    				<tr> Your Cash Balance: $
-      				<%=(Double) session.getAttribute("cash")%>
-      				</tr>
-      				<form method="post" action="cus_buyFund.do">
-        			<table>
-					  <tr>
-			 			<td>
-			 <%
-			 	 Fund fund = (Fund) session.getAttribute("fund");
-			 	 if(fund != null){
-			 %>
-			 <%=fund.getName() %>
-				</td>
-		      			<td><input type="text" name="amount" value="0"/></td>
-		      			<td><input type="hidden" name="fundName" value="fund.getName()"/></td>
-	         		</tr>
-			<%	
-				}
-		      %>
-		      		
-           			<td colspan="2" align="center"><input type="submit" name="button" value="Submit"/></td>
-        
-        			</table>
-      				</form>
-      			</div>
+    <div id="content-container">
+        <jsp:include page="template-section-navigation-cus.jsp" />
+        <div class="content">
+            <h2>Buy Fund </h2>
+            <p>
+                Type in the dollar amount if you want to buy the specified fund. 
+                Remember, it should be number.
+            </p>
+<%
+Customer customer = (Customer) session.getAttribute("customer");
+if(customer == null) {
+    out.print("There is no customer information found in session!");
+    return;
+}
+%>
+<%
+Fund fund = (Fund) session.getAttribute("fund");
+if(fund == null){
+    out.print("You need to select a fund first");
+    return;
+}
+%>
+            <p> 
+                Your Cash Balance: $ <%=customer.getCash()%>
+            </p>
+            <form method="post" action="cus_buyFund.do">
+                <table>
+                    <tr>
+                        <td><b> Fund Name: </b></td>
+                        <td> <%=fund.getName() %> </td>
+                    </tr>
+                    <tr>
+                        <td><b> Amount you want to buy:</b> $</td>
+                        <td><input type="text" name="amount" value="0.00"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <input type="submit" name="button" value="Submit"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="fundName" value="<%=fund.getName() %>"/>
+            </form>
+        </div>
         <jsp:include page="template-footer.jsp" />
     </div>
 </div>

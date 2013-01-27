@@ -12,7 +12,7 @@
 <div id="container">
     <jsp:include page="template-header-navigation.jsp" />
     <div id="content-container">
-        <jsp:include page="template-section-navigation-cus.jsp" />
+        <jsp:include page="template-section-navigation-emp.jsp" />
         
         <div class="content">
             <h2> Create Employee Account </h2>
@@ -22,15 +22,15 @@
 				<table>
 					<tr>
 						<td> User Name: </td>
-						<td><input type="text" name="userName" value="${form.userName}"/></td>
+						<td><input type="text" name="userName" value="<%=((request.getParameter("userName")==null)?"":request.getParameter("userName"))%>"/></td>
 					</tr>
 					<tr>
 						<td> First Name: </td>
-						<td><input type="text" name="firstName" value="${form.firstName}"/></td>
+						<td><input type="text" name="firstName" value="<%=((request.getParameter("firstName")==null)?"":request.getParameter("firstName"))%>"/></td>
 					</tr>
 					<tr>
 						<td> LastName: </td>
-						<td><input type="text" name="lastName" value="${form.lastName}"/></td>
+						<td><input type="text" name="lastName" value="<%=((request.getParameter("lastName")==null)?"":request.getParameter("lastName"))%>"/></td>
 					</tr>
 					<tr>
 						<td> Password: </td>

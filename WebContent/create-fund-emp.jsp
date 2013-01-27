@@ -21,10 +21,10 @@
 <%
 String fundName = "";
 String fundSymbol = "";
-if(request.getParameter("fundName")!=null && request.getAttribute("fund")==null){
+if(request.getParameter("fundName")!=null){
     fundName = request.getParameter("fundName");
 }
-if(request.getParameter("fundSymbol")!=null & request.getAttribute("fund")==null){
+if(request.getParameter("fundSymbol")!=null){
     fundSymbol = request.getParameter("fundSymbol");
 }
 %>

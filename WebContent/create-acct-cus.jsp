@@ -23,15 +23,15 @@
 				<table>
 					<tr>
 						<td> User Name: </td>
-						<td><input type="text" name="userName" value="${form.userName}"/></td>
+						<td><input type="text" name="userName" value="<%=((request.getParameter("userName")==null)?"":request.getParameter("userName"))%>"/></td>
 					</tr>
 					<tr>
 						<td> First Name: </td>
-						<td><input type="text" name="firstName" value="${form.firstName}"/></td>
+						<td><input type="text" name="firstName" value="<%=((request.getParameter("firstName")==null)?"":request.getParameter("firstName"))%>"/></td>
 					</tr>
 					<tr>
 						<td> LastName: </td>
-						<td><input type="text" name="lastName" value="${form.lastName}"/></td>
+						<td><input type="text" name="lastName" value="<%=((request.getParameter("lastName")==null)?"":request.getParameter("lastName"))%>"/></td>
 					</tr>
 					<tr>
 						<td> Password: </td>
@@ -43,23 +43,23 @@
 					</tr>
 					<tr>
 		 				<td> Address Line1: </td>
-						<td><input type="text" name="addr1" value="${form.addr1}"/></td>
+						<td><input type="text" name="addr1" value="<%=((request.getParameter("addr1")==null)?"":request.getParameter("addr1"))%>"/></td>
 					</tr>
 					<tr>
 						<td> Address Line2: </td>
-						<td><input type="text" name="addr2" value="${form.addr2}"/></td>
+						<td><input type="text" name="addr2" value="<%=((request.getParameter("addr2")==null)?"":request.getParameter("addr2"))%>"/></td>
 					</tr>
 					<tr>
 						<td> City: </td>
-						<td><input type="text" name="city" value="${form.city}"/></td>
+						<td><input type="text" name="city" value="<%=((request.getParameter("city")==null)?"":request.getParameter("city"))%>"/></td>
 					</tr>
 					<tr>
 						<td> State: </td>
-						<td><input type="text" name="state" value="${form.state}"/></td>
+						<td><input type="text" name="state" value="<%=((request.getParameter("state")==null)?"":request.getParameter("state"))%>"/></td>
 					</tr>
 					<tr>
 						<td> Zip: </td>
-						<td><input type="text" name="zip" value="${form.zip}"/></td>
+						<td><input type="text" name="zip" value="<%=((request.getParameter("zip")==null)?"":request.getParameter("zip"))%>"/></td>
 					</tr>
 					<tr>
 						<td colspan="2" align="center">
