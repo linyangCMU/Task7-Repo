@@ -19,6 +19,7 @@ public class Cus_LogoutAction extends Action {
 	public String perform(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         session.setAttribute("customer",null);
+        session.invalidate();
 
 		request.setAttribute("message","You are now logged out");
         return "success.jsp";
