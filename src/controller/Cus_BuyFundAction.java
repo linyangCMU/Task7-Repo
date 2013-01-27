@@ -59,10 +59,9 @@ public class Cus_BuyFundAction extends Action{
 			
 			t.setCustomer_id(customer_id);
 			t.setFund_id(Integer.parseInt(form.getFundId()));
-			Date date = new Date();
-			t.setDate(date);
-			
-			t.setTransaction_type("Buy");
+			//Date date = new Date();
+			t.setDate(null);
+			t.setTransaction_type("BUY");
 			t.setStatus("PENDING");
 			t.setAmount(Double.parseDouble(form.getAmount()));
 			

@@ -82,7 +82,8 @@ public class FundDAO {
 			if (!rs.next()) {
 				fund = null;
 			} else {
-				fund = new Fund();				
+				fund = new Fund();
+				fund.setId(rs.getInt("fund_id"));
 				fund.setName(rs.getString("name"));
 				fund.setSymbol(rs.getString("symbol"));
 				
@@ -120,7 +121,8 @@ public class FundDAO {
             if (!rs.next()) {
                 fund = null;
             } else {
-                fund = new Fund();              
+                fund = new Fund();
+                fund.setId(rs.getInt("fund_id"));
                 fund.setName(rs.getString("name"));
                 fund.setSymbol(rs.getString("symbol"));
             }
