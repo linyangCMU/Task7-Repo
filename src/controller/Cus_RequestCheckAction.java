@@ -67,9 +67,9 @@ public class Cus_RequestCheckAction extends Action {
             }
             
             balance = balance - withdrawAmount;
-            customer.setCash(balance);
+            customer.setAvailableCash(balance);
             
-            customerDAO.updateCash(customer);
+            customerDAO.update(customer);
             
             request.setAttribute("cash", balance);
             

@@ -233,14 +233,15 @@ public class CustomerDAO {
 
     }
 	
-	public void updateCash(Customer customer) throws MyDAOException {
+	public void update(Customer customer) throws MyDAOException {
         Connection con = null;
         try {
             con = getConnection();
             
-            PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET cash=? WHERE username=?");
+            PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET cash=?, available_cash=? WHERE username=?");
             pstmt.setInt(1, (int)(customer.getCash()*100));
-            pstmt.setString(2, customer.getUsername());
+            pstmt.setInt(2, (int)(customer.getAvailableCash()*100));
+            pstmt.setString(3, customer.getUsername());
             pstmt.executeUpdate();
             
             pstmt.close();
@@ -256,7 +257,6 @@ public class CustomerDAO {
             }
             throw new MyDAOException(e);
         }
-
     }
 	
 	/* 

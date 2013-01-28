@@ -71,6 +71,51 @@ public class PositionDAO {
 		}
 	}
 	
+	public void update(Position position) throws MyDAOException{
+        Connection con = null;
+        try{
+            con = getConnection();
+            
+            PreparedStatement pstmt = con.prepareStatement("UPDATE " + tableName + " SET shares=? WHERE customer_id=?, fund_id=?");
+            pstmt.setInt(1, (int)position.getShares() * 1000);
+            pstmt.setInt(2, position.getCustomer_id());
+            pstmt.setInt(3, position.getFund_id());
+            int count = pstmt.executeUpdate();
+            if(count != 1) throw new SQLException("Update updated" + count + "rows");
+            pstmt.close();
+            releaseConnection(con);
+        }catch(Exception e){
+            try{
+                if(con != null)
+                    con.close();
+            }catch(SQLException e2){
+                throw new MyDAOException(e);
+            }
+        }
+    }
+	
+	public void remove(Position position) throws MyDAOException{
+        Connection con = null;
+        try{
+            con = getConnection();
+            
+            PreparedStatement pstmt = con.prepareStatement("DELETE FROM " + tableName + " WHERE customer_id=?, fund_id=?");
+            pstmt.setInt(1, position.getCustomer_id());
+            pstmt.setInt(2, position.getFund_id());
+            int count = pstmt.executeUpdate();
+            if(count != 1) throw new SQLException("delete updated" + count + "rows");
+            pstmt.close();
+            releaseConnection(con);
+        }catch(Exception e){
+            try{
+                if(con != null)
+                    con.close();
+            }catch(SQLException e2){
+                throw new MyDAOException(e);
+            }
+        }
+    }
+    
 	public Position lookup(int customer_id, int fund_id) throws MyDAOException {
 		Connection con = null;
 		try {

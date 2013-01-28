@@ -109,37 +109,82 @@ public class Emp_TransitionDayAction extends Action {
             // Update Pending Transactions
             ArrayList<Transaction> transactions = transactionDAO.getPendingTransactions();
             for (Transaction transaction : transactions) {
-                Customer customer = customerDAO.lookup(transaction.getCustomer_id());
-                Position position = positionDAO.
+                transaction.setDate(transitionDay);
+                int customerId = transaction.getCustomer_id();
+                int fundId = transaction.getFund_id();
+                double amount = transaction.getAmount();
                 //determine the type of the transaction
                 String type = transaction.getTransaction_type();
                 if (type.equalsIgnoreCase("BUY")) {
                     //update position table
+                    //get the latest price for this fund, give fundId
+                    double price = historyDAO.lookupLatestPriceAndDate(fundId, new Date(0));
+                    double shares = amount / price;
+                    //check if the customer's available balance is enough
+                    Customer customer = customerDAO.lookup(customerId);
+                    double balance = customer.getAvailableCash();
+                    if(balance<amount){
+                        transaction.setStatus("DENIED");
+                        continue;
+                    }
+                    transaction.setStatus("APPROVED");
+                    customer.setAvailableCash(balance-amount);
+                    customer.setCash(balance-amount);
+                    customerDAO.update(customer);
                     //check if the position exists
-                    
+                    Position position = positionDAO.lookup(customerId, fundId);
+                    if (position==null) {
+                        position = new Position();
+                        position.setCustomer_id(customerId);
+                        position.setFund_id(fundId);
+                        position.setShares(shares);
+                        positionDAO.create(position);
+                    } else {
+                        position.setShares(position.getShares() + shares);
+                        positionDAO.update(position);
+                    }
                 } else if (type.equalsIgnoreCase("SELL")) {
+                    double price = historyDAO.lookupLatestPriceAndDate(fundId, new Date(0));
+                    double shares = amount / price;
+                    Customer customer = customerDAO.lookup(customerId);
+                    double balance = customer.getAvailableCash();
                     //update position table
-                    
-                    
-                    //check if the position becomes empty
-                    
+                    Position position = positionDAO.lookup(customerId, fundId);
+                    double availableShares = position.getShares();
+                    if(availableShares < shares + 0.001) {
+                        // Sold out all shares
+                        transaction.setStatus("APPROVED");
+                        customer.setAvailableCash(balance+amount);
+                        customer.setCash(balance+amount);
+                        customerDAO.update(customer);
+                        positionDAO.remove(position);
+                    } else if(availableShares < shares) {
+                        transaction.setStatus("DENIED");
+                    } else {
+                        transaction.setStatus("APPROVED");
+                        customer.setAvailableCash(balance+amount);
+                        customer.setCash(balance+amount);
+                        customerDAO.update(customer);
+                        position.setShares(availableShares-shares);
+                        positionDAO.update(position);
+                    }                    
                 } else if (type.equalsIgnoreCase("WITHDRAW")) {
-                    //do nothing, cuz customer balance will be updated later
+                    Customer customer = customerDAO.lookup(customerId);
+                    customer.setCash(customer.getAvailableCash());
+                    customerDAO.update(customer);
+                    transaction.setStatus("APPROVED");
                 } else if (type.equalsIgnoreCase("DEPOSIT")) {
-                    //update the available balance
+                    //update the balance
+                    Customer customer = customerDAO.lookup(customerId);
+                    double balance = customer.getAvailableCash() + amount;
+                    customer.setCash(balance);
+                    customer.setAvailableCash(balance);
+                    customerDAO.update(customer);
+                    transaction.setStatus("APPROVED");
                 } else {
                     System.out.println("Unknown Type of transaction");
                 }
-                transaction.setDate(transitionDay);
-                transaction.setStatus("APPROVED");
                 transactionDAO.updateTransaction(transaction);
-            }
-            
-            // update Customer Balance
-            List<Customer> customers = Arrays.asList(customerDAO.getCustomers());
-            for (Customer customer: customers) {
-                customer.setCash(customer.getAvailableCash());
-                customerDAO.updateCash(customer);
             }
             
             
