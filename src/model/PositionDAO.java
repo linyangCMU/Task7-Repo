@@ -77,7 +77,7 @@ public class PositionDAO {
 			con = getConnection();
 
 			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM "
-					+ tableName + " WHERE customer_id=?, fund_id=?");
+					+ tableName + " WHERE customer_id=? and fund_id=?");
 			pstmt.setInt(1, customer_id);
 			pstmt.setInt(2, fund_id);			
 			ResultSet rs = pstmt.executeQuery();

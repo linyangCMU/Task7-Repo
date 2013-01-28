@@ -18,7 +18,7 @@
     	<div id="content-container">
         	<jsp:include page="template-section-navigation-cus.jsp" />
        			 <div class="content">
-            <h2> Sell Fund </h2>
+            		<h2> Sell Fund </h2>
             
             <jsp:include page="error-list.jsp" />
             
@@ -32,23 +32,19 @@
                         <td> <div align="center">Shares you will sell</div></td>
                     </tr>
                     <tr>
-<%
-ArrayList<Fund> funds = (ArrayList<Fund>) request.getAttribute("funds");
-if(funds!=null){
-	for(Fund fund:funds){
-%>
-		<td>
-		<%=fund.getName() %>
-		:$
-		</td>
-        <td>;
-		</td>;
-		<td><input type="text" name="shares" value="0"/></td>
-		<td><input type="hidden" name="fundId" value="fund.getId()"/></td>
-		<%
-	}
-}
-%>
+					<%
+					Fund fund = (Fund) request.getAttribute("fund");
+					if(fund!=null){
+						
+					%>
+					<td><%=fund.getName() %>:$</td>
+					<td><%=fund.getShares() %></td>
+					<td><input type="text" name="shares" value="0"/></td>
+					<td><input type="hidden" name="fundName" value="<%=fund.getName() %>"/></td>
+					<%
+						
+					}
+					%>
                     <tr>
                         <td colspan="3" align="center"><input type="submit" name="button" value="submit"/></td>
                     </tr>

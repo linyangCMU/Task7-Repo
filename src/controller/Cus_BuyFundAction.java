@@ -56,7 +56,6 @@ public class Cus_BuyFundAction extends Action{
 			int customer_id = customerDAO.lookup(customer.getUsername()).getCustomerID();
 			Transaction t = new Transaction();
 			
-			
 			t.setCustomer_id(customer_id);
 			t.setFund_id(Integer.parseInt(form.getFundId()));
 			//Date date = new Date();
