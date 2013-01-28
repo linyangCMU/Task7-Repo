@@ -55,7 +55,7 @@ public class Cus_BuyFundAction extends Action{
 			int customer_id = customerDAO.lookup(customer.getUsername()).getCustomerID();
 			Transaction t = new Transaction();
 			
-			System.out.println(customer_id + "     " + form.getFundId());
+			
 			
 			t.setCustomer_id(customer_id);
 			t.setFund_id(Integer.parseInt(form.getFundId()));

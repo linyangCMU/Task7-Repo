@@ -76,6 +76,7 @@ nf.setMinimumFractionDigits(2);
                     <td align="right"> <%=nf.format(portfolio.getShares()) %> </td>
                     <td align="right"> $ <%=nf.format(portfolio.getPrice()) %> </td>
                     <td align="right"> $ <%=nf.format(portfolio.getTotal()) %> </td>
+                    <td><a href="cus_sellFund.do?fundName=<%=portfolio.getFundName() %>">Sell</td>
                 </tr>
 <%
         }

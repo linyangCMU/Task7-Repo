@@ -8,7 +8,16 @@ public class Fund {
 	private String symbol = null; // the short name for the fund
 	private Date date; // the last update date for this fund
 	private double price; // the latest price for this fund and converted to String
+	private double shares;
 	
+	public double getShares() {
+		return shares;
+	}
+
+	public void setShares(double shares) {
+		this.shares = shares;
+	}
+
 	public int compareTo(Fund other) {
 		int c = name.compareTo(other.name);
 		if (c != 0) return c;

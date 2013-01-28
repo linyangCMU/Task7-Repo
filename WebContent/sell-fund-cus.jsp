@@ -33,16 +33,16 @@
                     </tr>
                     <tr>
 					<%
-					ArrayList<Fund> funds = (ArrayList<Fund>) request.getAttribute("funds");
-					if(funds!=null){
-						for(Fund fund:funds){
+					Fund fund = (Fund) request.getAttribute("fund");
+					if(fund!=null){
+						
 					%>
 					<td><%=fund.getName() %>:$</td>
 					<td><%=fund.getShares() %></td>
 					<td><input type="text" name="shares" value="0"/></td>
-					<td><input type="hidden" name="fundId" value="fund.getId()"/></td>
+					<td><input type="hidden" name="fundName" value="<%=fund.getName() %>"/></td>
 					<%
-						}
+						
 					}
 					%>
                     <tr>
