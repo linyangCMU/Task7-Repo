@@ -51,11 +51,11 @@ public class Cus_BuyFundAction extends Action{
 				System.out.println(errors.toString());
 				return "buy-fund-cus.jsp";
 			}
-			Customer customer = (Customer) request.getSession().getAttribute("customer");
+			Customer customer = (Customer) request.getSession().getAttribute("customer");			
+			
 			int customer_id = customerDAO.lookup(customer.getUsername()).getCustomerID();
 			Transaction t = new Transaction();
 			
-			System.out.println(customer_id + "     " + form.getFundId());
 			
 			t.setCustomer_id(customer_id);
 			t.setFund_id(Integer.parseInt(form.getFundId()));
