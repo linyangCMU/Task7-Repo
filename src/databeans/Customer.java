@@ -13,6 +13,7 @@ public class Customer implements Comparable<Customer> {
 	private String state = null;
 	private String zip = null;
 	private double cash = 0;
+	private double availableCash = 0;
 	
 	public boolean checkPassword(String password) {
 		return password.equals(getPassword());
@@ -127,4 +128,12 @@ public class Customer implements Comparable<Customer> {
 	public String toString() {
 		return "Customer(" + getCustomerID() + ")";
 	}
+
+    public double getAvailableCash() {
+        return availableCash;
+    }
+
+    public void setAvailableCash(double availableCash) {
+        this.availableCash = availableCash;
+    }
 }

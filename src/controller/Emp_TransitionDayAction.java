@@ -3,6 +3,7 @@ package controller;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -105,9 +106,42 @@ public class Emp_TransitionDayAction extends Action {
                 historyDAO.create(history);
             }
             
+            // Update Pending Transactions
+            ArrayList<Transaction> transactions = transactionDAO.getPendingTransactions();
+            for (Transaction transaction : transactions) {
+                Customer customer = customerDAO.lookup(transaction.getCustomer_id());
+                Position position = positionDAO.
+                //determine the type of the transaction
+                String type = transaction.getTransaction_type();
+                if (type.equalsIgnoreCase("BUY")) {
+                    //update position table
+                    //check if the position exists
+                    
+                } else if (type.equalsIgnoreCase("SELL")) {
+                    //update position table
+                    
+                    
+                    //check if the position becomes empty
+                    
+                } else if (type.equalsIgnoreCase("WITHDRAW")) {
+                    //do nothing, cuz customer balance will be updated later
+                } else if (type.equalsIgnoreCase("DEPOSIT")) {
+                    //update the available balance
+                } else {
+                    System.out.println("Unknown Type of transaction");
+                }
+                transaction.setDate(transitionDay);
+                transaction.setStatus("APPROVED");
+                transactionDAO.updateTransaction(transaction);
+            }
             
+            // update Customer Balance
+            List<Customer> customers = Arrays.asList(customerDAO.getCustomers());
+            for (Customer customer: customers) {
+                customer.setCash(customer.getAvailableCash());
+                customerDAO.updateCash(customer);
+            }
             
-            // Traverse the Transaction History table
             
             return "transition-day-emp.jsp";
         } catch (MyDAOException e) {

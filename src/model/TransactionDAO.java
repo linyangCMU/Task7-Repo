@@ -160,6 +160,75 @@ public class TransactionDAO {
         
     }
 	
+	public ArrayList<Transaction> getPendingTransactions() throws MyDAOException{
+	    Connection con = null;
+        try {
+            con = getConnection();
+
+            Statement stmt = con.createStatement();
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM " + tableName + " where status=?");
+            pstmt.setString(1, "PENDING");
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            ArrayList<Transaction> list = new ArrayList<Transaction>();
+            while (rs.next()) {
+                Transaction transaction = new Transaction();
+                transaction = new Transaction();
+                transaction.setTransaction_id(rs.getInt("transaction_id"));
+                transaction.setCustomer_id(rs.getInt("customer_id"));
+                transaction.setFund_id(rs.getInt("fund_id"));
+                transaction.setDate(rs.getDate("execute_date"));
+                transaction.setShares((double)rs.getInt("shares")/1000);
+                transaction.setTransaction_type(rs.getString("transaction_type"));
+                transaction.setAmount(rs.getInt("amount"));
+                transaction.setStatus(rs.getString("status"));
+                
+                list.add(transaction);
+            }
+            stmt.close();
+            releaseConnection(con);
+            
+            return list;
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+    }
+	
+	public void updateTransaction(Transaction transaction) throws MyDAOException{
+	    Connection con = null;
+        try {
+            con = getConnection();
+            
+            PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET execute_date=?, status=? WHERE transaction_id=?");
+            pstmt.setDate(1, (transaction.getExecute_date()));
+            pstmt.setString(2, transaction.getStatus());
+            pstmt.setInt(3, transaction.getTransaction_id());
+            pstmt.executeUpdate();
+            
+            pstmt.close();
+            releaseConnection(con);
+            
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+        
+    }
+	
 	private boolean tableExists() throws MyDAOException{
 		Connection con = null;
         try {
@@ -194,4 +263,5 @@ public class TransactionDAO {
         	throw new MyDAOException(e);
         }
 	}
+
 }
