@@ -36,11 +36,11 @@ public class Cus_SellFundForm extends FormBean{
 		}
 		
 		try {
-            if (Double.parseDouble(shares) <= 0) {
-                errors.add("Amount must be positive number"); 
+            if (Double.parseDouble(shares) < 0.01) {
+                errors.add("Amount must be greater than $ 0.01"); 
             }
         }
-        catch (NumberFormatException e) {
+        catch (Exception e) {
             errors.add("Amount must be a valid number");
         }
 		

@@ -27,11 +27,11 @@ public class Cus_RequestCheckForm extends FormBean {
 		// no need to consider overflow here
 		
 		try {
-            if (Double.parseDouble(withdraw) <= 0) {
-                errors.add("Amount must be positive number"); 
+            if (Double.parseDouble(withdraw) < 0.01) {
+                errors.add("Amount must be greater than $ 0.01"); 
             }
         }
-        catch (NumberFormatException e) {
+        catch (Exception e) {
             errors.add("Amount must be a valid number");
         }
 		

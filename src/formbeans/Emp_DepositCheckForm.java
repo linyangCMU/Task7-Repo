@@ -27,8 +27,8 @@ public class Emp_DepositCheckForm extends FormBean {
 		}
 
 		try {
-            if (Double.parseDouble(deposit) <= 0) {
-                errors.add("Amount must be positive number"); 
+            if (Double.parseDouble(deposit) < 0.01) {
+                errors.add("Amount must be greater than $ 0.01"); 
             }
         }
         catch (NumberFormatException e) {
