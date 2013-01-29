@@ -40,12 +40,12 @@ if(transactions!=null) {
     for(Transaction transaction : transactions){
 %>
 			            <tr>
-							<td><div align="center"> <%=transaction.getExecute_date() %></div></td>
+							<td><div align="center"> <%=transaction.getExecute_dateStr() %></div></td>
 							<td><div align="center"> <%=transaction.getTransaction_type() %></div></td>
 							<td><div align="center"> <%=transaction.getFundName() %></div></td>
-							<td><div align="center"> <%=nf.format(transaction.getShares()) %></div></td>
-							<td><div align="center"> <%=nf.format(transaction.getFundPrice()) %></div></td>
-	   						<td><div align="center"> <%=nf.format(transaction.getAmount()) %></div></td>
+							<td><div align="right"><font face="courier">$<%=nf.format(transaction.getShares()) %></font></div></td>
+							<td><div align="right"><font face="courier">$<%=nf.format(transaction.getFundPrice()) %></font></div></td>
+	   						<td><div align="right"><font face="courier">$<%=nf.format(transaction.getAmount()) %></font></div></td>
 			            </tr>
 <%
     }

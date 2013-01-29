@@ -60,7 +60,7 @@ public class TransactionDAO {
 			pstmt.setDate(3, (Date) transaction.getExecute_date());
 			pstmt.setInt(4, (int)transaction.getShares() * 1000);	
 			pstmt.setString(5, transaction.getTransaction_type());
-			pstmt.setInt(6, (int)(transaction.getAmount()*1000));
+			pstmt.setInt(6, (int)(transaction.getAmount()*100));
 			pstmt.setString(7, transaction.getStatus());
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
@@ -97,7 +97,7 @@ public class TransactionDAO {
 				transaction.setDate(rs.getDate("execute_date"));
 				transaction.setShares((double)rs.getInt("shares")/1000);
 				transaction.setTransaction_type(rs.getString("transaction_type"));
-				transaction.setAmount(rs.getInt("amount"));
+				transaction.setAmount((double)rs.getInt("amount")/100);
             	transaction.setStatus(rs.getString("status"));
             	
             	list.add(transaction);
@@ -141,7 +141,7 @@ public class TransactionDAO {
                 transaction.setDate(rs.getDate("execute_date"));
                 transaction.setShares((double)rs.getInt("shares")/1000);
                 transaction.setTransaction_type(rs.getString("transaction_type"));
-                transaction.setAmount(rs.getInt("amount"));                
+                transaction.setAmount((double)rs.getInt("amount")/100);                
             }
             stmt.close();
             releaseConnection(con);
@@ -181,7 +181,7 @@ public class TransactionDAO {
                 transaction.setDate(rs.getDate("execute_date"));
                 transaction.setShares((double)rs.getInt("shares")/1000);
                 transaction.setTransaction_type(rs.getString("transaction_type"));
-                transaction.setAmount(rs.getInt("amount"));
+                transaction.setAmount((double)rs.getInt("amount")/100);
                 transaction.setStatus(rs.getString("status"));
                 
                 list.add(transaction);
@@ -208,7 +208,7 @@ public class TransactionDAO {
             con = getConnection();
             
             PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET execute_date=?, status=? WHERE transaction_id=?");
-            pstmt.setDate(1, (transaction.getExecute_date()));
+            pstmt.setDate(1, new Date((transaction.getExecute_date().getTime())));
             pstmt.setString(2, transaction.getStatus());
             pstmt.setInt(3, transaction.getTransaction_id());
             pstmt.executeUpdate();

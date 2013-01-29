@@ -57,6 +57,17 @@ public class Emp_TransitionDayAction extends Action {
                 return "login-emp.jsp";
             }
             
+          //get fund info:
+            ArrayList<Fund> funds = fundDAO.lookup(".");
+            Date date = new Date(0);
+            for (Fund fund : funds) {
+                fund.setPrice(historyDAO.lookupLatestPriceAndDate(fund.getId(), date));
+            }
+            date.setTime(date.getTime() + 86400000);
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+            request.setAttribute("date", format.format(date));
+            request.setAttribute("funds", funds);
+            
             //process request form
             Emp_TransitionDayForm form = new Emp_TransitionDayForm(request);
             request.setAttribute("form",form);
@@ -86,8 +97,88 @@ public class Emp_TransitionDayAction extends Action {
             // update the fund history database with new fund prices
             
             
-            // Traverse the Transaction History table
-            
+
+            // Update Pending Transactions
+            ArrayList<Transaction> transactions = transactionDAO.getPendingTransactions();
+            for (Transaction transaction : transactions) {
+                transaction.setDate(transitionDay);
+                int customerId = transaction.getCustomer_id();
+                int fundId = transaction.getFund_id();
+                double amount = transaction.getAmount();
+                //determine the type of the transaction
+                String type = transaction.getTransaction_type();
+                if (type.equalsIgnoreCase("BUY")) {
+                    //update position table
+                    //get the latest price for this fund, give fundId
+                    double price = historyDAO.lookupLatestPriceAndDate(fundId, new Date(0));
+                    double shares = amount / price;
+                    //check if the customer's available balance is enough
+                    Customer customer = customerDAO.lookup(customerId);
+                    double balance = customer.getAvailableCash();
+                    if(balance<amount){
+                        transaction.setStatus("DENIED");
+                        continue;
+                    }
+                    transaction.setStatus("APPROVED");
+                    customer.setAvailableCash(balance-amount);
+                    customer.setCash(balance-amount);
+                    customerDAO.update(customer);
+                    //check if the position exists
+                    Position position = positionDAO.lookup(customerId, fundId);
+                    if (position==null) {
+                        position = new Position();
+                        position.setCustomer_id(customerId);
+                        position.setFund_id(fundId);
+                        position.setShares(shares);
+                        positionDAO.create(position);
+                    } else {
+                        position.setShares(position.getShares() + shares);
+                        positionDAO.update(position);
+                    }
+                } else if (type.equalsIgnoreCase("SELL")) {
+                    double price = historyDAO.lookupLatestPriceAndDate(fundId, new Date(0));
+                    double shares = transaction.getShares();
+                    amount = shares * price;
+                    Customer customer = customerDAO.lookup(customerId);
+                    double balance = customer.getAvailableCash();
+                    //update position table
+                    Position position = positionDAO.lookup(customerId, fundId);
+                    double availableShares = position.getShares();
+                    if(availableShares < shares + 0.001) {
+                        // Sold out all shares
+                        transaction.setStatus("APPROVED");
+                        customer.setAvailableCash(balance+amount);
+                        customer.setCash(balance+amount);
+                        customerDAO.update(customer);
+                        positionDAO.remove(position);
+                    } else if(availableShares < shares) {
+                        transaction.setStatus("DENIED");
+                    } else {
+                        transaction.setStatus("APPROVED");
+                        customer.setAvailableCash(balance+amount);
+                        customer.setCash(balance+amount);
+                        customerDAO.update(customer);
+                        position.setShares(availableShares-shares);
+                        positionDAO.update(position);
+                    }                    
+                } else if (type.equalsIgnoreCase("WITHDRAW")) {
+                    Customer customer = customerDAO.lookup(customerId);
+                    customer.setCash(customer.getAvailableCash());
+                    customerDAO.update(customer);
+                    transaction.setStatus("APPROVED");
+                } else if (type.equalsIgnoreCase("DEPOSIT")) {
+                    //update the balance
+                    Customer customer = customerDAO.lookup(customerId);
+                    double balance = customer.getAvailableCash() + amount;
+                    customer.setCash(balance);
+                    customer.setAvailableCash(balance);
+                    customerDAO.update(customer);
+                    transaction.setStatus("APPROVED");
+                } else {
+                    System.out.println("Unknown Type of transaction");
+                }
+                transactionDAO.updateTransaction(transaction);
+            }
             return "transition-day-emp.jsp";
         } catch (MyDAOException e) {
             errors.add(e.getMessage());

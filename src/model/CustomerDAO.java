@@ -73,8 +73,8 @@ public class CustomerDAO {
 			pstmt.setString(7, customer.getCity());
 			pstmt.setString(8, customer.getState());
 			pstmt.setString(9, customer.getZip());
-			pstmt.setDouble(10, customer.getCash());
-			pstmt.setDouble(10, customer.getCash());
+			pstmt.setInt(10, (int)customer.getCash()*100);
+			pstmt.setInt(10, (int)customer.getCash()*100);
 			int count = pstmt.executeUpdate();
 			if (count != 1)
 				throw new SQLException("Insert updated" + count + "rows");
@@ -162,8 +162,8 @@ public class CustomerDAO {
                 customer.setCity(rs.getString("city"));
                 customer.setState(rs.getString("state"));
                 customer.setZip(rs.getString("zip"));
-                customer.setCash(rs.getInt("cash"));
-                
+                customer.setCash((double)rs.getInt("cash")*1.0/100.0);
+                customer.setAvailableCash((double)rs.getInt("available_cash")*1.0/100.0);
             }
 
             rs.close();
@@ -210,8 +210,8 @@ public class CustomerDAO {
                 customer.setCity(rs.getString("city"));
                 customer.setState(rs.getString("state"));
                 customer.setZip(rs.getString("zip"));
-                customer.setCash(rs.getInt("cash"));
-                customer.setAvailableCash(rs.getInt("available_cash"));
+                customer.setCash((double)rs.getInt("cash")*1.0/100.0);
+                customer.setAvailableCash((double)rs.getInt("available_cash")*1.0/100.0);
                 customers.add(customer);
             }
 
@@ -268,7 +268,7 @@ public class CustomerDAO {
         try {
             con = getConnection();
             
-            String sql = "SELECT cash FROM "  + tableName + " WHERE customer_id=?";
+            String sql = "SELECT available_cash FROM "  + tableName + " WHERE customer_id=?";
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, customerId);
             ResultSet rs = pstmt.executeQuery();
@@ -403,8 +403,8 @@ public class CustomerDAO {
 				customer.setCity(rs.getString("city"));
 				customer.setState(rs.getString("state"));
 				customer.setZip(rs.getString("zip"));
-				customer.setCash(rs.getInt("cash"));
-				customer.setAvailableCash(rs.getInt("available_cash"));
+				customer.setCash((double)rs.getInt("cash")*1.0/100.0);
+                customer.setAvailableCash((double)rs.getInt("available_cash")*1.0/100.0);
             	
             	
             	list.add(customer);

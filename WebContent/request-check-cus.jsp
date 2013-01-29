@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="java.text.DecimalFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,12 +23,15 @@
             <form method="post" action="requestcheck.do">
                 <table>
                     <tr>
-                        <td> Current Balance: $</td>
+                        <td> Available Balance: $</td>
                         <td>    
                         <%
+                            DecimalFormat nf = new DecimalFormat("#0.00");
+                            nf.setMaximumFractionDigits(2);
+                            nf.setMinimumFractionDigits(2);
 	                        Double cash = (Double) request.getAttribute("cash");
 	                        if (cash!=null)
-	                            out.println(cash);
+	                            out.println(nf.format(cash));
                         %>
                         </td>
                     </tr>
