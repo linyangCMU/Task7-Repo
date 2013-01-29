@@ -19,10 +19,10 @@ import formbeans.Cus_RegisterForm;
 public class Cus_RegisterAction extends Action {
 	private FormBeanFactory<Cus_RegisterForm> formBeanFactory = FormBeanFactory.getInstance(Cus_RegisterForm.class);
 
-	private CustomerDAO customerDAO;
+	private CustomerDAO CustomerDAO;
 	
 	public Cus_RegisterAction(Model model) {
-		customerDAO = model.getCustomerDAO();
+		CustomerDAO = model.getCustomerDAO();
 	}
 
 	public String getName() { return "create-customer-acct.do"; }
@@ -31,16 +31,7 @@ public class Cus_RegisterAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
-            Customer customer = (Customer) request.getSession(false).getAttribute("customer");
-            
-            if(customer == null) {
-                return "login-cus.jsp";
-            }
-            
-            customer = customerDAO.lookup(customer.getCustomerID());
-            request.getSession(false).setAttribute("customer", customer);
-            
-            Cus_RegisterForm form = formBeanFactory.create(request);
+        	Cus_RegisterForm form = formBeanFactory.create(request);
 	        request.setAttribute("form",form);
 	
 	        // If no params were passed, return with no errors so that the form will be
@@ -48,7 +39,6 @@ public class Cus_RegisterAction extends Action {
 	        if (!form.isPresent()) {
 	            return "create-acct-cus.jsp";
 	        }
-	
 	        // Any validation errors?
 	        errors.addAll(form.getValidationErrors());
 	        if (errors.size() != 0) {
@@ -67,7 +57,7 @@ public class Cus_RegisterAction extends Action {
 	        user.setState(form.getState());
 	        user.setZip(form.getZip());
 	        
-        	customerDAO.create(user);
+        	CustomerDAO.create(user);
         
 			// Attach (this copy of) the user bean to the session
 	        HttpSession session = request.getSession(false);

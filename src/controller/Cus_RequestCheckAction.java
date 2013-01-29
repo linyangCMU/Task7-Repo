@@ -63,14 +63,14 @@ public class Cus_RequestCheckAction extends Action {
             // Any validation errors?
             errors.addAll(form.getValidationErrors());
             
+            if (errors.size() != 0) {
+                return "request-check-cus.jsp";
+            }
+            
             double withdrawAmount = Double.parseDouble(form.getWithdraw());
             
             if (withdrawAmount > balance) {
                 errors.add("Withdraw amount cannot be greater than your current balance!");
-            }
-            
-            if (errors.size() != 0) {
-                return "request-check-cus.jsp";
             }
             
             balance = balance - withdrawAmount;

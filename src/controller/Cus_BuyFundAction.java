@@ -56,15 +56,16 @@ public class Cus_BuyFundAction extends Action{
 				return "buy-fund-cus.jsp";
 			}
 			
-			double amount = Double.parseDouble(form.getAmount());
-			if(amount > available)
-				errors.add("You don't have enough money!");
 			
 			errors.addAll(form.getValidationErrors());
 			if (errors.size() != 0) {
 				System.out.println(errors.toString());
 				return "buy-fund-cus.jsp";
 			}
+			
+			double amount = Double.parseDouble(form.getAmount());
+            if(amount > available)
+                errors.add("You don't have enough money!");
 			
 			Transaction t = new Transaction();
 			

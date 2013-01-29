@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Mutual Fund Management</title>
     <link rel="stylesheet" type="text/css" href="style/main.css">
+    <script type="text/javascript" src="scripts/submit.js"></script>
 </head>
 <body>
 
@@ -45,7 +46,7 @@ if(fund == null){
                 <table>
                     <tr>
                         <td><b> Fund Name: </b></td>
-                        <td> <%=fund.getName() %> </td>
+                        <td><a href="#" onclick="javascript:submitFund('<%=fund.getId() %>')"> <%=fund.getName() %> </a></td>
                     </tr>
                     <tr>
                         <td><b> Amount you want to buy:</b> $</td>
