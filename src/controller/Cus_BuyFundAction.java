@@ -41,7 +41,7 @@ public class Cus_BuyFundAction extends Action{
 			request.setAttribute("form", form);
 			Customer customer = (Customer) request.getSession().getAttribute("customer");						
 			int customer_id = customerDAO.lookup(customer.getUsername()).getCustomerID();
-			double available = customer.getAvailable();
+			double available = customer.getAvailableCash();
 			// If no params were passed, return with no errors so that the form
 			// will be presented (we assume for the first time).
 			if (!form.isPresent()) {
