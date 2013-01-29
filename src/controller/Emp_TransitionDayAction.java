@@ -123,10 +123,6 @@ public class Emp_TransitionDayAction extends Action {
                     //check if the customer's available balance is enough
                     Customer customer = customerDAO.lookup(customerId);
                     double balance = customer.getAvailableCash();
-                    if(balance<amount){
-                        transaction.setStatus("DENIED");
-                        continue;
-                    }
                     transaction.setStatus("APPROVED");
                     transaction.setFundPrice(price);
                     customer.setAvailableCash(balance-amount);
