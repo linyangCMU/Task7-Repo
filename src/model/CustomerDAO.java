@@ -74,7 +74,7 @@ public class CustomerDAO {
 			pstmt.setString(8, customer.getState());
 			pstmt.setString(9, customer.getZip());
 			pstmt.setInt(10, (int)customer.getCash()*100);
-			pstmt.setInt(10, (int)customer.getCash()*100);
+			pstmt.setInt(11, (int)customer.getAvailableCash()*100);
 			int count = pstmt.executeUpdate();
 			if (count != 1)
 				throw new SQLException("Insert updated" + count + "rows");

@@ -37,15 +37,20 @@ public class Cus_RequestCheckAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
+            
+            Customer customer = (Customer) request.getSession(false).getAttribute("customer");
+            
+            if(customer == null) {
+                return "login-cus.jsp";
+            }
+            
+            customer = customerDAO.lookup(customer.getCustomerID());
+            request.getSession(false).setAttribute("customer", customer);
+            
             Cus_RequestCheckForm form = formBeanFactory.create(request);
             request.setAttribute("form",form);
             
-            // Look up the customer
-            Customer customer = (Customer) request.getSession(false).getAttribute("customer");
             
-            if (customer == null) {
-                return "login-cus.jsp";
-            }
             
             double balance = customerDAO.getAvailableCash(customer.getCustomerID());
             request.setAttribute("cash", balance);

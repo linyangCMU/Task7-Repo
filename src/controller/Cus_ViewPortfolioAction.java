@@ -14,6 +14,7 @@ import databeans.Transaction;
 
 import model.Model;
 
+import model.CustomerDAO;
 import model.HistoryDAO;
 import model.FundDAO;
 import model.PositionDAO;
@@ -26,12 +27,14 @@ public class Cus_ViewPortfolioAction extends Action {
     private HistoryDAO historyDAO;
     private PositionDAO positionDAO;
     private TransactionDAO transactionDAO;
+    private CustomerDAO customerDAO;
     
     public Cus_ViewPortfolioAction(Model model) {
         fundDAO = model.getFundDAO();
         historyDAO = model.getHistoryDAO();
         positionDAO = model.getPositionDAO();
         transactionDAO = model.getTransactionDAO();
+        customerDAO = model.getCustomerDAO();
     }
     
     public String getName() { return "viewportfolio.do"; }
@@ -46,6 +49,9 @@ public class Cus_ViewPortfolioAction extends Action {
             if(customer == null) {
                 return "login-cus.jsp";
             }
+            
+            customer = customerDAO.lookup(customer.getCustomerID());
+            request.getSession(false).setAttribute("customer", customer);
             
             if (errors.size() != 0) {
                 return "error.jsp";

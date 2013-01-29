@@ -20,7 +20,13 @@
             <h2> Transition Day Simulation </h2>
             <jsp:include page="error-list.jsp" />
             <form method="POST" action="transitionday.do">
+                
+            
                 <table>
+                    <tr>
+                        <td><b style="color: red;">Update Date:</b></td>
+                        <td><input type="text" name="date" value="<%=request.getAttribute("date")%>"/></td>
+                    </tr>
 <%
 ArrayList<Fund> funds = (ArrayList<Fund>) request.getAttribute("funds");
 if (funds!=null) {

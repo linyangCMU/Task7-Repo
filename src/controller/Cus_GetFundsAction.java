@@ -10,9 +10,11 @@ import javax.servlet.http.HttpSession;
 import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
 
+import databeans.Customer;
 import databeans.Fund;
 import formbeans.Cus_FundSearchForm;
 
+import model.CustomerDAO;
 import model.Model;
 import model.HistoryDAO;
 import model.FundDAO;
@@ -23,10 +25,12 @@ public class Cus_GetFundsAction extends Action {
     private FormBeanFactory<Cus_FundSearchForm> formBeanFactory = FormBeanFactory.getInstance(Cus_FundSearchForm.class);
     private FundDAO fundDAO;
     private HistoryDAO historyDAO;
+    private CustomerDAO customerDAO;
     
     public Cus_GetFundsAction(Model model) {
         fundDAO = model.getFundDAO();
         historyDAO = model.getHistoryDAO();
+        customerDAO = model.getCustomerDAO();
     }
     
     public String getName() { return "getfunds.do"; }
@@ -36,6 +40,15 @@ public class Cus_GetFundsAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
+            Customer customer = (Customer) request.getSession(false).getAttribute("customer");
+            
+            if(customer == null) {
+                return "login-cus.jsp";
+            }
+            
+            customer = customerDAO.lookup(customer.getCustomerID());
+            request.getSession(false).setAttribute("customer", customer);
+            
             Cus_FundSearchForm form = formBeanFactory.create(request);
             request.setAttribute("form",form);
 

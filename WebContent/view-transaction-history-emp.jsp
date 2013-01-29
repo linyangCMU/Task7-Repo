@@ -29,6 +29,7 @@
 							<th width="auto">Shares</th>
 							<th width="auto">Price</th>
 							<th width="auto">Dollar Amount</th>
+                            <th width="auto">Status</th>
                         </tr>
 						
 <%
@@ -46,6 +47,7 @@ if(transactions!=null) {
                             <td><div align="right"> <%=nf.format(transaction.getShares()) %></div></td>
                             <td><div align="right"> $<%=nf.format(transaction.getFundPrice()) %></div></td>
                             <td><div align="right"> $<%=nf.format(transaction.getAmount()) %></div></td>
+                            <td><div align="center"><%=transaction.getStatus() %></div></td>
                         </tr> 
 <%
     }

@@ -57,7 +57,7 @@ if(fund == null){
                         </td>
                     </tr>
                 </table>
-                <input type="text" name="fundId" value="<%=fund.getId()%>"/>
+                <input type="hidden" name="fundId" value="<%=fund.getId()%>"/>
             </form>
         </div>
         <jsp:include page="template-footer.jsp" />

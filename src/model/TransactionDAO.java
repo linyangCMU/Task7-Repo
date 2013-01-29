@@ -89,7 +89,7 @@ public class TransactionDAO {
 			pstmt.setDate(3, (Date) transaction.getExecute_date());
 			pstmt.setInt(4, (int)transaction.getShares() * 1000);	
 			pstmt.setString(5, transaction.getTransaction_type());
-			pstmt.setInt(6, (int)(transaction.getAmount()*1000));
+			pstmt.setInt(6, (int)(transaction.getAmount()*100));
 			pstmt.setString(7, transaction.getStatus());
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
@@ -130,7 +130,7 @@ public class TransactionDAO {
 			pstmt.setDate(3, (Date) transaction.getExecute_date());
 			pstmt.setInt(4, (int)transaction.getShares() * 1000);	
 			pstmt.setString(5, transaction.getTransaction_type());
-			pstmt.setInt(6, (int)(transaction.getAmount()*1000));
+			pstmt.setInt(6, (int)(transaction.getAmount()*100));
 			pstmt.setString(7, transaction.getStatus());
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");

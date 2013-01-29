@@ -52,7 +52,7 @@ public class HistoryDAO {
 		try{
 			con = getConnection();
 			
-        	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (fund_id, price_date, price,) VALUES (?,?,?)");
+        	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (fund_id, price_date, price) VALUES (?,?,?)");
 			pstmt.setInt(1, history.getId());
 			pstmt.setDate(2, history.getDate());
 			int int_price = (int) history.getPrice() * 100;

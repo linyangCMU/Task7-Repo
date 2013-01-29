@@ -80,8 +80,6 @@ public class Emp_TransitionDayAction extends Action {
             // if the transition day form is not ready:
             // present the form
             if (!form.isPresent()) {
-              
-                
                 return "transition-day-emp.jsp";
             }
             
@@ -130,6 +128,7 @@ public class Emp_TransitionDayAction extends Action {
                         continue;
                     }
                     transaction.setStatus("APPROVED");
+                    transaction.setFundPrice(price);
                     customer.setAvailableCash(balance-amount);
                     customer.setCash(balance-amount);
                     customerDAO.update(customer);
@@ -147,6 +146,7 @@ public class Emp_TransitionDayAction extends Action {
                     }
                 } else if (type.equalsIgnoreCase("SELL")) {
                     double price = historyDAO.lookupLatestPriceAndDate(fundId, new Date(0));
+                    transaction.setFundPrice(price);
                     double shares = transaction.getShares();
                     amount = shares * price;
                     Customer customer = customerDAO.lookup(customerId);
@@ -185,7 +185,8 @@ public class Emp_TransitionDayAction extends Action {
                 }
                 transactionDAO.updateTransaction(transaction);
             }
-            return "transition-day-emp.jsp";
+                        
+            return "manage-customers-emp.jsp";
         } catch (MyDAOException e) {
             errors.add(e.getMessage());
             return "error.jsp";

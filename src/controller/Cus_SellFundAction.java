@@ -47,10 +47,18 @@ public class Cus_SellFundAction extends Action{
 		request.setAttribute("errors", errors);
 
 		try {
+		    Customer customer = (Customer) request.getSession(false).getAttribute("customer");
+            
+            if(customer == null) {
+                return "login-cus.jsp";
+            }
+            
+            customer = customerDAO.lookup(customer.getCustomerID());
+            request.getSession(false).setAttribute("customer", customer);
+		    
 			Cus_SellFundForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
 			
-			Customer customer = (Customer) request.getSession().getAttribute("customer");
 			int customer_id = customerDAO.lookup(customer.getUsername()).getCustomerID();
 			String fundName = form.getFundName();
 			String shares = form.getShares();

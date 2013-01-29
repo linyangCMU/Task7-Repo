@@ -9,6 +9,7 @@ import databeans.Customer;
 import databeans.Fund;
 import databeans.Transaction;
 
+import model.CustomerDAO;
 import model.Model;
 import model.FundDAO;
 import model.MyDAOException;
@@ -18,10 +19,12 @@ import model.TransactionDAO;
 public class Cus_ViewTransactionHistoryAction extends Action {   
     private FundDAO fundDAO;
     private TransactionDAO transactionDAO;
+    private CustomerDAO customerDAO;
     
     public Cus_ViewTransactionHistoryAction(Model model) {
         fundDAO = model.getFundDAO();
         transactionDAO = model.getTransactionDAO();
+        customerDAO = model.getCustomerDAO();
     }
     
     public String getName() { return "cusviewhistory.do"; }
@@ -33,9 +36,13 @@ public class Cus_ViewTransactionHistoryAction extends Action {
         try {
             
             Customer customer = (Customer) request.getSession(false).getAttribute("customer");
-            if (customer == null) {
+            
+            if(customer == null) {
                 return "login-cus.jsp";
             }
+            
+            customer = customerDAO.lookup(customer.getCustomerID());
+            request.getSession(false).setAttribute("customer", customer);
             
             if (errors.size() != 0) {
                 return "error.jsp";

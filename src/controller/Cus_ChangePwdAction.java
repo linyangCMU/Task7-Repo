@@ -32,7 +32,16 @@ public class Cus_ChangePwdAction extends Action {
 		request.setAttribute("errors", errors);
 
 		try {
-			Cus_ChangePwdForm form = formBeanFactory.create(request);
+		    Customer customer = (Customer) request.getSession(false).getAttribute("customer");
+            
+            if(customer == null) {
+                return "login-cus.jsp";
+            }
+            
+            customer = customerDAO.lookup(customer.getCustomerID());
+            request.getSession(false).setAttribute("customer", customer);
+		    
+		    Cus_ChangePwdForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
 			// If no params were passed, return with no errors so that the form
 			// will be presented (we assume for the first time).
@@ -46,8 +55,6 @@ public class Cus_ChangePwdAction extends Action {
 				System.out.println(errors.toString());
 				return "change-pwd-cus.jsp";
 			}
-
-			Customer customer = (Customer) request.getSession().getAttribute("customer");
 			
 			customerDAO.setPassword(customer.getUsername(), form.getNewPassword());
 			

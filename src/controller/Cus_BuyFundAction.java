@@ -37,9 +37,17 @@ public class Cus_BuyFundAction extends Action{
 		request.setAttribute("errors", errors);
 
 		try {
-			Cus_BuyFundForm form = formBeanFactory.create(request);
+		    Customer customer = (Customer) request.getSession(false).getAttribute("customer");
+            
+            if(customer == null) {
+                return "login-cus.jsp";
+            }
+            
+            customer = customerDAO.lookup(customer.getCustomerID());
+            request.getSession(false).setAttribute("customer", customer);
+		    Cus_BuyFundForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-			Customer customer = (Customer) request.getSession().getAttribute("customer");						
+
 			int customer_id = customerDAO.lookup(customer.getUsername()).getCustomerID();
 			double available = customer.getAvailableCash();
 			// If no params were passed, return with no errors so that the form
