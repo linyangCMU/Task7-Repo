@@ -47,7 +47,7 @@ public class Cus_RequestCheckAction extends Action {
                 return "login-cus.jsp";
             }
             
-            double balance = customerDAO.getCash(customer.getCustomerID());
+            double balance = customerDAO.getAvailableCash(customer.getCustomerID());
             request.setAttribute("cash", balance);
             
             if (!form.isPresent()) {

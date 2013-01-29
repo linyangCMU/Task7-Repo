@@ -1,7 +1,7 @@
 package model;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.util.Date;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,17 +18,17 @@ public class TransactionDAO {
 	private String jdbcDriver;
 	private String jdbcURL;
 	private String tableName;
-	
+
 	public TransactionDAO(String jdbcDriver, String jdbcURL, String tableName) throws MyDAOException{
 		this.jdbcDriver = jdbcDriver;
 		this.jdbcURL = jdbcURL;
 		this.tableName = tableName;
-		
+
 		if(!tableExists())
 			createTable();
-			
+
 	}
-	
+
 	private synchronized Connection getConnection() throws MyDAOException{
 		if(connectionPool.size() > 0){
 			return connectionPool.remove(connectionPool.size() - 1);
@@ -44,16 +44,16 @@ public class TransactionDAO {
 			throw new MyDAOException(e);
 		}
 	}
-	
+
 	private synchronized void releaseConnection(Connection con){
 		connectionPool.add(con);
 	}
-	
+
 	public void create(Transaction transaction) throws MyDAOException{
 		Connection con = null;
 		try{
 			con = getConnection();
-			
+
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (customer_id, fund_id, execute_date, shares, transaction_type, amount, status) VALUES (?,?,?,?,?,?,?)");
 			pstmt.setInt(1, transaction.getCustomer_id());
 			pstmt.setInt(2, transaction.getFund_id());
@@ -75,7 +75,7 @@ public class TransactionDAO {
 			}
 		}
 	}
-	
+
 	public ArrayList<Transaction> getTransactions(int customer_id) throws MyDAOException {
 		Connection con = null;
     	try {
@@ -116,9 +116,9 @@ public class TransactionDAO {
             }
             throw new MyDAOException(e);
 		}
-		
+
 	}
-	
+
 	public Transaction getLastTransaction(int customer_id) throws MyDAOException {
         Connection con = null;
         try {
@@ -159,7 +159,7 @@ public class TransactionDAO {
         }
         
     }
-	
+
 	public ArrayList<Transaction> getPendingTransactions() throws MyDAOException{
 	    Connection con = null;
         try {
@@ -201,7 +201,7 @@ public class TransactionDAO {
             throw new MyDAOException(e);
         }
     }
-	
+
 	public void updateTransaction(Transaction transaction) throws MyDAOException{
 	    Connection con = null;
         try {
@@ -228,7 +228,7 @@ public class TransactionDAO {
         }
         
     }
-	
+
 	private boolean tableExists() throws MyDAOException{
 		Connection con = null;
         try {

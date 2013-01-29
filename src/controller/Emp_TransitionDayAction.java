@@ -1,11 +1,14 @@
 package controller;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.SimpleAttributeSet;
 
 import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
@@ -13,6 +16,7 @@ import org.mybeans.form.FormBeanFactory;
 import databeans.Customer;
 import databeans.Employee;
 import databeans.Fund;
+import databeans.History;
 import databeans.Portfolio;
 import databeans.Position;
 import databeans.Transaction;
@@ -52,6 +56,7 @@ public class Emp_TransitionDayAction extends Action {
         
         try {
             
+            //If employee is not logged in, direct him/her to the employee login page.
             Employee employee = (Employee) request.getSession(false).getAttribute("employee");
             if(employee == null) {
                 return "login-emp.jsp";
@@ -72,32 +77,37 @@ public class Emp_TransitionDayAction extends Action {
             Emp_TransitionDayForm form = new Emp_TransitionDayForm(request);
             request.setAttribute("form",form);
             
-            //get fund info:
-            ArrayList<Fund> funds = fundDAO.lookup(".");
-            for (Fund fund : funds) {
-                
-                fund.setPrice(historyDAO.lookupLatestPriceAndDate(fund.getId(), new Date(0)));
-                System.out.println(fund.getName() + ":");
-            }
-            
-            request.setAttribute("funds", funds);
-            
             // if the transition day form is not ready:
             // present the form
             if (!form.isPresent()) {
+              
+                
                 return "transition-day-emp.jsp";
             }
-
+            
+            //Validate the form
             // Any validation errors?
             errors.addAll(form.getValidationErrors());
             if (errors.size() != 0) {
                 return "transition-day-emp.jsp";
             }
             
-            // update the fund history database with new fund prices
+            //get form info:
+            Date transitionDay = new Date(form.getDate().getTime());
+            ArrayList<Integer> fundIds = form.getFundIds();
+            ArrayList<Double> prices = form.getPrices();
             
+            //update the funds' prices with newly provided prices
+            History history = new History();
+            for (int i=0; i<fundIds.size(); i++) {
+                int id = fundIds.get(i);
+                double price = prices.get(i);
+                history.setDate(transitionDay);
+                history.setId(id);
+                history.setPrice(price);
+                historyDAO.create(history);
+            }
             
-
             // Update Pending Transactions
             ArrayList<Transaction> transactions = transactionDAO.getPendingTransactions();
             for (Transaction transaction : transactions) {

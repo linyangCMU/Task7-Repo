@@ -17,17 +17,17 @@ public class PositionDAO {
 	private String jdbcDriver;
 	private String jdbcURL;
 	private String tableName;
-	
+
 	public PositionDAO(String jdbcDriver, String jdbcURL, String tableName) throws MyDAOException{
 		this.jdbcDriver = jdbcDriver;
 		this.jdbcURL = jdbcURL;
 		this.tableName = tableName;
-		
+
 		if(!tableExists())
 			createTable();
-			
+
 	}
-	
+
 	private synchronized Connection getConnection() throws MyDAOException{
 		if(connectionPool.size() > 0){
 			return connectionPool.remove(connectionPool.size() - 1);
@@ -43,16 +43,16 @@ public class PositionDAO {
 			throw new MyDAOException(e);
 		}
 	}
-	
+
 	private synchronized void releaseConnection(Connection con){
 		connectionPool.add(con);
 	}
-	
+
 	public void create(Position position) throws MyDAOException{
 		Connection con = null;
 		try{
 			con = getConnection();
-			
+
         	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (customer_id, fund_id, shares) VALUES (?,?,?)");
 			pstmt.setInt(1, position.getCustomer_id());
 			pstmt.setInt(2, position.getFund_id());
@@ -70,7 +70,52 @@ public class PositionDAO {
 			}
 		}
 	}
-	
+
+	public void update(Position position) throws MyDAOException{
+        Connection con = null;
+        try{
+            con = getConnection();
+            
+            PreparedStatement pstmt = con.prepareStatement("UPDATE " + tableName + " SET shares=? WHERE customer_id=?, fund_id=?");
+            pstmt.setInt(1, (int)position.getShares() * 1000);
+            pstmt.setInt(2, position.getCustomer_id());
+            pstmt.setInt(3, position.getFund_id());
+            int count = pstmt.executeUpdate();
+            if(count != 1) throw new SQLException("Update updated" + count + "rows");
+            pstmt.close();
+            releaseConnection(con);
+        }catch(Exception e){
+            try{
+                if(con != null)
+                    con.close();
+            }catch(SQLException e2){
+                throw new MyDAOException(e);
+            }
+        }
+    }
+
+	public void remove(Position position) throws MyDAOException{
+        Connection con = null;
+        try{
+            con = getConnection();
+            
+            PreparedStatement pstmt = con.prepareStatement("DELETE FROM " + tableName + " WHERE customer_id=?, fund_id=?");
+            pstmt.setInt(1, position.getCustomer_id());
+            pstmt.setInt(2, position.getFund_id());
+            int count = pstmt.executeUpdate();
+            if(count != 1) throw new SQLException("delete updated" + count + "rows");
+            pstmt.close();
+            releaseConnection(con);
+        }catch(Exception e){
+            try{
+                if(con != null)
+                    con.close();
+            }catch(SQLException e2){
+                throw new MyDAOException(e);
+            }
+        }
+    }
+    
 	public Position lookup(int customer_id, int fund_id) throws MyDAOException {
 		Connection con = null;
 		try {
@@ -90,7 +135,7 @@ public class PositionDAO {
 				position.setCustomer_id(rs.getInt("customer_id"));
 				position.setFund_id(rs.getInt("fund_id"));
 				position.setShares((double)rs.getInt("shares")/1000);
-				
+
 			}
 
 			rs.close();
@@ -108,10 +153,10 @@ public class PositionDAO {
             }
             throw new MyDAOException(e);
 		}
-		
+
 	}
-	
-	
+
+
 	public ArrayList<Position> getPositionsByCustomerId(int customer_id) throws MyDAOException {
         Connection con = null;
         try {
@@ -148,7 +193,7 @@ public class PositionDAO {
             throw new MyDAOException(e);
         }
     }
-	
+
 	private boolean tableExists() throws MyDAOException{
 		Connection con = null;
         try {
@@ -168,7 +213,7 @@ public class PositionDAO {
         	throw new MyDAOException(e);
         }
 	}
-	
+
 	private void createTable() throws MyDAOException {
 		Connection con = null;
         try {
