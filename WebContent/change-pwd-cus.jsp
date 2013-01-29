@@ -22,7 +22,7 @@
 					<table>
                         <tr>
                             <td>Old Password:</td>
-                            <td><input type="password" name="oldPassword" value="" /></td>
+                            <td><input type="hidden" name="oldPassword" value="" /></td>
                         </tr>
 						<tr>
 							<td>New Password:</td>
