@@ -145,7 +145,8 @@ public class Emp_TransitionDayAction extends Action {
                     }
                 } else if (type.equalsIgnoreCase("SELL")) {
                     double price = historyDAO.lookupLatestPriceAndDate(fundId, new Date(0));
-                    double shares = amount / price;
+                    double shares = transaction.getShares();
+                    amount = shares * price;
                     Customer customer = customerDAO.lookup(customerId);
                     double balance = customer.getAvailableCash();
                     //update position table
@@ -186,8 +187,6 @@ public class Emp_TransitionDayAction extends Action {
                 }
                 transactionDAO.updateTransaction(transaction);
             }
-            
-            
             return "transition-day-emp.jsp";
         } catch (MyDAOException e) {
             errors.add(e.getMessage());
