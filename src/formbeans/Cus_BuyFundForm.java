@@ -36,7 +36,7 @@ public class Cus_BuyFundForm extends FormBean{
     		    errors.add("Amount must be greater than 0.01"); 
             }
 		}
-		catch (Exception e) {
+		catch (NumberFormatException e) {
 		    errors.add("Amount must be a valid number");
 		}
 		

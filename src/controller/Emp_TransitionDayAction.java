@@ -125,7 +125,7 @@ public class Emp_TransitionDayAction extends Action {
                     double balance = customer.getAvailableCash();
                     transaction.setStatus("APPROVED");
                     transaction.setFundPrice(price);
-                    customer.setAvailableCash(balance-amount);
+                    //customer.setAvailableCash(balance-amount);
                     customer.setCash(balance-amount);
                     customerDAO.update(customer);
                     //check if the position exists

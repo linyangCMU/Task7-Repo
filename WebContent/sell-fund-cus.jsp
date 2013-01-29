@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Sell Fund</title>
 <link rel="stylesheet" type="text/css" href="style/main.css">
+<script type="text/javascript" src="scripts/submit.js"></script>
 </head>
 <body>
 
@@ -37,7 +38,7 @@
 					if(fund!=null){
 						
 					%>
-					<td><%=fund.getName() %>:$</td>
+					<td><a href="#" onclick="javascript:submitFund('<%=fund.getId() %>')"> <%=fund.getName() %></a>:$</td>
 					<td><%=fund.getShares() %></td>
 					<td><input type="text" name="shares" value="0"/></td>
 					<td><input type="hidden" name="fundName" value="<%=fund.getName() %>"/></td>
