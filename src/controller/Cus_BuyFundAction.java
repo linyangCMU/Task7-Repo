@@ -39,21 +39,25 @@ public class Cus_BuyFundAction extends Action{
 		try {
 			Cus_BuyFundForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
+			Customer customer = (Customer) request.getSession().getAttribute("customer");						
+			int customer_id = customerDAO.lookup(customer.getUsername()).getCustomerID();
+			double available = customer.getAvailable();
 			// If no params were passed, return with no errors so that the form
 			// will be presented (we assume for the first time).
 			if (!form.isPresent()) {
 				return "buy-fund-cus.jsp";
 			}
-
-			// Any validation errors?
+			
+			double amount = Double.parseDouble(form.getAmount());
+			if(amount > available)
+				errors.add("You don't have enough money!");
+			
 			errors.addAll(form.getValidationErrors());
 			if (errors.size() != 0) {
 				System.out.println(errors.toString());
 				return "buy-fund-cus.jsp";
 			}
-			Customer customer = (Customer) request.getSession().getAttribute("customer");			
 			
-			int customer_id = customerDAO.lookup(customer.getUsername()).getCustomerID();
 			Transaction t = new Transaction();
 			
 			t.setCustomer_id(customer_id);
@@ -62,9 +66,10 @@ public class Cus_BuyFundAction extends Action{
 			t.setDate(null);
 			t.setTransaction_type("BUY");
 			t.setStatus("PENDING");
-			t.setAmount(Double.parseDouble(form.getAmount()));
+			t.setAmount(amount);
 			
-			transactionDAO.create(t); 
+			double newAvailable = available - amount;
+			transactionDAO.createWithUpdate_Buy(t, customer_id, newAvailable); 
 			
 	        return "viewportfolio.do";
 	  } catch (Exception e) {

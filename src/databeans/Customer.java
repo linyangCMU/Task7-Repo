@@ -13,7 +13,32 @@ public class Customer implements Comparable<Customer> {
 	private String state = null;
 	private String zip = null;
 	private double cash = 0;
+	private double available = 0;
 	
+	public String getAddr_line1() {
+		return addr_line1;
+	}
+
+	public void setAddr_line1(String addr_line1) {
+		this.addr_line1 = addr_line1;
+	}
+
+	public String getAddr_line2() {
+		return addr_line2;
+	}
+
+	public void setAddr_line2(String addr_line2) {
+		this.addr_line2 = addr_line2;
+	}
+
+	public double getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(double available) {
+		this.available = available;
+	}
+
 	public boolean checkPassword(String password) {
 		return password.equals(getPassword());
 	}

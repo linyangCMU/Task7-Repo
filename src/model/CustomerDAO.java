@@ -63,7 +63,7 @@ public class CustomerDAO {
 			PreparedStatement pstmt = con
 					.prepareStatement("INSERT INTO "
 							+ tableName
-							+ " (username, password, firstname, lastname, addr_line1, addr_line2, city, state, zip, cash) VALUES (?,?,?,?,?,?,?,?,?,?)");
+							+ " (username, password, firstname, lastname, addr_line1, addr_line2, city, state, zip, cash, available_cash) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1, customer.getUsername());
 			pstmt.setString(2, customer.getPassword());
 			pstmt.setString(3, customer.getFirstName());
@@ -74,6 +74,7 @@ public class CustomerDAO {
 			pstmt.setString(8, customer.getState());
 			pstmt.setString(9, customer.getZip());
 			pstmt.setDouble(10, customer.getCash());
+			pstmt.setDouble(11, customer.getAvailable());
 			int count = pstmt.executeUpdate();
 			if (count != 1)
 				throw new SQLException("Insert updated" + count + "rows");
@@ -115,6 +116,7 @@ public class CustomerDAO {
 				customer.setState(rs.getString("state"));
 				customer.setZip(rs.getString("zip"));
 				customer.setCash((double)rs.getInt("cash")*1.0/100.0);
+				customer.setAvailable((double)rs.getInt("available_cash")*1.0/100.0);
 			}
 
 			rs.close();
@@ -161,6 +163,7 @@ public class CustomerDAO {
                 customer.setState(rs.getString("state"));
                 customer.setZip(rs.getString("zip"));
                 customer.setCash(rs.getInt("cash"));
+                customer.setAvailable((double)rs.getInt("available_cash")*1.0/100.0);
             }
 
             rs.close();
@@ -208,6 +211,7 @@ public class CustomerDAO {
                 customer.setState(rs.getString("state"));
                 customer.setZip(rs.getString("zip"));
                 customer.setCash(rs.getInt("cash"));
+                customer.setAvailable((double)rs.getInt("available_cash")*1.0/100.0);
                 
                 customers.add(customer);
             }
@@ -235,8 +239,8 @@ public class CustomerDAO {
         try {
             con = getConnection();
             
-            PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET cash=? WHERE username=?");
-            pstmt.setInt(1, (int)(customer.getCash()*100));
+            PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET available_cash=? WHERE username=?");
+            pstmt.setInt(1, (int)(customer.getAvailable()*100));
             pstmt.setString(2, customer.getUsername());
             pstmt.executeUpdate();
             
@@ -292,7 +296,38 @@ public class CustomerDAO {
             throw new MyDAOException(e);
         }
     }
-	
+	public double getAvailableCash(int customerId) throws MyDAOException {
+        Connection con = null;
+        try {
+            con = getConnection();
+            
+            String sql = "SELECT available_cash FROM "  + tableName + " WHERE customer_id=?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, customerId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            double cash = 0;
+            if (rs.next()) {
+                cash = rs.getInt("available_cash") * 1.0 / 100;
+            } else {
+                cash = 0;
+            }
+            rs.close();
+            pstmt.close();
+            releaseConnection(con);
+            
+            return cash;
+        } catch (SQLException e) {
+            try { 
+                if (con != null) 
+                    con.close(); 
+            } 
+            catch (SQLException e2) {
+                
+            }
+            throw new MyDAOException(e);
+        }
+    }
 	public void setPassword(String username, String password) throws MyDAOException {
 		Connection con = null;		
     	try {
@@ -400,7 +435,8 @@ public class CustomerDAO {
 				customer.setCity(rs.getString("city"));
 				customer.setState(rs.getString("state"));
 				customer.setZip(rs.getString("zip"));
-				customer.setCash(rs.getInt("cash"));
+				customer.setCash((double)rs.getInt("cash")*1.0/100.0);
+				customer.setAvailable((double)rs.getInt("available_cash")*1.0/100.0);
             	
             	
             	list.add(customer);
@@ -452,7 +488,7 @@ public class CustomerDAO {
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("CREATE TABLE "
 					+ tableName
-					+ " (customer_id INT NOT NULL AUTO_INCREMENT, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, addr_line1 VARCHAR(255), addr_line2 VARCHAR(255), city VARCHAR(255), state VARCHAR(255), zip INT, cash INT, PRIMARY KEY(customer_id))");
+					+ " (customer_id INT NOT NULL AUTO_INCREMENT, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, addr_line1 VARCHAR(255), addr_line2 VARCHAR(255), city VARCHAR(255), state VARCHAR(255), zip INT, cash INT, available_cash INT, PRIMARY KEY(customer_id))");
 			stmt.close();
 
 			releaseConnection(con);

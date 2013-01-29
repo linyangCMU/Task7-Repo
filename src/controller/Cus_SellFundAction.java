@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import model.CustomerDAO;
 import model.FundDAO;
+import model.HistoryDAO;
 import model.Model;
 import model.PositionDAO;
 import model.TransactionDAO;
@@ -29,11 +30,13 @@ public class Cus_SellFundAction extends Action{
 	private PositionDAO positionDAO;
 	private CustomerDAO customerDAO;
 	private FundDAO fundDAO;
+	private HistoryDAO historyDAO;
 	public Cus_SellFundAction(Model model) {
 		transactionDAO = model.getTransactionDAO();
 		positionDAO = model.getPositionDAO();
 		customerDAO = model.getCustomerDAO();
 		fundDAO = model.getFundDAO();
+		historyDAO = model.getHistoryDAO();
 	}
 	public String getName() {
 		
@@ -51,21 +54,34 @@ public class Cus_SellFundAction extends Action{
 			int customer_id = customerDAO.lookup(customer.getUsername()).getCustomerID();
 			String fundName = form.getFundName();
 			String shares = form.getShares();
+			double dShares;
+			if(shares != null){
+				 dShares = Double.parseDouble(shares);
+			}
+			else
+				 dShares = 0;
+			
 			Fund fund = fundDAO.lookup(fundName, null);
+			double totalShares = positionDAO.lookup(customer_id, fund.getId()).getShares();;
+		
+			
 			if (shares == null||shares.length() == 0) {			
-				
-				fund.setShares(positionDAO.lookup(customer_id, fund.getId()).getShares());
+				fund.setShares(totalShares);
 				request.setAttribute("fund", fund);					
 				return "sell-fund-cus.jsp";
 			}
 			
+			if(dShares > totalShares)
+				errors.add("You can't sell more than you have!");
 
 			// Any validation errors?
 			errors.addAll(form.getValidationErrors());
 			if (errors.size() != 0) {
-				System.out.println(errors.toString());
+				fund.setShares(totalShares);
+				request.setAttribute("fund", fund);	
 				return "sell-fund-cus.jsp";
 			}
+			
 			
 			Transaction t = new Transaction();
 			t.setCustomer_id(customer_id);
@@ -79,9 +95,13 @@ public class Cus_SellFundAction extends Action{
 			
 			
 			t.setTransaction_type("SELL");
-			t.setShares(Double.parseDouble(form.getShares()));
+			
+			
+			t.setShares(dShares);
 			t.setStatus("Pending");
-			transactionDAO.create(t); 
+
+			double newShares = totalShares - dShares;
+			transactionDAO.createWithUpdate_Sell(t, customer_id, fund_id, newShares); 
 			
 	        return "viewportfolio.do";
 	  } catch (Exception e) {
