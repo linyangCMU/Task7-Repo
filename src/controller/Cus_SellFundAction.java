@@ -106,7 +106,7 @@ public class Cus_SellFundAction extends Action{
 			
 			
 			t.setShares(dShares);
-			t.setStatus("Pending");
+			t.setStatus("PENDING");
 
 			double newShares = totalShares - dShares;
 			transactionDAO.createWithUpdate_Sell(t, customer_id, fund_id, newShares); 

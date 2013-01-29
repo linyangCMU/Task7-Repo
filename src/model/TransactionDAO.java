@@ -301,7 +301,7 @@ public class TransactionDAO {
         try {
             con = getConnection();
             
-            PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET execute_date=?, status=? WHERE transaction_id=?");
+            PreparedStatement pstmt = con.prepareStatement("UPDATE "  + tableName + " SET execute_date=?, status=?, price=? WHERE transaction_id=?");
             pstmt.setDate(1, new Date((transaction.getExecute_date().getTime())));
             pstmt.setString(2, transaction.getStatus());
             pstmt.setInt(3, transaction.getTransaction_id());

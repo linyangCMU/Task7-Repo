@@ -26,6 +26,15 @@ public class Emp_DepositCheckForm extends FormBean {
 			errors.add("Deposit amount is required");
 		}
 
+		try {
+            if (Double.parseDouble(deposit) <= 0) {
+                errors.add("Amount must be positive number"); 
+            }
+        }
+        catch (NumberFormatException e) {
+            errors.add("Amount must be a valid number");
+        }
+		
 		// missing validation for cash
 		
 		if (errors.size() > 0) {

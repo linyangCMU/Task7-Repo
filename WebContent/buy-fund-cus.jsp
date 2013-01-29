@@ -39,7 +39,7 @@ if(fund == null){
 }
 %>
             <p> 
-                Your Cash Balance: $ <%=customer.getCash()%>
+                Your Cash Balance: $ <%=customer.getAvailableCash()%>
             </p>
             <form method="post" action="cus_buyFund.do">
                 <table>

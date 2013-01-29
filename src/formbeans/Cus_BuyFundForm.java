@@ -30,6 +30,16 @@ public class Cus_BuyFundForm extends FormBean{
 			errors.add("Amount is required");
 		}
 		
+		
+		try {
+    		if (Double.parseDouble(amount) <= 0) {
+    		    errors.add("Amount must be positive number"); 
+            }
+		}
+		catch (NumberFormatException e) {
+		    errors.add("Amount must be a valid number");
+		}
+		
 		if (errors.size() > 0) {
 			return errors;
 		}

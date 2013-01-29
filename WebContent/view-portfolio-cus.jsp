@@ -52,6 +52,10 @@
 					<td> <b>Cash Balance</b> </td>
 					<td> <%=customer.getCash()%></td>
 				</tr>
+                <tr>
+                    <td> <b>Available Balance</b> </td>
+                    <td> <%=customer.getAvailableCash()%></td>
+                </tr>
             </table>
             
             <p>&nbsp</p>

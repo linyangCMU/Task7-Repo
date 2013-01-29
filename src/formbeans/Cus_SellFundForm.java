@@ -35,7 +35,14 @@ public class Cus_SellFundForm extends FormBean{
 			errors.add("No such fund !");
 		}
 		
-		
+		try {
+            if (Double.parseDouble(shares) <= 0) {
+                errors.add("Amount must be positive number"); 
+            }
+        }
+        catch (NumberFormatException e) {
+            errors.add("Amount must be a valid number");
+        }
 		
 		if (errors.size() > 0) {
 			return errors;
