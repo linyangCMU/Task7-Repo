@@ -62,6 +62,17 @@ public class Emp_TransitionDayAction extends Action {
                 return "login-emp.jsp";
             }
             
+          //get fund info:
+            ArrayList<Fund> funds = fundDAO.lookup(".");
+            Date date = new Date(0);
+            for (Fund fund : funds) {
+                fund.setPrice(historyDAO.lookupLatestPriceAndDate(fund.getId(), date));
+            }
+            date.setTime(date.getTime() + 86400000);
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+            request.setAttribute("date", format.format(date));
+            request.setAttribute("funds", funds);
+            
             //process request form
             Emp_TransitionDayForm form = new Emp_TransitionDayForm(request);
             request.setAttribute("form",form);
@@ -69,16 +80,7 @@ public class Emp_TransitionDayAction extends Action {
             // if the transition day form is not ready:
             // present the form
             if (!form.isPresent()) {
-              //get fund info:
-                ArrayList<Fund> funds = fundDAO.lookup(".");
-                Date date = new Date(0);
-                for (Fund fund : funds) {
-                    fund.setPrice(historyDAO.lookupLatestPriceAndDate(fund.getId(), date));
-                }
-                date.setTime(date.getTime() + 86400000);
-                SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-                request.setAttribute("date", format.format(date));
-                request.setAttribute("funds", funds);
+              
                 
                 return "transition-day-emp.jsp";
             }
