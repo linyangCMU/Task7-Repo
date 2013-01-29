@@ -1,6 +1,7 @@
 package databeans;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Transaction {
 	
@@ -77,5 +78,10 @@ public class Transaction {
         this.fundPrice = fundPrice;
     }
 	
+    public String getExecute_dateStr() {
+        if(execute_date==null) return "";
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        return format.format(execute_date);
+    }
 	
 }

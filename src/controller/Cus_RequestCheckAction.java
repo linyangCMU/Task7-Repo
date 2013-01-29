@@ -23,9 +23,11 @@ import model.MyDAOException;
 public class Cus_RequestCheckAction extends Action {   
     private FormBeanFactory<Cus_RequestCheckForm> formBeanFactory = FormBeanFactory.getInstance(Cus_RequestCheckForm.class);
     private CustomerDAO customerDAO;
+    private TransactionDAO transactionDAO;
     
     public Cus_RequestCheckAction(Model model) {
         customerDAO = model.getCustomerDAO();
+        transactionDAO = model.getTransactionDAO();
     }
     
     public String getName() { return "requestcheck.do"; }
@@ -69,6 +71,14 @@ public class Cus_RequestCheckAction extends Action {
             balance = balance - withdrawAmount;
             customer.setAvailableCash(balance);
             
+            Transaction transaction = new Transaction();
+            transaction.setAmount(withdrawAmount);
+            transaction.setCustomer_id(customer.getCustomerID());
+            transaction.setDate(null);
+            transaction.setStatus("PENDING");
+            transaction.setTransaction_type("WITHDRAW");
+            
+            transactionDAO.create(transaction);
             customerDAO.update(customer);
             
             request.setAttribute("cash", balance);

@@ -268,7 +268,7 @@ public class CustomerDAO {
         try {
             con = getConnection();
             
-            String sql = "SELECT cash FROM "  + tableName + " WHERE customer_id=?";
+            String sql = "SELECT available_cash FROM "  + tableName + " WHERE customer_id=?";
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, customerId);
             ResultSet rs = pstmt.executeQuery();
