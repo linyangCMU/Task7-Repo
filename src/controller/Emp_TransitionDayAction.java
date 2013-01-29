@@ -154,22 +154,18 @@ public class Emp_TransitionDayAction extends Action {
                     //update position table
                     Position position = positionDAO.lookup(customerId, fundId);
                     double availableShares = position.getShares();
-                    if(availableShares < shares + 0.001) {
+                    if(availableShares < 0.001) {
                         // Sold out all shares
                         transaction.setStatus("APPROVED");
                         customer.setAvailableCash(balance+amount);
                         customer.setCash(balance+amount);
                         customerDAO.update(customer);
                         positionDAO.remove(position);
-                    } else if(availableShares < shares) {
-                        transaction.setStatus("DENIED");
                     } else {
                         transaction.setStatus("APPROVED");
                         customer.setAvailableCash(balance+amount);
                         customer.setCash(balance+amount);
                         customerDAO.update(customer);
-                        position.setShares(availableShares-shares);
-                        positionDAO.update(position);
                     }                    
                 } else if (type.equalsIgnoreCase("WITHDRAW")) {
                     Customer customer = customerDAO.lookup(customerId);
