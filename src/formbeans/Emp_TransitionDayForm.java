@@ -5,51 +5,61 @@ import java.util.*;
 import javax.servlet.http.HttpServletRequest;;
 
 public class Emp_TransitionDayForm {
-    private ArrayList<String> fundIds;
-    private ArrayList<String> prices;
+    private ArrayList<Integer> fundIds;
+    private ArrayList<Double> prices;
+    private String date;
+    private Date formatDate;
     
     public Emp_TransitionDayForm(HttpServletRequest request){
-        fundIds = new ArrayList<String>();
-        prices = new ArrayList<String>();
+        fundIds = new ArrayList<Integer>();
+        prices = new ArrayList<Double>();
         Enumeration<String> parameterNames = request.getParameterNames();
         while(parameterNames.hasMoreElements()) { 
             String id = parameterNames.nextElement();
             if (id.startsWith("fund_")) {
-                fundIds.add(id);
-                String price = request.getParameter(id);
-                prices.add(price);
+                try {  
+                    fundIds.add(Integer.parseInt(id.substring(5)));  
+                    prices.add(Double.parseDouble(request.getParameter(id)));
+                }
+                catch(NumberFormatException nfe){  
+                    fundIds = null;
+                    prices = null;
+                    break;
+                }
             }
+        }
+        date = request.getParameter("date");
+        if(date==null) return;
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        try {
+            formatDate = format.parse(date);
+        } catch (ParseException e) {
+            formatDate = null;
         }
     }
     
-    public ArrayList<String> getFundIds() {
+    public ArrayList<Integer> getFundIds() {
         return fundIds;
     }
     
-    public ArrayList<String> getPrices() {
+    public ArrayList<Double> getPrices() {
         return prices;
+    }
+    
+    public Date getDate() {
+        return formatDate;
     }
     
     public List<String> getValidationErrors() {
         List<String> errors = new ArrayList<String>();
-        for (String id :fundIds) {
-            try {  
-                Integer.parseInt(id.substring(5));  
-            }  
-            catch(NumberFormatException nfe){  
-                errors.add(id + " is not a valid fund_id");
-                return errors;
-            }  
+        if (fundIds == null || prices == null) {
+            errors.add("There are errors in the form");
         }
-        for (String price :prices) {
-            try{  
-              Double.parseDouble(price);  
-            }  
-            catch(NumberFormatException nfe){  
-              errors.add(price + " is not a number");
-              return errors;
-            }  
+        
+        if (formatDate == null) {
+            errors.add("Invalid Date Format. Must be MM/DD/YYYY");
         }
+        
         return errors;
     }
     
