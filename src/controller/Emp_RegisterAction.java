@@ -34,6 +34,7 @@ public class Emp_RegisterAction extends Action {
         try {
         	Emp_RegisterForm form = formBeanFactory.create(request);
 	        request.setAttribute("form",form);
+			Employee employee = (Employee) request.getSession(false).getAttribute("employee");
 	
 	        // If no params were passed, return with no errors so that the form will be
 	        // presented (we assume for the first time).
@@ -56,23 +57,20 @@ public class Emp_RegisterAction extends Action {
 	        user.setPassword(form.getPassword());
         	employeeDAO.create(user);
         
-			// Attach (this copy of) the user bean to the session
-	        HttpSession session = request.getSession(false);
-	        session.setAttribute("user",user);
 	
-	        // After successful registration (and login) send to...
-	        String redirectTo = (String) session.getAttribute("redirectTo");
-	        if (redirectTo != null) return redirectTo;
-	        
-	        // If redirectTo is null, redirect to the "manage" action
-			String webapp = request.getContextPath();
-			return webapp + "//getcustomers.do";
-        } catch (MyDAOException e) {
-        	errors.add(e.getMessage());
-        	return "error.jsp";
-        } catch (FormBeanException e) {
-        	errors.add(e.getMessage());
-        	return "error.jsp";
-        }
-    }
+			// Attach (this copy of) the user bean to the session
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+
+			// If redirectTo is null, redirect to the "manage" action
+			// return "manage-customers-emp.jsp";
+			return "feedback-create-acct-emp.jsp";
+		} catch (MyDAOException e) {
+			errors.add(e.getMessage());
+			return "error.jsp";
+		} catch (FormBeanException e) {
+			errors.add(e.getMessage());
+			return "error.jsp";
+		}
+	}
 }
