@@ -94,7 +94,17 @@ public class Emp_TransitionDayAction extends Action {
             Date transitionDay = new Date(form.getDate().getTime());
             ArrayList<Integer> fundIds = form.getFundIds();
             ArrayList<Double> prices = form.getPrices();
+            ArrayList<Transaction> transactions = transactionDAO.getPendingTransactions();
+            /**
+             * start transition day
+             */
+            transactionDAO.transitionDay(fundIds, prices, transitionDay, transactions);
             
+            
+            /**
+             * end of transition day
+             */
+/*            
             //update the funds' prices with newly provided prices
             History history = new History();
             for (int i=0; i<fundIds.size(); i++) {
@@ -126,7 +136,7 @@ public class Emp_TransitionDayAction extends Action {
                     transaction.setStatus("APPROVED");
                     transaction.setFundPrice(price);
                     //customer.setAvailableCash(balance-amount);
-                    customer.setCash(balance-amount);
+                    customer.setCash(balance);
                     customerDAO.update(customer);
                     //check if the position exists
                     Position position = positionDAO.lookup(customerId, fundId);
@@ -181,7 +191,7 @@ public class Emp_TransitionDayAction extends Action {
                 }
                 transactionDAO.updateTransaction(transaction);
             }
-                        
+*/         
             return "manage-customers-emp.jsp";
         } catch (MyDAOException e) {
             errors.add(e.getMessage());

@@ -41,9 +41,13 @@ public class Cus_RegisterAction extends Action {
 		request.setAttribute("errors", errors);
 
 		try {
+		    Employee employee = (Employee) request.getSession(false).getAttribute("employee");
+		    if(employee==null) {
+		        return "login-emp.jsp";
+		    }
+		    
 			Cus_RegisterForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-			Employee employee = (Employee) request.getSession(false).getAttribute("employee");
 
 			// If no params were passed, return with no errors so that the form
 			// will be

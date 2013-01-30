@@ -33,20 +33,25 @@
                         </tr>
 						
 <%
-DecimalFormat nf = new DecimalFormat("#0.00");
+DecimalFormat nf = new DecimalFormat("#,##0.00");
 nf.setMaximumFractionDigits(2);
 nf.setMinimumFractionDigits(2);
+DecimalFormat nf2 = new DecimalFormat("#,##0.00");
+nf2.setMaximumFractionDigits(3);
+nf2.setMinimumFractionDigits(3);
 ArrayList<Transaction> transactions = (ArrayList<Transaction>)request.getAttribute("transactions");
 if(transactions!=null) {
     for(Transaction transaction : transactions){
+        boolean type = transaction.getTransaction_type().equalsIgnoreCase("BUY") 
+                || transaction.getTransaction_type().equalsIgnoreCase("SELL");
 %>
 			            <tr>
 							<td><div align="center"> <%=transaction.getExecute_dateStr() %></div></td>
 							<td><div align="center"> <%=transaction.getTransaction_type() %></div></td>
-							<td><div align="center"> <%=transaction.getFundName() %></div></td>
-							<td><div align="right"><font face="courier">$<%=nf.format(transaction.getShares()) %></font></div></td>
-							<td><div align="right"><font face="courier">$<%=nf.format(transaction.getFundPrice()) %></font></div></td>
-	   						<td><div align="right"><font face="courier">$<%=nf.format(transaction.getAmount()) %></font></div></td>
+							<td><div align="center"> <%=type?transaction.getFundName():"N/A" %></div></td>
+							<td><div align="right"><font face="courier"><%=type?nf2.format(transaction.getShares()):"N/A" %></font></div></td>
+							<td><div align="right"><font face="courier"><%=type?"$"+nf.format(transaction.getFundPrice()):"N/A" %></font></div></td>
+	   						<td><div align="right"><font face="courier"><%="$"+nf.format(transaction.getAmount()) %></font></div></td>
 			                <td><div align="center"><%=transaction.getStatus() %></div></td>
                         </tr>
 <%
