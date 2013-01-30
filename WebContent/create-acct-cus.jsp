@@ -63,7 +63,7 @@
 					</tr>
 					<tr>
 						<td colspan="2" align="center">
-							<input type="submit" name="button" value="Create Account"/>
+							<input onclick="javascript:submitCustomer('"+ request.getParameter("userName") +"') type="submit" name="button" value="Create Account"/>
 						</td>
 					</tr>
 				</table>
