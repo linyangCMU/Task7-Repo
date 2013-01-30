@@ -20,10 +20,6 @@
 
 				<form method="POST" action="emp_changePwd.do">
 					<table>
-                        <tr>
-                            <td>Old Password:</td>
-                            <td><input type="password" name="oldPassword" value="" /></td>
-                        </tr>
 						<tr>
 							<td>New Password:</td>
 							<td><input type="password" name="newPassword" value="" /></td>
