@@ -6,16 +6,16 @@ import java.util.List;
 import org.mybeans.form.FormBean;
 
 public class Cus_RegisterForm extends FormBean {
-	private String firstName;
-	private String lastName;
-	private String userName;
-	private String password;
-	private String confirmPassword ;
-	private String addr1;
-	private String addr2;
-	private String city;
-	private String state;
-	private String zip;
+	private String firstName = "";
+	private String lastName = "";
+	private String userName = "";
+	private String password = "";
+	private String confirmPassword = "";
+	private String addr1 = "";
+	private String addr2 = "";
+	private String city = "";
+	private String state = "";
+	private String zip = "";
 	
 	public String getFirstName() { return firstName; }
 	public String getLastName()  { return lastName;  }

@@ -408,50 +408,60 @@ public class TransactionDAO {
                 if (type.equalsIgnoreCase("BUY")) {
                     //update position table
                     shares = amount / price;
-                    //check if the customer's available balance is enough
-                    double balance = customer.getCash();
-                    transaction.setStatus("APPROVED");
-                    transaction.setFundPrice(price);
-                    transaction.setShares(shares);
-                    transaction.setAmount(amount);
-                    pstmt = con.prepareStatement("UPDATE task7_customer SET cash=?, available_cash=? WHERE customer_id=?");
-                    pstmt.setInt(1, (int)(balance - amount)*100);
-                    pstmt.setInt(2, (int)(balance - amount)*100);
-                    pstmt.setInt(3, customerId);
-                    pstmt.executeUpdate();                    
-                    pstmt.close();
-                    
-                    //check if the position exists
-                    pstmt = con.prepareStatement("SELECT * FROM task7_position WHERE customer_id=? AND fund_id=?");
-                    pstmt.setInt(1, customerId);
-                    pstmt.setInt(2, fundId);
-                    rs = pstmt.executeQuery();
-                    if (!rs.next()) {
-                        pstmt = con.prepareStatement("INSERT INTO task7_position (customer_id, fund_id, shares) VALUES (?,?,?)");
+                    if(shares<0.001) {
+                        transaction.setStatus("DENIED");
+                        transaction.setFundPrice(price);
+                        transaction.setShares(shares);
+                        transaction.setAmount(amount);
+                    } else {
+                        double balance = customer.getCash();
+                        transaction.setStatus("APPROVED");
+                        transaction.setFundPrice(price);
+                        transaction.setShares(shares);
+                        transaction.setAmount(amount);
+                        pstmt = con.prepareStatement("UPDATE task7_customer SET cash=?, available_cash=? WHERE customer_id=?");
+                        pstmt.setInt(1, (int)(balance - amount)*100);
+                        pstmt.setInt(2, (int)(balance - amount)*100);
+                        pstmt.setInt(3, customerId);
+                        pstmt.executeUpdate();                    
+                        pstmt.close();
+                        
+                        //check if the position exists
+                        pstmt = con.prepareStatement("SELECT * FROM task7_position WHERE customer_id=? AND fund_id=?");
                         pstmt.setInt(1, customerId);
                         pstmt.setInt(2, fundId);
-                        pstmt.setInt(3, (int)shares * 1000);      
-                        int count = pstmt.executeUpdate();
-                        if(count != 1) throw new SQLException("Insert updated" + count + "rows");
+                        rs = pstmt.executeQuery();
                         pstmt.close();
-                    } else {
-                        sql = "UPDATE task7_position SET shares=? WHERE customer_id=? AND fund_id=?";
-                        pstmt = con.prepareStatement(sql);
-                        pstmt.setInt(1, (int) shares*1000 + rs.getInt("shares"));
-                        pstmt.setInt(2, customerId);
-                        pstmt.setInt(3, fundId);
-                        int count = pstmt.executeUpdate();
-                        if(count != 1) throw new SQLException("Insert updated" + count + "rows");
-                        pstmt.close();
+                        
+                        if (!rs.next()) {
+                            pstmt = con.prepareStatement("INSERT INTO task7_position (customer_id, fund_id, shares) VALUES (?,?,?)");
+                            pstmt.setInt(1, customerId);
+                            pstmt.setInt(2, fundId);
+                            pstmt.setInt(3, (int)shares * 1000);      
+                            int count = pstmt.executeUpdate();
+                            if(count != 1) throw new SQLException("Insert updated" + count + "rows");
+                            pstmt.close();
+                        } else {
+                            
+                            sql = "UPDATE task7_position SET shares=? WHERE customer_id=? AND fund_id=?";
+                            pstmt = con.prepareStatement(sql);
+                            pstmt.setInt(1, (int) shares*1000 + rs.getInt("shares"));
+                            pstmt.setInt(2, customerId);
+                            pstmt.setInt(3, fundId);
+                            int count = pstmt.executeUpdate();
+                            if(count != 1) throw new SQLException("Insert updated" + count + "rows");
+                            pstmt.close();
+                            
+                        }
+                        rs.close();
                     }
-                    rs.close();
                 } else if (type.equalsIgnoreCase("SELL")) {
                     amount = shares * price;
                     transaction.setStatus("APPROVED");
                     transaction.setFundPrice(price);
                     transaction.setShares(shares);
                     transaction.setAmount(amount);
-                    double balance = customer.getAvailableCash();
+                    
                     //update position table
                     pstmt = con.prepareStatement("SELECT * FROM task7_position WHERE customer_id=? AND fund_id=?");
                     pstmt.setInt(1, customerId);
@@ -461,6 +471,8 @@ public class TransactionDAO {
                     if(rs.next())
                         availableShares = ((double)rs.getInt("shares"))/1000.0;
                     rs.close();
+                    pstmt.close();
+                    
                     sql = "UPDATE task7_customer SET cash=?, available_cash=? WHERE customer_id=?";
                     pstmt = con.prepareStatement(sql);
                     pstmt.setInt(1, (int) (amount + customer.getCash())*100);
@@ -478,7 +490,7 @@ public class TransactionDAO {
                         count = pstmt.executeUpdate();
                         if(count != 1) throw new SQLException("delete updated" + count + "rows");
                         pstmt.close();
-                    }                  
+                    }
                 } else if (type.equalsIgnoreCase("WITHDRAW")) {
                     sql = "UPDATE task7_customer SET cash=?, available_cash=? WHERE customer_id=?";
                     pstmt = con.prepareStatement(sql);
@@ -514,7 +526,6 @@ public class TransactionDAO {
                 pstmt.setString(2, transaction.getStatus());
                 pstmt.setInt(3, transaction.getTransaction_id());
                 pstmt.executeUpdate();
-                
                 pstmt.close();
             }
 

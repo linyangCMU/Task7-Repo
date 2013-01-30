@@ -34,7 +34,7 @@
 			<div class="content">
 				<h2>Customer Account</h2>
 				<%
-					DecimalFormat nf = new DecimalFormat("$#0.00");
+					DecimalFormat nf = new DecimalFormat("$#,##0.00");
 					nf.setMaximumFractionDigits(2);
 					nf.setMinimumFractionDigits(2);
 					Customer customer = (Customer) session.getAttribute("cus");
@@ -66,7 +66,7 @@
 					<tr>
 					<tr>
 						<td><b>Last Trading Date</b></td>
-						<td><%=(Date) request.getAttribute("lastExecuteDate")%></td>
+						<td><%=(Date) request.getAttribute("lastExecuteDate")==null?"N/A":(Date) request.getAttribute("lastExecuteDate")%></td>
 					</tr>
 					<tr>
 						<td><b>Cash Balance</b></td>
@@ -83,8 +83,7 @@
 						<td><b>Total Value</b></td>
 					</tr>
 					<%
-						ArrayList<Portfolio> portfolios = (ArrayList<Portfolio>) request
-								.getAttribute("portfolios");
+						ArrayList<Portfolio> portfolios = (ArrayList<Portfolio>) request.getAttribute("portfolios");
 						if (portfolios != null) {
 							for (Portfolio portfolio : portfolios) {
 					%>

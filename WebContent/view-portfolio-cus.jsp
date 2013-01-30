@@ -54,7 +54,7 @@
 					</tr>
 					<tr>
 						<td><b>Last Trading Date</b></td>
-						<td><%=(Date) request.getAttribute("lastExecuteDate")%></td>
+                        <td><%=(Date) request.getAttribute("lastExecuteDate")==null?"N/A":(Date) request.getAttribute("lastExecuteDate")%></td>
 					</tr>
 					<tr>
 						<td><b>Cash Balance</b></td>

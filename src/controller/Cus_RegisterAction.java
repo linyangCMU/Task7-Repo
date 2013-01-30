@@ -26,10 +26,10 @@ public class Cus_RegisterAction extends Action {
 	private FormBeanFactory<Cus_RegisterForm> formBeanFactory = FormBeanFactory
 			.getInstance(Cus_RegisterForm.class);
 
-	private CustomerDAO CustomerDAO;
+	private CustomerDAO customerDAO;
 
 	public Cus_RegisterAction(Model model) {
-		CustomerDAO = model.getCustomerDAO();
+		customerDAO = model.getCustomerDAO();
 	}
 
 	public String getName() {
@@ -62,24 +62,29 @@ public class Cus_RegisterAction extends Action {
 				return "create-acct-cus.jsp";
 			}
 			// Create the user bean
-			Customer user = new Customer();
-			user.setUsername(form.getUserName());
-			user.setFirstName(form.getFirstName());
-			user.setLastName(form.getLastName());
-			user.setPassword(form.getPassword());
-			user.setAddr1(form.getAddr1());
-			user.setAddr2(form.getAddr2());
-			user.setCity(form.getCity());
-			user.setState(form.getState());
-			user.setZip(form.getZip());
-
-			CustomerDAO.create(user);
+			Customer customer = new Customer();
+			customer.setUsername(form.getUserName());
+			customer.setFirstName(form.getFirstName());
+			customer.setLastName(form.getLastName());
+			customer.setPassword(form.getPassword());
+			customer.setAddr1(form.getAddr1());
+			customer.setAddr2(form.getAddr2());
+			customer.setCity(form.getCity());
+			customer.setState(form.getState());
+			customer.setZip(form.getZip());
+			
+			if(customerDAO.lookup(customer.getUsername())!=null){
+			    errors.add("Username already exists!");
+			    return "create-acct-cus.jsp";
+			}
+			
+			customerDAO.create(customer);
 			
 			// Look up the customer
-			Customer customer = (Customer) request.getAttribute("customer");
+			customer = (Customer) request.getAttribute("customer");
 
 			if (customer == null)
-				customer = CustomerDAO.lookup(form.getUserName());
+				customer = customerDAO.lookup(form.getUserName());
 
 			if (customer == null)
 				customer = (Customer) request.getSession().getAttribute("cus");

@@ -50,13 +50,21 @@ public class FundDAO {
 		Connection con = null;
 		try{
 			con = getConnection();
-			
-        	PreparedStatement pstmt = con.prepareStatement("INSERT INTO " + tableName + " (name, symbol) VALUES (?,?)");
+			con.setAutoCommit(false);
+        	PreparedStatement pstmt;
+        	pstmt = con.prepareStatement("SELECT * from " +tableName+ " WHERE name=? OR symbol=?");
+        	pstmt.setString(1, fund.getName());
+            pstmt.setString(2, fund.getSymbol());   
+            pstmt.executeQuery();
+            pstmt.close();
+        	
+        	pstmt = con.prepareStatement("INSERT INTO " + tableName + " (name, symbol) VALUES (?,?)");
 			pstmt.setString(1, fund.getName());
 			pstmt.setString(2, fund.getSymbol());	
 			int count = pstmt.executeUpdate();
 			if(count != 1) throw new SQLException("Insert updated" + count + "rows");
 			pstmt.close();
+			con.commit();
 			releaseConnection(con);
 		}catch(Exception e){
 			try{

@@ -7,11 +7,11 @@ public class Customer implements Comparable<Customer> {
 	private String password = null;
 	private String firstName = null;
 	private String lastName = null;
-	private String addr_line1 = null;
-	private String addr_line2 = null;
-	private String city = null;
-	private String state = null;
-	private String zip = null;
+	private String addr_line1 = "";
+	private String addr_line2 = "";
+	private String city = "";
+	private String state = "";
+	private String zip = "";
 	private double cash = 0;
 	private double availableCash = 0;
 	
