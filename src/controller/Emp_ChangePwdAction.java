@@ -32,6 +32,10 @@ public class Emp_ChangePwdAction extends Action{
 		request.setAttribute("errors", errors);
 
 		try {
+		    Employee employee = (Employee) request.getSession(false).getAttribute("employee");
+            if(employee == null) {
+                return "employee-login.do";
+            }
 			Emp_ChangePwdForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
 			// If no params were passed, return with no errors so that the form
@@ -47,8 +51,6 @@ public class Emp_ChangePwdAction extends Action{
 				System.out.println(errors.toString());
 				return "change-pwd-emp.jsp";
 			}
-
-			Employee employee = (Employee) request.getSession().getAttribute("employee");
 		
 			// Change the password
 			employeeDAO.setPassword(employee.getUsername(), form.getNewPassword());

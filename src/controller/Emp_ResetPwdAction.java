@@ -36,6 +36,11 @@ public class Emp_ResetPwdAction extends Action{
 		request.setAttribute("errors", errors);
 
 		try {
+		    Employee employee = (Employee) request.getSession(false).getAttribute("employee");
+            if(employee == null) {
+                return "employee-login.do";
+            }
+            
 			Emp_ResetPwdForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
 			String newPwd = null;

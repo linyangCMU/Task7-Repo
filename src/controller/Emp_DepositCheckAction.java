@@ -10,6 +10,7 @@ import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
 
 import databeans.Customer;
+import databeans.Employee;
 import databeans.Transaction;
 import formbeans.Emp_DepositCheckForm;
 
@@ -36,6 +37,11 @@ public class Emp_DepositCheckAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
+            Employee employee = (Employee) request.getSession(false).getAttribute("employee");
+            if(employee == null) {
+                return "employee-login.do";
+            }
+            
             Emp_DepositCheckForm form = formBeanFactory.create(request);
             request.setAttribute("form",form);
 

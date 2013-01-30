@@ -42,8 +42,8 @@ public class Emp_ViewTransactionHistoryAction extends Action {
         
         try {
             Employee employee = (Employee) request.getSession(false).getAttribute("employee");
-            if (employee == null) {
-                return "login-emp.jsp";
+            if(employee == null) {
+                return "employee-login.do";
             }
             
             Emp_ViewCustomerForm form = formBeanFactory.create(request);

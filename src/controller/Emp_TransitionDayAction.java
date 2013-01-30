@@ -59,7 +59,7 @@ public class Emp_TransitionDayAction extends Action {
             //If employee is not logged in, direct him/her to the employee login page.
             Employee employee = (Employee) request.getSession(false).getAttribute("employee");
             if(employee == null) {
-                return "login-emp.jsp";
+                return "employee-login.do";
             }
             
           //get fund info:

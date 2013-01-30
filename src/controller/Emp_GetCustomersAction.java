@@ -11,6 +11,7 @@ import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
 
 import databeans.Customer;
+import databeans.Employee;
 import databeans.Fund;
 import formbeans.Cus_FundSearchForm;
 
@@ -35,6 +36,11 @@ public class Emp_GetCustomersAction extends Action {
         request.setAttribute("errors",errors);
         
         try {
+            Employee employee = (Employee) request.getSession(false).getAttribute("employee");
+            if(employee == null) {
+                return "employee-login.do";
+            }
+            
             Cus_FundSearchForm form = formBeanFactory.create(request);
             request.setAttribute("form",form);
 

@@ -53,7 +53,7 @@ public class Emp_ViewCustomerAccountAction extends Action {
             
             Employee employee = (Employee) request.getSession(false).getAttribute("employee");
             if(employee == null) {
-                return "login-emp.jsp";
+                return "employee-login.do";
             }
             
             Emp_ViewCustomerForm form = formBeanFactory.create(request);
